@@ -204,7 +204,7 @@ ServingSpec returns mlops::ServingSpec:
     ('healthPath' '=' healthPath=STRING)?
     ('readinessPath' '=' readinessPath=STRING)?
     ('replicas' '=' replicas=INT)?
-    ('autoscaling' '=' autoscaling?=('true'|'false'))?
+    ('autoscaling' '=' autoscaling=BooleanValue)?
     ('timeoutSeconds' '=' timeoutSeconds=INT)?
     ('resources' '=' '[' resources+=Resource (',' resources+=Resource)* ']')?
     ('env'       '=' '[' env+=Param (',' env+=Param)* ']')?
@@ -372,7 +372,7 @@ OperationalPlan returns mlops::OperationalPlan:
     ('dockerfile' '=' dockerfile=STRING)?
     ('extraDeps'  '=' '[' extraDeps+=STRING (',' extraDeps+=STRING)* ']')?
     ('retries' '=' retries=INT)?
-    ('cache'   '=' cache?=('true'|'false'))?
+    ('cache'   '=' cache=BooleanValue)?
     ('queue'   '=' queue=STRING)?
   '}'
 ;
@@ -386,7 +386,7 @@ NetworkSpec returns mlops::NetworkSpec:
   'NetworkSpec' '{'
     'exposure' '=' exposure=ExposureKind
     ('domain' '=' domain=STRING)?
-    ('tls' '=' tls?=('true'|'false'))?
+    ('tls' '=' tls=BooleanValue)?
     ('ingressClass' '=' ingressClass=STRING)?
     ('vpcId' '=' vpcId=STRING)?
     ('cidr' '=' cidr=STRING)?
@@ -400,7 +400,7 @@ StorageTarget returns mlops::StorageTarget:
     'purpose'    '=' purpose=STRING
     'name'       '=' name=STRING
     ('retention' '=' retention=STRING)?
-    ('encrypted' '=' encrypted?=('true'|'false'))?
+    ('encrypted' '=' encrypted=BooleanValue)?
   '}'
 ;
 
@@ -416,9 +416,9 @@ SecretBackendSpec returns mlops::SecretBackendSpec:
 ObservabilitySpec returns mlops::ObservabilitySpec:
   'ObservabilitySpec' '{'
     'stack'          '=' stack=ObservabilityStack
-    ('logsEnabled'    '=' logsEnabled?=('true'|'false'))?
-    ('metricsEnabled' '=' metricsEnabled?=('true'|'false'))?
-    ('tracesEnabled'  '=' tracesEnabled?=('true'|'false'))?
+    ('logsEnabled'    '=' logsEnabled=BooleanValue)?
+    ('metricsEnabled' '=' metricsEnabled=BooleanValue)?
+    ('tracesEnabled'  '=' tracesEnabled=BooleanValue)?
   '}'
 ;
 
@@ -441,10 +441,10 @@ InfraPlan returns mlops::InfraPlan:
     'secrets' '=' secrets=SecretBackendSpec
     'observability' '=' observability=ObservabilitySpec
 
-    ('spotAllowed' '=' spotAllowed?=('true'|'false'))?
+    ('spotAllowed' '=' spotAllowed=BooleanValue)?
     ('maxMonthlyBudget' '=' maxMonthlyBudget=INT)?
-    ('piiData' '=' piiData?=('true'|'false'))?
-    ('gdprRestricted' '=' gdprRestricted?=('true'|'false'))?
+    ('piiData' '=' piiData=BooleanValue)?
+    ('gdprRestricted' '=' gdprRestricted=BooleanValue)?
   '}'
 ;
 // =====================================
@@ -551,3 +551,4 @@ terminal FLOAT returns ecore::EFloat:
 SignedLong returns ecore::ELong:
     ('+'|'-')? INT
 ;
+
