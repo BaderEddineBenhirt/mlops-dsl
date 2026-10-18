@@ -1,0 +1,16 @@
+project_name = "validation-c00"
+environment = "dev"
+region = "westeurope"
+account_id = "azure-subscription-1234"
+cluster_name = "vision_prod_aks"
+namespace = "vision-serving"
+domain = "vision.azure.company.com"
+public_exposure = true
+tls_enabled = true
+pii_data = false
+gdpr_restricted = true
+max_monthly_budget = 3000
+data_source = "IMAGE_FOLDER"
+data_modality = "IMAGE"
+data_location = "defects_ds_v1"
+tags = { owner = "mlops-team" }
