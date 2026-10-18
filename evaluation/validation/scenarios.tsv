@@ -1,0 +1,17 @@
+id	file	expected	category	diagnostic_fragment	mutation	sha256
+C00	c00_valid_azure.mlops	ACCEPT	control		Unmodified Azure requirements	12e1fbc33d29cfc521b3742799360c3be71edc349a5969b63b9ae8ed71ad9681
+C01	c01_valid_private_without_tls.mlops	ACCEPT	control		Private exposure permits TLS disabled	3ba9105ea36c62e925802b73723d563c0c970c4e833236e913ffc196f1b48b1a
+C02	c02_valid_min_api_port.mlops	ACCEPT	boundary		API port lower boundary	b68b1c346530e94bd6a41902a9684d5da8a431c1203be28f7b6745def6fae0b7
+C03	c03_valid_max_api_port.mlops	ACCEPT	boundary		API port upper boundary	72a49bd942c9e59deeb0d3d1dcfe2989614d2a8bc0ef29e9d9ce1a13b9eb4f3d
+S01	s01_invalid_split.mlops	REJECT	semantic	Dataset split ratios must sum to 1.0	Split total is 0.90	6a06f5353b51a3c724480342c15cf074091b49e192a966ab91bddbfad6b31dd7
+S02	s02_missing_gpu.mlops	REJECT	semantic	GPU compute profile requires at least one GPU resource	Operational GPU amount is zero	1dfc531bae51b99a4f2df942cae088177540037850a4c1bd92dc9b67b711a635
+S03	s03_public_without_tls.mlops	REJECT	semantic	Public network exposure requires TLS	Public endpoint disables TLS	8004c43083f3fd3a6112e2a79d41821fd6064d8b2f9e647227f33795ad7b6781
+S04	s04_missing_api_port.mlops	REJECT	semantic	API serving requires a port between 1 and 65535	API port omitted	555b2f737584496310534bda3b5a6098ab8ddebf293c5f1e4103b1d0b0c30d04
+S05	s05_missing_cloud_region.mlops	REJECT	semantic	InfraPlan.region is required for cloud providers	Azure region blank	d280a99ac81f09ee6be36b911550dd58556f0af375956bac47da5799d0ddbd92
+S06	s06_missing_public_domain.mlops	REJECT	semantic	Public network exposure requires a domain	Public domain blank with TLS enabled	ad58bb4b79efbe96c903f753257950a6c3baa96720d58e01e83e349b130e2882
+S07	s07_invalid_node_counts.mlops	REJECT	semantic	Node pool counts must satisfy minNodes <= desiredNodes <= maxNodes	Desired nodes below minimum	acfd99e0f79ae54c8dff47f3f54e735f392317ff8cc38d6460e373d1209c00af
+S08	s08_invalid_decision_weights.mlops	REJECT	semantic	Decision criterion weights must sum to 1.0	Weight total is 0.90	9ef501001aac5a128b23eed7759fe7526b0b1e376064a1606fa6f0722b231451
+S09	s09_contradictory_criterion_bounds.mlops	REJECT	semantic	Decision criterion minValue cannot exceed maxValue	Criterion minimum exceeds maximum	6e8f827ff1064d0a1f2a2122e6c4872567c4393554facfef683314e82a089060
+S10	s10_broken_workflow_reference.mlops	REJECT	linking	missing_validation_task	Edge target does not exist	140bbdbc4ffb700e2a222148d8521710ac249f68c93e3e1ed0341c6e503139d9
+S11	s11_empty_entry_command.mlops	REJECT	semantic	OperationalPlan.entryCmd is required	Execution command blank	8dc88983bc5423d60cdf748dd70998d924cb75548896dc8edb6d137a302036bd
+S12	s12_zero_split_ratio.mlops	REJECT	semantic	A dataset split ratio must be greater than 0 and at most 1	One zero split with total still 1.00	8a310f1d19ef9d593473290debe2c086ad52bfa4eef8d58f661bbfb05b957119
