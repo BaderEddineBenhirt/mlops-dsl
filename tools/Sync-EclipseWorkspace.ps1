@@ -13,6 +13,7 @@ foreach ($project in @("org.xtext.ucd.mlopsdsl", "org.xtext.ucd.mlopsdsl.tests",
 }
 
 $relativeFiles = @(
+    "org.xtext.ucd.mlopsdsl\src\org\xtext\ucd\mlopsdsl\generator\MlopsGenerator.java",
     "org.xtext.ucd.mlopsdsl\src\org\xtext\ucd\mlopsdsl\MlopsDslStandaloneSetup.java",
     "org.xtext.ucd.mlopsdsl\src\org\xtext\ucd\mlopsdsl\MlopsDsl.xtext",
     "org.xtext.ucd.mlopsdsl\src\org\xtext\ucd\mlopsdsl\validation\MlopsDslValidator.java",

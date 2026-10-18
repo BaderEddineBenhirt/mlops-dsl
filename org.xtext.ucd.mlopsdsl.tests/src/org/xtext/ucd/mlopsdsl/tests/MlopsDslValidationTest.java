@@ -85,6 +85,41 @@ public class MlopsDslValidationTest {
         assertEquals(Boolean.FALSE, value(infra, "piiData"));
     }
 
+    @Test
+    public void generatedIngressPreservesTlsAndIngressClass() throws Exception {
+        InMemoryFileSystemAccess output = generate("C00");
+        String ingress = generatedText(output, "runtime/k8s/ingress.yaml");
+        assertTrue(ingress.contains("  ingressClassName: \"nginx\""));
+        assertTrue(ingress.contains("  tls:\n    - hosts:\n        - \"vision.azure.company.com\"\n"));
+        assertTrue(ingress.contains("      secretName: validation-c00-serving-tls"));
+        assertTrue(generatedText(output, "validation-c00/README.md").contains("validation-c00-serving-tls"));
+    }
+
+    @Test
+    public void privateIngressDoesNotEnableTlsWhenFalse() throws Exception {
+        String ingress = generatedText(generate("C01"), "runtime/k8s/ingress.yaml");
+        assertFalse(ingress.contains("  tls:"));
+        assertFalse(ingress.contains("secretName:"));
+    }
+
+    private InMemoryFileSystemAccess generate(String id) throws Exception {
+        EObject root = parse(id, resourceSets.get());
+        assertTrue(errors(root).isEmpty(), id + " must validate before checking generated content");
+        InMemoryFileSystemAccess output = fileSystems.get();
+        GeneratorContext context = new GeneratorContext();
+        context.setCancelIndicator(CancelIndicator.NullImpl);
+        new MlopsGenerator().doGenerate(root.eResource(), output, context);
+        return output;
+    }
+
+    private String generatedText(InMemoryFileSystemAccess output, String suffix) {
+        List<CharSequence> matches = output.getTextFiles().entrySet().stream()
+            .filter(entry -> entry.getKey().endsWith("/" + suffix))
+            .map(entry -> entry.getValue()).collect(Collectors.toList());
+        assertEquals(1, matches.size(), "Expected one generated file ending with " + suffix);
+        return matches.get(0).toString();
+    }
+
     private void verify(String id) throws Exception {
         String[] scenario = scenario(id);
         EObject root = parse(id, resourceSets.get());

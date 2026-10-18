@@ -2261,6 +2261,15 @@ public class MlopsGenerator implements IGenerator2 {
         line(sb, "  name: " + app);
         line(sb, "  namespace: " + namespace(infra, projectName(project)));
         line(sb, "spec:");
+        if (infra.getNetwork() != null && !isBlank(infra.getNetwork().getIngressClass())) {
+            line(sb, "  ingressClassName: " + quote(infra.getNetwork().getIngressClass()));
+        }
+        if (infra.getNetwork() != null && Boolean.TRUE.equals(infra.getNetwork().getTls())) {
+            line(sb, "  tls:");
+            line(sb, "    - hosts:");
+            line(sb, "        - " + quote(domain));
+            line(sb, "      secretName: " + app + "-tls");
+        }
         line(sb, "  rules:");
         line(sb, "    - host: " + domain);
         line(sb, "      http:");
@@ -2287,6 +2296,7 @@ public class MlopsGenerator implements IGenerator2 {
     private void generateReadme(MetaModelSpec model, String base, IFileSystemAccess2 fsa) {
         StringBuilder sb = new StringBuilder();
         ProjectSpec project = model.getProject();
+        InfraPlan infra = model.getInfra();
         line(sb, "# Generated MLOps Artifacts");
         line(sb, "");
         line(sb, "Project: `" + projectName(project) + "`");
@@ -2298,6 +2308,19 @@ public class MlopsGenerator implements IGenerator2 {
         line(sb, "- `mlops/`: tracking, versioning, registry, decision gate, retraining and governance policies.");
         line(sb, "- `runtime/k8s/`: Kubernetes runtime descriptors for the external inference application.");
         line(sb, "- `ai-decision-engine/`: executable AI-assisted decision layer consuming generated MLOps policies.");
+        if (infra != null && infra.getOrchestrator() == Orchestrator.KUBERNETES
+                && project != null && project.getServing() != null
+                && project.getServing().getKind() != ServingKind.NONE
+                && infra.getNetwork() != null && Boolean.TRUE.equals(infra.getNetwork().getTls())) {
+            line(sb, "");
+            line(sb, "## Ingress TLS prerequisite");
+            line(sb, "");
+            line(sb, "The generated Ingress references the TLS Secret `"
+                    + sanitize(projectName(project)) + "-serving-tls` in namespace `"
+                    + namespace(infra, projectName(project)) + "`.");
+            line(sb, "Provision that Secret with a certificate valid for the configured domain and its private key before deployment, or manage it through your certificate controller.");
+            line(sb, "This generator does not issue certificates, create the TLS Secret, install an Ingress controller, or verify live HTTPS.");
+        }
         line(sb, "");
         line(sb, "## AI Decision Gate execution");
         line(sb, "");
