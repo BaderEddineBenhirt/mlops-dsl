@@ -3,11 +3,23 @@
  */
 package org.xtext.ucd.mlopsdsl;
 
+import com.google.inject.Injector;
+import mlops.MlopsPackage;
+import org.eclipse.emf.ecore.EPackage;
+
 
 /**
  * Initialization support for running Xtext languages without Equinox extension registry.
  */
 public class MlopsDslStandaloneSetup extends MlopsDslStandaloneSetupGenerated {
+
+	@Override
+	public Injector createInjectorAndDoEMFRegistration() {
+		// Standalone launches do not use Eclipse's generated_package extension.
+		// Register the imported metamodel before the injector loads the grammar.
+		EPackage.Registry.INSTANCE.put(MlopsPackage.eNS_URI, MlopsPackage.eINSTANCE);
+		return super.createInjectorAndDoEMFRegistration();
+	}
 
 	public static void doSetup() {
 		new MlopsDslStandaloneSetup().createInjectorAndDoEMFRegistration();
