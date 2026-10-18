@@ -1,0 +1,759 @@
+{
+  "recorded_at_utc": "2026-10-18T16:28:58.089812+00:00",
+  "python": "3.12.14",
+  "pyyaml": "6.0.3",
+  "platform": "Linux-6.18.55-x86_64-with-glibc2.39",
+  "scope": "Selected C00 runtime manifest requirements only",
+  "baseline_provenance": "Assistant-assisted directly authored Kustomize configuration; not a human authoring trial",
+  "authoring_time": "not_measured",
+  "full_functional_equivalence": "not_reviewed",
+  "terraform": "not_run",
+  "deployment": "not_run",
+  "contract_sha256": "af90b9472a4d2fe373e5e7af75b227313adab88598f3bfbd9e4d11e0894916bd",
+  "runner_sha256": "a797c6f185c9e82f663879cca9b2a5040eadf25c722f83f2c57214e3b0a53ad2",
+  "dsl_inventory": {
+    "files": [
+      {
+        "path": "c00_valid_azure.mlops",
+        "bytes": 12684,
+        "nonblank_lines": 511,
+        "sha256": "12e1fbc33d29cfc521b3742799360c3be71edc349a5969b63b9ae8ed71ad9681"
+      }
+    ],
+    "file_count": 1,
+    "nonblank_lines": 511
+  },
+  "baseline_source_inventory": {
+    "files": [
+      {
+        "path": "kustomization.yaml",
+        "bytes": 1301,
+        "nonblank_lines": 42,
+        "sha256": "3acb4414e7afd08103e3c620935761f7d575e0318eb2f309303cc074f37fe213"
+      },
+      {
+        "path": "runtime/k8s/deployment.yaml",
+        "bytes": 728,
+        "nonblank_lines": 29,
+        "sha256": "14303b7b23637f6d621046d2023ceefad679e7ecb9e52e20803bf09a61c05455"
+      },
+      {
+        "path": "runtime/k8s/ingress.yaml",
+        "bytes": 577,
+        "nonblank_lines": 22,
+        "sha256": "93fd4076db5b9167ed4fd66d77b3621ed2ea3ece6bb9ddb78bd05150b90641a0"
+      },
+      {
+        "path": "runtime/k8s/namespace.yaml",
+        "bytes": 64,
+        "nonblank_lines": 4,
+        "sha256": "68117174a7d465f25c07b5de04c39d24ef1d1d66dc70ffe8b5465598149af79b"
+      },
+      {
+        "path": "runtime/k8s/service.yaml",
+        "bytes": 267,
+        "nonblank_lines": 13,
+        "sha256": "a37a43dfffc369ad1b31f81836836b3901d542580fee5e4a168d3120eaa3e7ef"
+      }
+    ],
+    "file_count": 5,
+    "nonblank_lines": 110
+  },
+  "status": "pass_selected_requirements",
+  "commands": [
+    {
+      "argv": [
+        "/tmp/mlops-evaluation-tools/kubectl",
+        "version",
+        "--client",
+        "-o",
+        "json"
+      ],
+      "exit_code": 0
+    },
+    {
+      "argv": [
+        "/tmp/mlops-evaluation-tools/kubectl",
+        "kustomize",
+        "/workspace/scratch/d8dbf060cc08/mlops-dsl/evaluation/comparison/baseline/c00-runtime"
+      ],
+      "exit_code": 0
+    }
+  ],
+  "generated": {
+    "root": "/workspace/scratch/d8dbf060cc08/mlops-dsl/evaluation/comparison/generated/c00-after-tls",
+    "inventory": {
+      "files": [
+        {
+          "path": "azure-pipelines.yml",
+          "bytes": 2116,
+          "nonblank_lines": 74,
+          "sha256": "14ad5eed78fa7db56a497fa7a66b2ea5e1fa23713193b8d52dcb42dbed22d365"
+        },
+        {
+          "path": "infra/terraform/main.tf",
+          "bytes": 2804,
+          "nonblank_lines": 96,
+          "sha256": "e6127f87f21fd19b09a52b005a230f1d8aed0d5bb6d7634c1a1a3b7441c52ad3"
+        },
+        {
+          "path": "infra/terraform/modules/compute/main.tf",
+          "bytes": 2659,
+          "nonblank_lines": 109,
+          "sha256": "c6e1e599558f870b8955bb1a93c756a820db32fbfcf8f98f77773ee1ce2ba844"
+        },
+        {
+          "path": "infra/terraform/modules/network/main.tf",
+          "bytes": 2022,
+          "nonblank_lines": 88,
+          "sha256": "6c09d38b8595eb48f68abdd7bf613e84c55ca2e2cc72f8f1464e5b0dc8d61f11"
+        },
+        {
+          "path": "infra/terraform/modules/observability/main.tf",
+          "bytes": 1753,
+          "nonblank_lines": 80,
+          "sha256": "6171864d2faed04c5958bc67bb2c9049bae4c0551fc9a51b0a11d720d50bfc8d"
+        },
+        {
+          "path": "infra/terraform/modules/secrets/main.tf",
+          "bytes": 1947,
+          "nonblank_lines": 83,
+          "sha256": "d5ad7be184d8c10b8524c57c511004284473057dfbe285837e5bd395188b4119"
+        },
+        {
+          "path": "infra/terraform/modules/storage/main.tf",
+          "bytes": 2334,
+          "nonblank_lines": 94,
+          "sha256": "001abd577eadd80d733d1a0c5d548443f72ff180ded23db20ca67ff39cf7d296"
+        },
+        {
+          "path": "infra/terraform/outputs.tf",
+          "bytes": 485,
+          "nonblank_lines": 21,
+          "sha256": "e24027576a45189582b5ea6ec887405864553fc5a76e944a7decbaf6ca0f59f6"
+        },
+        {
+          "path": "infra/terraform/variables.tf",
+          "bytes": 1656,
+          "nonblank_lines": 78,
+          "sha256": "240851f415050ad5314cb3f5d7461bab968b9112d6ed7df4e17d275508b8ae3f"
+        },
+        {
+          "path": "infra/terraform/versions.tf",
+          "bytes": 180,
+          "nonblank_lines": 9,
+          "sha256": "cc8a59459af7fb5c9cf1f4882e4b3d667777392c4436bff15ac27d3d50619ee2"
+        },
+        {
+          "path": "mlops/cicdct.yaml",
+          "bytes": 1510,
+          "nonblank_lines": 57,
+          "sha256": "e03f17ee950d09589fd42184d8e3ced484b6766d6d763334dda26e7bb2fbb7a2"
+        },
+        {
+          "path": "mlops/decision-gate.yaml",
+          "bytes": 790,
+          "nonblank_lines": 35,
+          "sha256": "4ae22d1d773d11af1b67b487bb57cec254c57cb4ef7c141806ad27e59f7fced8"
+        },
+        {
+          "path": "mlops/governance.yaml",
+          "bytes": 140,
+          "nonblank_lines": 6,
+          "sha256": "3b46d07d16406cc232de3b9ce2ebf4fc5725622c58638ebb1e0d02ae761d12e1"
+        },
+        {
+          "path": "mlops/lifecycle.yaml",
+          "bytes": 419,
+          "nonblank_lines": 22,
+          "sha256": "ea0d6f309ecab5cbe018f8835bf12f2925ce46744a8b3ea4a1032c79fdc1187c"
+        },
+        {
+          "path": "mlops/model-registry.yaml",
+          "bytes": 173,
+          "nonblank_lines": 7,
+          "sha256": "34557a74b31c41b1a41c97beda64ccebace71ec5df2e37b2319292336502ac7d"
+        },
+        {
+          "path": "mlops/monitoring-policy.yaml",
+          "bytes": 298,
+          "nonblank_lines": 11,
+          "sha256": "fc3f1a29ef31d2265a8e83fb8e77cd318a0c7b7853512c94372dec53a818bf7d"
+        },
+        {
+          "path": "mlops/retraining-policy.yaml",
+          "bytes": 162,
+          "nonblank_lines": 7,
+          "sha256": "2bdc658453f35493fd66f1fb6bd5e198e02ca426c3a6ed139f011b607b9ecba9"
+        },
+        {
+          "path": "mlops/tracking.yaml",
+          "bytes": 191,
+          "nonblank_lines": 8,
+          "sha256": "6d55e3a664e4ea8b7a597870c6b830cd184b8f1f6489bacf394fb954a020331d"
+        },
+        {
+          "path": "mlops/versioning.yaml",
+          "bytes": 154,
+          "nonblank_lines": 7,
+          "sha256": "1bee1e51e1c2688cbf4c525146abc0ec0f862d5454cf40525af060d739e480ff"
+        },
+        {
+          "path": "model-manifest.yaml",
+          "bytes": 657,
+          "nonblank_lines": 31,
+          "sha256": "7fb6cd452f20781ece7e290b5ec8b6987b6cdf8cf3c4a9229717092cd1155292"
+        },
+        {
+          "path": "pipelines/pipeline-model.yaml",
+          "bytes": 255,
+          "nonblank_lines": 16,
+          "sha256": "cbe896d692df7483634d31261ee8914ec606ef908ee8e8c9330c1b09177fb20f"
+        },
+        {
+          "path": "runtime/k8s/deployment.yaml",
+          "bytes": 586,
+          "nonblank_lines": 22,
+          "sha256": "2eee72a403246148bb3e9688fe97c55f087d84491490917f25daf83560eb48ee"
+        },
+        {
+          "path": "runtime/k8s/ingress.yaml",
+          "bytes": 502,
+          "nonblank_lines": 21,
+          "sha256": "ea4cf790f8115a476e285d8c29247c83d5f0883af96fe5c937d8eadc40b8c8b0"
+        },
+        {
+          "path": "runtime/k8s/namespace.yaml",
+          "bytes": 146,
+          "nonblank_lines": 7,
+          "sha256": "9c96367bd7d92ee48c47db9920e17ac6cc496277fdd2988e9c53559adea70d6f"
+        },
+        {
+          "path": "runtime/k8s/service.yaml",
+          "bytes": 197,
+          "nonblank_lines": 10,
+          "sha256": "f75573caa7a815c653c936cc7ba121208b4a614ad1bdf8e8d8c74eb4bdbda458"
+        }
+      ],
+      "file_count": 25,
+      "nonblank_lines": 999
+    },
+    "syntax": [
+      {
+        "file": "azure-pipelines.yml",
+        "status": "pass"
+      },
+      {
+        "file": "mlops/cicdct.yaml",
+        "status": "pass"
+      },
+      {
+        "file": "mlops/decision-gate.yaml",
+        "status": "pass"
+      },
+      {
+        "file": "mlops/governance.yaml",
+        "status": "pass"
+      },
+      {
+        "file": "mlops/lifecycle.yaml",
+        "status": "pass"
+      },
+      {
+        "file": "mlops/model-registry.yaml",
+        "status": "pass"
+      },
+      {
+        "file": "mlops/monitoring-policy.yaml",
+        "status": "pass"
+      },
+      {
+        "file": "mlops/retraining-policy.yaml",
+        "status": "pass"
+      },
+      {
+        "file": "mlops/tracking.yaml",
+        "status": "pass"
+      },
+      {
+        "file": "mlops/versioning.yaml",
+        "status": "pass"
+      },
+      {
+        "file": "model-manifest.yaml",
+        "status": "pass"
+      },
+      {
+        "file": "pipelines/pipeline-model.yaml",
+        "status": "pass"
+      },
+      {
+        "file": "runtime/k8s/deployment.yaml",
+        "status": "pass"
+      },
+      {
+        "file": "runtime/k8s/ingress.yaml",
+        "status": "pass"
+      },
+      {
+        "file": "runtime/k8s/namespace.yaml",
+        "status": "pass"
+      },
+      {
+        "file": "runtime/k8s/service.yaml",
+        "status": "pass"
+      }
+    ],
+    "requirement_checks": [
+      {
+        "id": "deployment_namespace",
+        "file": "runtime/k8s/deployment.yaml",
+        "path": [
+          "metadata",
+          "namespace"
+        ],
+        "expected": "vision-serving",
+        "actual": [
+          "vision-serving"
+        ],
+        "status": "pass"
+      },
+      {
+        "id": "replicas",
+        "file": "runtime/k8s/deployment.yaml",
+        "path": [
+          "spec",
+          "replicas"
+        ],
+        "expected": 2,
+        "actual": [
+          2
+        ],
+        "status": "pass"
+      },
+      {
+        "id": "container_port",
+        "file": "runtime/k8s/deployment.yaml",
+        "path": [
+          "spec",
+          "template",
+          "spec",
+          "containers",
+          "*",
+          "ports",
+          "*",
+          "containerPort"
+        ],
+        "expected": 8080,
+        "actual": [
+          8080
+        ],
+        "status": "pass"
+      },
+      {
+        "id": "readiness_port",
+        "file": "runtime/k8s/deployment.yaml",
+        "path": [
+          "spec",
+          "template",
+          "spec",
+          "containers",
+          "*",
+          "readinessProbe",
+          "httpGet",
+          "port"
+        ],
+        "expected": 8080,
+        "actual": [
+          8080
+        ],
+        "status": "pass"
+      },
+      {
+        "id": "liveness_port",
+        "file": "runtime/k8s/deployment.yaml",
+        "path": [
+          "spec",
+          "template",
+          "spec",
+          "containers",
+          "*",
+          "livenessProbe",
+          "httpGet",
+          "port"
+        ],
+        "expected": 8080,
+        "actual": [
+          8080
+        ],
+        "status": "pass"
+      },
+      {
+        "id": "service_port",
+        "file": "runtime/k8s/service.yaml",
+        "path": [
+          "spec",
+          "ports",
+          "*",
+          "port"
+        ],
+        "expected": 8080,
+        "actual": [
+          8080
+        ],
+        "status": "pass"
+      },
+      {
+        "id": "service_target_port",
+        "file": "runtime/k8s/service.yaml",
+        "path": [
+          "spec",
+          "ports",
+          "*",
+          "targetPort"
+        ],
+        "expected": 8080,
+        "actual": [
+          8080
+        ],
+        "status": "pass"
+      },
+      {
+        "id": "public_host",
+        "file": "runtime/k8s/ingress.yaml",
+        "path": [
+          "spec",
+          "rules",
+          "*",
+          "host"
+        ],
+        "expected": "vision.azure.company.com",
+        "actual": [
+          "vision.azure.company.com"
+        ],
+        "status": "pass"
+      },
+      {
+        "id": "ingress_backend_port",
+        "file": "runtime/k8s/ingress.yaml",
+        "path": [
+          "spec",
+          "rules",
+          "*",
+          "http",
+          "paths",
+          "*",
+          "backend",
+          "service",
+          "port",
+          "number"
+        ],
+        "expected": 8080,
+        "actual": [
+          8080
+        ],
+        "status": "pass"
+      },
+      {
+        "id": "explicit_tls_host",
+        "file": "runtime/k8s/ingress.yaml",
+        "path": [
+          "spec",
+          "tls",
+          "*",
+          "hosts",
+          "*"
+        ],
+        "expected": "vision.azure.company.com",
+        "actual": [
+          "vision.azure.company.com"
+        ],
+        "status": "pass"
+      }
+    ],
+    "terraform": {
+      "status": "not_run"
+    },
+    "runtime_inventory": {
+      "files": [
+        {
+          "path": "runtime/k8s/deployment.yaml",
+          "bytes": 586,
+          "nonblank_lines": 22,
+          "sha256": "2eee72a403246148bb3e9688fe97c55f087d84491490917f25daf83560eb48ee"
+        },
+        {
+          "path": "runtime/k8s/ingress.yaml",
+          "bytes": 502,
+          "nonblank_lines": 21,
+          "sha256": "ea4cf790f8115a476e285d8c29247c83d5f0883af96fe5c937d8eadc40b8c8b0"
+        },
+        {
+          "path": "runtime/k8s/namespace.yaml",
+          "bytes": 146,
+          "nonblank_lines": 7,
+          "sha256": "9c96367bd7d92ee48c47db9920e17ac6cc496277fdd2988e9c53559adea70d6f"
+        },
+        {
+          "path": "runtime/k8s/service.yaml",
+          "bytes": 197,
+          "nonblank_lines": 10,
+          "sha256": "f75573caa7a815c653c936cc7ba121208b4a614ad1bdf8e8d8c74eb4bdbda458"
+        }
+      ],
+      "file_count": 4,
+      "nonblank_lines": 60
+    }
+  },
+  "baseline": {
+    "root": "/tmp/mlops-c00-runtime-pair-01/baseline-rendered",
+    "inventory": {
+      "files": [
+        {
+          "path": "runtime/k8s/deployment.yaml",
+          "bytes": 629,
+          "nonblank_lines": 29,
+          "sha256": "fa22cd24a0e1d3ff6900a371de4fe21eae148fd55fbd3537d931b9e41013699a"
+        },
+        {
+          "path": "runtime/k8s/ingress.yaml",
+          "bytes": 470,
+          "nonblank_lines": 22,
+          "sha256": "7c6047fb127ea42a212775e61308aa92b7514389a405afa4f1f2ad7a56c9f229"
+        },
+        {
+          "path": "runtime/k8s/namespace.yaml",
+          "bytes": 64,
+          "nonblank_lines": 4,
+          "sha256": "68117174a7d465f25c07b5de04c39d24ef1d1d66dc70ffe8b5465598149af79b"
+        },
+        {
+          "path": "runtime/k8s/service.yaml",
+          "bytes": 226,
+          "nonblank_lines": 13,
+          "sha256": "dbcf5fb2823f0490100111464dd11d03c96c9ddce146420a6b5540601cb81a29"
+        }
+      ],
+      "file_count": 4,
+      "nonblank_lines": 68
+    },
+    "syntax": [
+      {
+        "file": "runtime/k8s/deployment.yaml",
+        "status": "pass"
+      },
+      {
+        "file": "runtime/k8s/ingress.yaml",
+        "status": "pass"
+      },
+      {
+        "file": "runtime/k8s/namespace.yaml",
+        "status": "pass"
+      },
+      {
+        "file": "runtime/k8s/service.yaml",
+        "status": "pass"
+      }
+    ],
+    "requirement_checks": [
+      {
+        "id": "deployment_namespace",
+        "file": "runtime/k8s/deployment.yaml",
+        "path": [
+          "metadata",
+          "namespace"
+        ],
+        "expected": "vision-serving",
+        "actual": [
+          "vision-serving"
+        ],
+        "status": "pass"
+      },
+      {
+        "id": "replicas",
+        "file": "runtime/k8s/deployment.yaml",
+        "path": [
+          "spec",
+          "replicas"
+        ],
+        "expected": 2,
+        "actual": [
+          2
+        ],
+        "status": "pass"
+      },
+      {
+        "id": "container_port",
+        "file": "runtime/k8s/deployment.yaml",
+        "path": [
+          "spec",
+          "template",
+          "spec",
+          "containers",
+          "*",
+          "ports",
+          "*",
+          "containerPort"
+        ],
+        "expected": 8080,
+        "actual": [
+          8080
+        ],
+        "status": "pass"
+      },
+      {
+        "id": "readiness_port",
+        "file": "runtime/k8s/deployment.yaml",
+        "path": [
+          "spec",
+          "template",
+          "spec",
+          "containers",
+          "*",
+          "readinessProbe",
+          "httpGet",
+          "port"
+        ],
+        "expected": 8080,
+        "actual": [
+          8080
+        ],
+        "status": "pass"
+      },
+      {
+        "id": "liveness_port",
+        "file": "runtime/k8s/deployment.yaml",
+        "path": [
+          "spec",
+          "template",
+          "spec",
+          "containers",
+          "*",
+          "livenessProbe",
+          "httpGet",
+          "port"
+        ],
+        "expected": 8080,
+        "actual": [
+          8080
+        ],
+        "status": "pass"
+      },
+      {
+        "id": "service_port",
+        "file": "runtime/k8s/service.yaml",
+        "path": [
+          "spec",
+          "ports",
+          "*",
+          "port"
+        ],
+        "expected": 8080,
+        "actual": [
+          8080
+        ],
+        "status": "pass"
+      },
+      {
+        "id": "service_target_port",
+        "file": "runtime/k8s/service.yaml",
+        "path": [
+          "spec",
+          "ports",
+          "*",
+          "targetPort"
+        ],
+        "expected": 8080,
+        "actual": [
+          8080
+        ],
+        "status": "pass"
+      },
+      {
+        "id": "public_host",
+        "file": "runtime/k8s/ingress.yaml",
+        "path": [
+          "spec",
+          "rules",
+          "*",
+          "host"
+        ],
+        "expected": "vision.azure.company.com",
+        "actual": [
+          "vision.azure.company.com"
+        ],
+        "status": "pass"
+      },
+      {
+        "id": "ingress_backend_port",
+        "file": "runtime/k8s/ingress.yaml",
+        "path": [
+          "spec",
+          "rules",
+          "*",
+          "http",
+          "paths",
+          "*",
+          "backend",
+          "service",
+          "port",
+          "number"
+        ],
+        "expected": 8080,
+        "actual": [
+          8080
+        ],
+        "status": "pass"
+      },
+      {
+        "id": "explicit_tls_host",
+        "file": "runtime/k8s/ingress.yaml",
+        "path": [
+          "spec",
+          "tls",
+          "*",
+          "hosts",
+          "*"
+        ],
+        "expected": "vision.azure.company.com",
+        "actual": [
+          "vision.azure.company.com"
+        ],
+        "status": "pass"
+      }
+    ],
+    "terraform": {
+      "status": "not_run"
+    },
+    "runtime_inventory": {
+      "files": [
+        {
+          "path": "runtime/k8s/deployment.yaml",
+          "bytes": 629,
+          "nonblank_lines": 29,
+          "sha256": "fa22cd24a0e1d3ff6900a371de4fe21eae148fd55fbd3537d931b9e41013699a"
+        },
+        {
+          "path": "runtime/k8s/ingress.yaml",
+          "bytes": 470,
+          "nonblank_lines": 22,
+          "sha256": "7c6047fb127ea42a212775e61308aa92b7514389a405afa4f1f2ad7a56c9f229"
+        },
+        {
+          "path": "runtime/k8s/namespace.yaml",
+          "bytes": 64,
+          "nonblank_lines": 4,
+          "sha256": "68117174a7d465f25c07b5de04c39d24ef1d1d66dc70ffe8b5465598149af79b"
+        },
+        {
+          "path": "runtime/k8s/service.yaml",
+          "bytes": 226,
+          "nonblank_lines": 13,
+          "sha256": "dbcf5fb2823f0490100111464dd11d03c96c9ddce146420a6b5540601cb81a29"
+        }
+      ],
+      "file_count": 4,
+      "nonblank_lines": 68
+    }
+  }
+}
