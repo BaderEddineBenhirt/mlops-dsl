@@ -1,0 +1,8 @@
+tracking:
+  backend: MLFLOW
+  experimentName: "vision_defects_experiment"
+  trackingUri: "http://mlflow.local:5000"
+  logParams: true
+  logMetrics: true
+  logArtifacts: true
+  logModel: true
