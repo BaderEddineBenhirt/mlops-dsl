@@ -125,7 +125,8 @@ public class MlopsDslValidationTest {
             .filter(entry -> entry.getKey().endsWith("/" + suffix))
             .map(entry -> entry.getValue()).collect(Collectors.toList());
         assertEquals(1, matches.size(), "Expected one generated file ending with " + suffix);
-        return matches.get(0).toString();
+        // File-system postprocessors may use the editor/platform line separator.
+        return matches.get(0).toString().replace("\r\n", "\n").replace('\r', '\n');
     }
 
     private void verify(String id) throws Exception {
