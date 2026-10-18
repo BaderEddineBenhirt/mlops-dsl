@@ -9,11 +9,13 @@ import java.util.stream.Collectors;
 
 import com.google.inject.Inject;
 import com.google.inject.Provider;
+import mlops.Edge;
 import mlops.InfraPlan;
 import mlops.MetaModelSpec;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.resource.ResourceSet;
+import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.xtext.EcoreUtil2;
 import org.eclipse.xtext.diagnostics.Severity;
 import org.eclipse.xtext.generator.GeneratorContext;
@@ -89,10 +91,16 @@ public class MlopsDslValidationTest {
     public void generatedIngressPreservesTlsAndIngressClass() throws Exception {
         InMemoryFileSystemAccess output = generate("C00");
         String ingress = generatedText(output, "runtime/k8s/ingress.yaml");
-        assertTrue(ingress.contains("  ingressClassName: \"nginx\""));
-        assertTrue(ingress.contains("  tls:\n    - hosts:\n        - \"vision.azure.company.com\"\n"));
-        assertTrue(ingress.contains("      secretName: validation-c00-serving-tls"));
-        assertTrue(generatedText(output, "validation-c00/README.md").contains("validation-c00-serving-tls"));
+        System.out.println("C00 GENERATED INGRESS:\n" + ingress);
+        System.out.println("GENERATOR CLASS: " + MlopsGenerator.class.getResource("MlopsGenerator.class"));
+        assertTrue(ingress.contains("  ingressClassName: \"nginx\""),
+            "Missing configured Ingress class. Actual generated Ingress:\n" + ingress);
+        assertTrue(ingress.contains("  tls:\n    - hosts:\n        - \"vision.azure.company.com\"\n"),
+            "Missing configured TLS host. Actual generated Ingress:\n" + ingress);
+        assertTrue(ingress.contains("      secretName: validation-c00-serving-tls"),
+            "Missing TLS Secret reference. Actual generated Ingress:\n" + ingress);
+        assertTrue(generatedText(output, "validation-c00/README.md").contains("validation-c00-serving-tls"),
+            "Generated README must document the certificate Secret prerequisite");
     }
 
     @Test
@@ -136,7 +144,10 @@ public class MlopsDslValidationTest {
             assertFalse(issues.isEmpty(), id + " was incorrectly accepted");
             assertTrue(issues.stream().anyMatch(i -> i.getMessage().contains(scenario[4])),
                 id + " did not report the intended fault: " + issues);
-            assertTrue(issues.stream().allMatch(i -> i.getMessage().contains(scenario[4])),
+            issues.forEach(issue -> System.out.println("DIAGNOSTIC\t" + id
+                + "\t" + issue.getCode() + "\t" + issue.getUriToProblem()
+                + "\t" + issue.getMessage()));
+            assertTrue(issues.stream().allMatch(i -> isExpectedIssue(i, scenario, root)),
                 id + " also reports unrelated errors: " + issues);
         }
 
@@ -154,6 +165,32 @@ public class MlopsDslValidationTest {
         }
         System.out.println("VALIDATION\t" + id + "\t" + scenario[2]
             + "\t" + scenario[3] + "\tassertions_passed");
+    }
+
+
+    private boolean isExpectedIssue(Issue issue, String[] scenario, EObject root) {
+        if (issue.getMessage().contains(scenario[4])) {
+            return true;
+        }
+        if (!"S10".equals(scenario[0])) {
+            return false;
+        }
+        // Xtext linking and EMF proxy validation can diagnose the same Edge.to.
+        // Accept the additional proxy diagnostic only at that exact broken edge.
+        String message = issue.getMessage().toLowerCase(java.util.Locale.ROOT);
+        if (!message.contains("proxy") || !message.contains("resolv")
+                || !message.contains("'to'")) {
+            return false;
+        }
+        List<Edge> edges = EcoreUtil2.getAllContentsOfType(root, Edge.class);
+        if (edges.isEmpty()) {
+            return false;
+        }
+        Edge intendedEdge = edges.get(0); // S10 changes only the first Edge.to.
+        Object target = intendedEdge.eGet(
+            intendedEdge.eClass().getEStructuralFeature("to"), false);
+        return target instanceof EObject && ((EObject) target).eIsProxy()
+            && EcoreUtil.getURI(intendedEdge).equals(issue.getUriToProblem());
     }
 
     private EObject parse(String id, ResourceSet resourceSet) throws Exception {
