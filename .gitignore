@@ -5,6 +5,8 @@
 *.class
 
 # Local environment
+.venv-evaluation/
+__pycache__/
 .env
 .env.*
 !.env.example

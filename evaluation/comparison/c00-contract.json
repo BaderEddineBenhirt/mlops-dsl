@@ -1,0 +1,16 @@
+{
+  "case": "C00 Azure pilot",
+  "scope": "Selected runtime requirements only; the complete C00 requirements also need independent review.",
+  "checks": [
+    {"id": "deployment_namespace", "file": "runtime/k8s/deployment.yaml", "path": ["metadata", "namespace"], "expected": "vision-serving"},
+    {"id": "replicas", "file": "runtime/k8s/deployment.yaml", "path": ["spec", "replicas"], "expected": 2},
+    {"id": "container_port", "file": "runtime/k8s/deployment.yaml", "path": ["spec", "template", "spec", "containers", "*", "ports", "*", "containerPort"], "expected": 8080},
+    {"id": "readiness_port", "file": "runtime/k8s/deployment.yaml", "path": ["spec", "template", "spec", "containers", "*", "readinessProbe", "httpGet", "port"], "expected": 8080},
+    {"id": "liveness_port", "file": "runtime/k8s/deployment.yaml", "path": ["spec", "template", "spec", "containers", "*", "livenessProbe", "httpGet", "port"], "expected": 8080},
+    {"id": "service_port", "file": "runtime/k8s/service.yaml", "path": ["spec", "ports", "*", "port"], "expected": 8080},
+    {"id": "service_target_port", "file": "runtime/k8s/service.yaml", "path": ["spec", "ports", "*", "targetPort"], "expected": 8080},
+    {"id": "public_host", "file": "runtime/k8s/ingress.yaml", "path": ["spec", "rules", "*", "host"], "expected": "vision.azure.company.com"},
+    {"id": "ingress_backend_port", "file": "runtime/k8s/ingress.yaml", "path": ["spec", "rules", "*", "http", "paths", "*", "backend", "service", "port", "number"], "expected": 8080},
+    {"id": "explicit_tls_host", "file": "runtime/k8s/ingress.yaml", "path": ["spec", "tls", "*", "hosts", "*"], "expected": "vision.azure.company.com"}
+  ]
+}
