@@ -1,0 +1,40 @@
+kind: pipeline-runtime
+rationale: vision_2025Q1
+compute: GPU_SINGLE
+packaging: CONTAINER
+trainMode: SCRIPT
+servingMode: API
+entryCmd: "python serve.py"
+ciTarget: AZURE
+resources:
+  -
+    key: GPU
+    amount: 1
+  -
+    key: CPU
+    amount: 4
+  -
+    key: memory
+    amount: 16384
+featureStore:
+  kind: feast
+  offlineStore: azure_blob_offline
+  onlineStore: redis-online
+secrets:
+  -
+    name: azure-ml-registry-creds
+    mountAs: env
+    pathPrefix: "<azure-ml-registry-creds path in secrets backend>"
+  -
+    name: azure-storage-creds
+    mountAs: env
+    pathPrefix: "<azure-storage-creds path in secrets backend>"
+imageRef: pipelineBaseImage
+dockerfile: ""
+extraDeps:
+  - "torchvision==0.17.0"
+  - "opencv-python==4.9.0"
+  - "mlflow==2.10.0"
+retries: 2
+cache: true
+queue: gpu-training

@@ -1,0 +1,16 @@
+kind: evaluation-job
+metrics:
+  - accuracy
+  - precision
+  - recall
+  - f1
+  - auc
+thresholds:
+  -
+    key: accuracy
+    value: 0.9
+    op: GE
+  -
+    key: f1
+    value: 0.88
+    op: GE

@@ -1,0 +1,201 @@
+{
+  "kind": "workflow-graph",
+  "tasks": [
+    {
+      "id": "w_prepare",
+      "type": "PREPARE",
+      "produces": [
+        {
+          "path": "images/prepared",
+          "kind": "DATASET"
+        }
+      ]
+    },
+    {
+      "id": "w_version",
+      "type": "VERSION",
+      "produces": [
+        {
+          "path": "dvc.lock",
+          "kind": "OTHER"
+        }
+      ],
+      "consumes": [
+        {
+          "path": "images/prepared",
+          "kind": "DATASET"
+        }
+      ]
+    },
+    {
+      "id": "w_train",
+      "type": "TRAIN",
+      "produces": [
+        {
+          "path": "models/resnet.pt",
+          "kind": "MODEL"
+        }
+      ],
+      "consumes": [
+        {
+          "path": "images/prepared",
+          "kind": "DATASET"
+        }
+      ]
+    },
+    {
+      "id": "w_track",
+      "type": "TRACK",
+      "produces": [
+        {
+          "path": "mlruns",
+          "kind": "OTHER"
+        }
+      ],
+      "consumes": [
+        {
+          "path": "models/resnet.pt",
+          "kind": "MODEL"
+        }
+      ]
+    },
+    {
+      "id": "w_eval",
+      "type": "EVAL",
+      "produces": [
+        {
+          "path": "metrics/eval.json",
+          "kind": "METRICS"
+        }
+      ],
+      "consumes": [
+        {
+          "path": "models/resnet.pt",
+          "kind": "MODEL"
+        }
+      ]
+    },
+    {
+      "id": "w_decide",
+      "type": "DECIDE",
+      "produces": [
+        {
+          "path": "reports/decision.json",
+          "kind": "OTHER"
+        }
+      ],
+      "consumes": [
+        {
+          "path": "metrics/eval.json",
+          "kind": "METRICS"
+        }
+      ]
+    },
+    {
+      "id": "w_register",
+      "type": "REGISTER",
+      "produces": [
+        {
+          "path": "registry/vision_defects_model_v1",
+          "kind": "MODEL"
+        }
+      ],
+      "consumes": [
+        {
+          "path": "models/resnet.pt",
+          "kind": "MODEL"
+        },
+        {
+          "path": "reports/decision.json",
+          "kind": "OTHER"
+        }
+      ]
+    },
+    {
+      "id": "w_deploy",
+      "type": "DEPLOY",
+      "produces": [
+        {
+          "path": "infra/terraform/tfplan",
+          "kind": "OTHER"
+        }
+      ],
+      "consumes": [
+        {
+          "path": "registry/vision_defects_model_v1",
+          "kind": "MODEL"
+        }
+      ]
+    },
+    {
+      "id": "w_monitor",
+      "type": "MONITOR",
+      "produces": [
+        {
+          "path": "metrics/runtime.json",
+          "kind": "METRICS"
+        }
+      ],
+      "consumes": [
+        {
+          "path": "infra/terraform/tfplan",
+          "kind": "OTHER"
+        }
+      ]
+    },
+    {
+      "id": "w_retrain",
+      "type": "RETRAIN",
+      "produces": [
+        {
+          "path": "reports/retraining-decision.json",
+          "kind": "OTHER"
+        }
+      ],
+      "consumes": [
+        {
+          "path": "metrics/runtime.json",
+          "kind": "METRICS"
+        }
+      ]
+    }
+  ],
+  "edges": [
+    {
+      "from": "w_prepare",
+      "to": "w_version"
+    },
+    {
+      "from": "w_version",
+      "to": "w_train"
+    },
+    {
+      "from": "w_train",
+      "to": "w_track"
+    },
+    {
+      "from": "w_train",
+      "to": "w_eval"
+    },
+    {
+      "from": "w_eval",
+      "to": "w_decide"
+    },
+    {
+      "from": "w_decide",
+      "to": "w_register"
+    },
+    {
+      "from": "w_register",
+      "to": "w_deploy"
+    },
+    {
+      "from": "w_deploy",
+      "to": "w_monitor"
+    },
+    {
+      "from": "w_monitor",
+      "to": "w_retrain"
+    }
+  ]
+}

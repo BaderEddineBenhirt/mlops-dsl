@@ -1,0 +1,59 @@
+kind: storage-policies
+targets:
+  -
+    purpose: datasets
+    kind: OBJECT_STORE
+    name: azure://vision-datasets
+    retention: 180d
+    encrypted: true
+    enforcementHints:
+      complianceLevel: STRICT
+      requireEncryptionAtRest: true
+      lifecycleExpireAfter: 180d
+      blockPublicAccess: true
+    azure:
+      storageAccountName: azurevisiondatasetst
+      containerName: datasets
+      accessTier: Hot
+      replicationType: LRS
+      allowBlobPublicAccess: false
+      location: westeurope
+      providerHint: "Azure Blob Storage"
+  -
+    purpose: models
+    kind: OBJECT_STORE
+    name: azure://vision-model-registry
+    retention: infinite
+    encrypted: true
+    enforcementHints:
+      complianceLevel: STRICT
+      requireEncryptionAtRest: true
+      lifecycleExpireAfter: infinite
+      blockPublicAccess: true
+    azure:
+      storageAccountName: azurevisionmodelrest
+      containerName: models
+      accessTier: Hot
+      replicationType: LRS
+      allowBlobPublicAccess: false
+      location: westeurope
+      providerHint: "Azure Blob Storage"
+  -
+    purpose: metrics
+    kind: OBJECT_STORE
+    name: azure://vision-metrics
+    retention: 365d
+    encrypted: true
+    enforcementHints:
+      complianceLevel: STRICT
+      requireEncryptionAtRest: true
+      lifecycleExpireAfter: 365d
+      blockPublicAccess: true
+    azure:
+      storageAccountName: azurevisionmetricsst
+      containerName: metrics
+      accessTier: Hot
+      replicationType: LRS
+      allowBlobPublicAccess: false
+      location: westeurope
+      providerHint: "Azure Blob Storage"

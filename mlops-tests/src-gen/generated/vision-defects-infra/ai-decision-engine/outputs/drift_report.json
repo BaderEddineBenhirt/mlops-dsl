@@ -1,0 +1,7 @@
+{
+  "dataset_version": "v1",
+  "method": "neutral_default",
+  "drift_score": 0.0,
+  "drift_detected": false,
+  "threshold": 0.3
+}

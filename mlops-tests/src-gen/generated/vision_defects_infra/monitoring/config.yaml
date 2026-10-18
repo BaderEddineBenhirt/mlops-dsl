@@ -1,0 +1,17 @@
+kind: monitoring-config
+perfMetrics:
+  - p95_latency_ms
+  - p99_latency_ms
+  - throughput_rps
+  - error_rate
+dataDrift:
+  -
+    name: image_brightness_shift
+    warn: 0.15
+    fail: 0.3
+modelDrift:
+  -
+    name: accuracy_drop
+    warn: 0.05
+    fail: 0.1
+alertChannel: "slack://#azure-monitoring"

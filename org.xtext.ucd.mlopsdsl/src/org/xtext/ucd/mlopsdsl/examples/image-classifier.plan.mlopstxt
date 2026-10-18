@@ -1,0 +1,25 @@
+OperationalPlan {
+  name        = "plan-image-classifier"
+  rationale   = "cheap GPU single node"
+  compute     = GPU_SINGLE
+  packaging   = CONTAINER
+  trainMode   = SCRIPT
+  servingMode = API
+  entryCmd    = "python -m train.main --epochs 5"
+
+  resources = [
+    Resource { key = "cpu" amount = 8 },
+    Resource { key = "ram_gb" amount = 32 },
+    Resource { key = "gpu" amount = 1 }
+  ]
+
+  featureStore = FeatureStoreSpec {
+    kind = "feast"
+    offlineStore = "bigquery://mlops_offline"
+    onlineStore  = "redis://mlops_online"
+  }
+
+  secrets = [ SecretRef { name = "S3_CREDENTIALS" }, SecretRef { name = "SLACK_WEBHOOK" } ]
+
+  ciTarget = GITHUB
+}

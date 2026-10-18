@@ -1,0 +1,38 @@
+kind: image-catalog
+images:
+  -
+    key: observabilityAgentImage
+    purpose: "Cluster-wide telemetry/logs agent DaemonSet or VM agent"
+    suggested: gcr.io/datadoghq/agent:latest
+    approvedImage: "<TO_BE_FILLED_BY_PLATFORM>"
+    approvedDigest: "<TO_BE_FILLED_BY_PLATFORM_SHA256>"
+  -
+    key: pipelineBaseImage
+    purpose: "Base image for pipeline steps/build context"
+    suggested: mcr.microsoft.com/azureml/openmpi4.1.0-ubuntu20.04
+    approvedImage: "<TO_BE_FILLED_BY_PLATFORM>"
+    approvedDigest: "<TO_BE_FILLED_BY_PLATFORM_SHA256>"
+  -
+    key: servingApiImage
+    purpose: "Online inference API server image"
+    suggested: "<provide-realtime-api-image>"
+    approvedImage: "<TO_BE_FILLED_BY_PLATFORM>"
+    approvedDigest: "<TO_BE_FILLED_BY_PLATFORM_SHA256>"
+  -
+    key: servingRuntimeImage
+    purpose: "Image used by the online inference API Deployment"
+    suggested: python:3.11-slim
+    approvedImage: "<TO_BE_FILLED_BY_PLATFORM>"
+    approvedDigest: "<TO_BE_FILLED_BY_PLATFORM_SHA256>"
+  -
+    key: trainerRuntimeImage
+    purpose: "Image used by the Kubernetes training Job"
+    suggested: python:3.11-slim
+    approvedImage: "<TO_BE_FILLED_BY_PLATFORM>"
+    approvedDigest: "<TO_BE_FILLED_BY_PLATFORM_SHA256>"
+  -
+    key: trainingImage
+    purpose: "Container that runs training loop / train script"
+    suggested: mcr.microsoft.com/azureml/pytorch:2.1-cuda11.8
+    approvedImage: "<TO_BE_FILLED_BY_PLATFORM>"
+    approvedDigest: "<TO_BE_FILLED_BY_PLATFORM_SHA256>"

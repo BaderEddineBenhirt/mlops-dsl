@@ -1,0 +1,25 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: api-script
+  namespace: vision-serving
+data:
+  api.py: |
+    from flask import Flask, request, jsonify
+    import joblib
+    
+    app = Flask(__name__)
+    model = joblib.load('/model/model.joblib')
+    
+    @app.route('/health', methods=['GET'])
+    def health():
+        return {'status': 'ok'}
+    
+    @app.route('/predict', methods=['POST'])
+    def predict():
+        data = request.json['input']
+        pred = model.predict([data])
+        return jsonify({'prediction': int(pred[0])})
+    
+    app.run(host='0.0.0.0', port=5000)
+    

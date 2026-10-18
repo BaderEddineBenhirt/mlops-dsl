@@ -1,0 +1,14 @@
+OperationalPlan {
+  name        = "plan-sentiment-batch"
+  rationale   = "CPU scale-out nightly"
+  compute     = CPU_SMALL
+  packaging   = CONTAINER
+  trainMode   = SCRIPT
+  servingMode = BATCH
+  entryCmd    = "python -m pipelines.batch_infer --input s3://in --output s3://out"
+  resources = [
+    Resource { key = "cpu" amount = 16 },
+    Resource { key = "ram_gb" amount = 64 }
+  ]
+  ciTarget = GITLAB
+}

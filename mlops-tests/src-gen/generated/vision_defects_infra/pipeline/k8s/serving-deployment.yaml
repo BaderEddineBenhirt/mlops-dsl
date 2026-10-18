@@ -1,0 +1,63 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ml-api
+  namespace: vision-serving
+  labels:
+    app: ml-api
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: ml-api
+  template:
+    metadata:
+      labels:
+        app: ml-api
+    spec:
+      containers:
+        -
+          name: api
+          image: python:3.11-slim
+          command:
+            - /bin/sh
+            - -c
+            - "pip install flask scikit-learn joblib && python /app/api.py"
+          ports:
+            -
+              containerPort: 8080
+          volumeMounts:
+            -
+              name: model-storage
+              mountPath: /model
+            -
+              name: api-script-volume
+              mountPath: /app
+          resources:
+            requests:
+              cpu: 250m
+              memory: 512Mi
+            limits:
+              cpu: 500m
+              memory: 1Gi
+          readinessProbe:
+            httpGet:
+              path: /health
+              port: 8080
+            initialDelaySeconds: 5
+            periodSeconds: 10
+          livenessProbe:
+            httpGet:
+              path: /health
+              port: 8080
+            initialDelaySeconds: 10
+            periodSeconds: 15
+      volumes:
+        -
+          name: model-storage
+          persistentVolumeClaim:
+            claimName: ml-model-pvc
+        -
+          name: api-script-volume
+          configMap:
+            name: api-script

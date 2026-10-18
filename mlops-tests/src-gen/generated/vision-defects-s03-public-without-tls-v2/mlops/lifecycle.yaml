@@ -1,0 +1,22 @@
+project: "vision_defects_s03_public_without_tls_v2"
+pipeline:
+  - data_validation
+  - data_versioning
+  - training
+  - experiment_tracking
+  - evaluation
+  - model_registry
+  - ai_decision_gate
+  - deployment
+  - monitoring
+  - retraining_trigger
+tools:
+  tracking: MLFLOW
+  versioning: DVC
+  registry: AZURE_ML
+  cicdct: AZURE
+generatedArtifacts:
+  terraform: infra/terraform
+  cicdct: pipelines/
+  mlopsPolicies: mlops/
+  runtime: runtime/k8s

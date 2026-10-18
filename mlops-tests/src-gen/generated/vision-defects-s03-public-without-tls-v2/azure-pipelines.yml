@@ -1,0 +1,74 @@
+trigger:
+  - main
+pool:
+  vmImage: ubuntu-latest
+stages:
+  - stage: data_validation
+    jobs:
+      - job: data_validationJob
+        steps:
+          - script: |
+              echo 'Validating dataset contract according to model-manifest.yaml'
+  - stage: data_versioning
+    jobs:
+      - job: data_versioningJob
+        steps:
+          - script: |
+              echo 'Versioning data/code/model according to mlops/versioning.yaml'
+  - stage: training
+    jobs:
+      - job: trainingJob
+        steps:
+          - script: |
+              cd ai-decision-engine
+              python experiments/train_candidates.py --output outputs/model_metrics.json
+              cd ..
+  - stage: experiment_tracking
+    jobs:
+      - job: experiment_trackingJob
+        steps:
+          - script: |
+              echo 'Tracking experiment according to mlops/tracking.yaml'
+  - stage: evaluation
+    jobs:
+      - job: evaluationJob
+        steps:
+          - script: |
+              cd ai-decision-engine
+              python experiments/evaluate_candidates.py
+              cd ..
+  - stage: model_registry
+    jobs:
+      - job: model_registryJob
+        steps:
+          - script: |
+              echo 'Registering selected model according to mlops/model-registry.yaml'
+  - stage: decision_gate
+    jobs:
+      - job: decision_gateJob
+        steps:
+          - script: |
+              cd ai-decision-engine
+              python run_decision_gate.py
+              cd ..
+  - stage: deployment
+    jobs:
+      - job: deploymentJob
+        steps:
+          - script: |
+              echo 'Deploying runtime layer if application image is available'
+              kubectl apply -f runtime/k8s/ || true
+  - stage: monitoring
+    jobs:
+      - job: monitoringJob
+        steps:
+          - script: |
+              echo 'Applying monitoring policy from mlops/monitoring-policy.yaml'
+  - stage: retraining_check
+    jobs:
+      - job: retraining_checkJob
+        steps:
+          - script: |
+              cd ai-decision-engine
+              python experiments/train_candidates.py --output outputs/model_metrics.json
+              cd ..

@@ -1,0 +1,10 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: vision-defects-s03-public-without-tls-v2-serving
+  namespace: vision-serving
+spec:
+  selector: { app: vision-defects-s03-public-without-tls-v2-serving }
+  ports:
+    - port: 8080
+      targetPort: 8080

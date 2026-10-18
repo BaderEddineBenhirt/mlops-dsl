@@ -1,0 +1,16 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: vision-defects-s03-public-without-tls-v2-serving
+  namespace: vision-serving
+spec:
+  rules:
+    - host: vision.azure.company.com
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: vision-defects-s03-public-without-tls-v2-serving
+                port: { number: 8080 }

@@ -1,0 +1,13 @@
+kind: model-registry
+provider: azureml
+registerAs: vision_defects_model_v1
+tags:
+  - vision
+  - resnet50
+  - azure
+  - aks
+  - industrial-qa
+  - defect-detection
+  - mlops
+description: "Defects detection model for industrial quality assurance"
+stage: STAGING

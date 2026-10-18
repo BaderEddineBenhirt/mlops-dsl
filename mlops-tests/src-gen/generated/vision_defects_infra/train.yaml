@@ -1,0 +1,52 @@
+kind: train-job
+framework: pytorch
+algorithm: resnet50
+imageRef: trainingImage
+hyperparams:
+  epochs: "30"
+  lr: 0.0005
+  batch: "64"
+  optimizer: adamw
+command:
+  - python
+  - train.py
+resources:
+  -
+    key: GPU
+    amount: 1
+  -
+    key: CPU
+    amount: 4
+  -
+    key: memory
+    amount: 16384
+env:
+  DATASET_PATH: defects_ds_v1
+  MODEL_OUTPUT: models/resnet.pt
+data:
+  source: IMAGE_FOLDER
+  modality: IMAGE
+  location: defects_ds_v1
+  format: jpg
+  schema: https://storage.azure.com/schema/defects.json
+  version: 2025-01
+  sizeBytes: 2150000000
+  recordCount: 120000
+  license: proprietary
+  privacy: non_pii
+  hash: sha256:vision-defects-v1
+  splits:
+    -
+      name: train
+      ratio: 0.8
+    -
+      name: valid
+      ratio: 0.1
+    -
+      name: test
+      ratio: 0.1
+secrets:
+  -
+    name: mlops-registry-creds
+    mountAs: env
+    pathPrefix: "<resolved by secrets-infra.yaml>"

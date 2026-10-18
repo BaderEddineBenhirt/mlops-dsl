@@ -1,0 +1,349 @@
+// =====================================
+// Data & Features
+// =====================================
+
+DataAsset {
+  source       = IMAGE_FOLDER
+  modality     = IMAGE
+  location     = "defects_ds_v1_vps"
+  format       = "jpg"
+  schema       = "file:///data/defects/schema.json"
+  version      = "2025-02"
+  sizeBytes    = 1800000000
+  recordCount  = 95000
+  license      = "internal"
+  splits = [
+    SplitSpec {
+      name  = "train"
+      ratio = 0.80
+    },
+    SplitSpec {
+      name  = "valid"
+      ratio = 0.10
+    },
+    SplitSpec {
+      name  = "test"
+      ratio = 0.10
+    }
+  ]
+}
+
+FeatureSet {
+  name = "vision_defects_vps_v1"
+}
+
+// =====================================
+// Training
+// =====================================
+
+TrainingSpec {
+  framework   = "pytorch_vps"
+  algorithm   = "resnet34"
+  hyperparams = [
+    Param { key = "epochs" value = "30" },
+    Param { key = "lr"     value = "0.001" },
+    Param { key = "batch"  value = "32" }
+  ]
+  image       = "registry.example.com/vision/train-resnet34:1.0.0"
+  command     = ["python","train.py"]
+  resources   = [
+    Resource { key = "GPU"    amount = 1 },
+    Resource { key = "CPU"    amount = 8 },
+    Resource { key = "memory" amount = 24576 }
+  ]
+}
+
+// =====================================
+// Evaluation
+// =====================================
+
+EvaluationSpec {
+  metrics = ["accuracy","f1","recall"]
+  thresholds = [
+    Threshold {
+      key   = "accuracy"
+      value = 0.90
+      op    = GE
+    },
+    Threshold {
+      key   = "f1"
+      value = 0.88
+      op    = GE
+    }
+  ]
+}
+
+// =====================================
+// Registry
+// =====================================
+
+RegistrySpec {
+  kind        = "mlflow_vps"
+  registerAs  = "vision_defects_vps_v1"
+  tags        = ["vps","resnet34","pytorch"]
+  description = "Defect detector déployé sur pool VPS"
+  stage       = STAGING
+}
+
+// =====================================
+// Serving API
+// =====================================
+
+ServingSpec vps{
+  kind = API
+  port = 8080
+  healthPath     = "/healthz"
+  readinessPath  = "/ready"
+  replicas       = 2
+  autoscaling    = true
+  timeoutSeconds = 20
+  resources = [
+    Resource { key = "CPU"    amount = 4 },
+    Resource { key = "memory" amount = 8192 }
+  ]
+  routes = ["/predict","/metrics","/healthz"]
+}
+
+// =====================================
+// Monitoring
+// =====================================
+
+MonitoringSpec {
+  perfMetrics = ["p95_latency_ms","error_rate","throughput_rps"]
+  dataDrift = [
+    DriftMetric {
+      name = "feature_drift"
+      warn = 0.10
+      fail = 0.20
+    }
+  ]
+  modelDrift = [
+    DriftMetric {
+      name = "accuracy_drop"
+      warn = 0.05
+      fail = 0.10
+    }
+  ]
+  alertChannel = "slack://#vision-vps-alerts"
+}
+
+// =====================================
+// Feature store
+// =====================================
+
+FeatureStoreSpec {
+  kind         = "feast_vps"
+  offlineStore = "vision_vps_offline"
+  onlineStore  = "vision_vps_online_redis"
+}
+
+// =====================================
+// Operational Plan (plan VPS)
+// =====================================
+
+OperationalPlan {
+  rationale    = "vision_vps_2025Q1"
+  compute      = GPU_SINGLE
+  packaging    = CONTAINER
+  trainMode    = SCRIPT
+  servingMode  = API
+  entryCmd     = "python serve.py"
+
+  resources    = [
+    Resource { key = "GPU"    amount = 1 },     // GPUCoherence OK
+    Resource { key = "CPU"    amount = 8 },
+    Resource { key = "memory" amount = 24576 }
+  ]
+
+  featureStore = vision_vps_offline        // via offlineStore / kind selon ton QNP
+  secrets      = [
+    SecretRef { name = "vision-vps-registry-creds" },
+    SecretRef { name = "vision-vps-db-creds" }
+  ]
+
+  ciTarget     = GITHUB
+
+  // Packaging avancé
+  baseImage  = "python:3.11-slim"
+  dockerfile = "./deploy/Dockerfile"
+  extraDeps  = ["torch==2.3.0","torchvision==0.18.0","uvicorn[standard]"]
+
+  // Orchestration
+  retries = 3
+  cache   = true
+  queue   = "vision_vps_high_priority"
+}
+
+// =====================================
+// Infra VPS
+// =====================================
+
+InfraPlan {
+  provider     = VPS
+  accountId    = "customer-12345"
+  region       = "eu-central"     // optionnel mais renseigné
+
+  orchestrator = VM_POOL
+  clusterName  = "vision_vps_pool"
+  namespace    = "vision-apps"
+
+  network = NetworkSpec {
+    exposure     = PUBLIC
+    domain       = "vision-vps.example.com"
+    tls          = true                
+    ingressClass = "nginx-reverse-proxy"
+    vpcId        = "vps-net-prod-01"
+    subnets      = ["10.20.0.0/24","10.20.1.0/24"]
+  }
+
+  storage = [
+    StorageTarget {
+      kind       = FILESYSTEM
+      purpose    = "models"
+      name       = "vision_models_pv"
+      retention  = "infinite"
+      encrypted  = true
+    },
+    StorageTarget {
+      kind       = FILESYSTEM
+      purpose    = "logs"
+      name       = "vision_logs_pv"
+      retention  = "30d"
+      encrypted  = false
+    },
+    StorageTarget {
+      kind       = OBJECT_STORE
+      purpose    = "datasets"
+      name       = "vision_vps_datasets"
+      retention  = "180d"
+      encrypted  = true
+    }
+  ]
+
+  secrets = SecretBackendSpec {
+    kind       = FILE_ENV
+    pathPrefix = "/etc/vision-app/secrets/"
+  }
+
+  observability = ObservabilitySpec {
+    stack           = ELK
+    logsEnabled     = true
+    metricsEnabled  = true
+    tracesEnabled   = false
+  }
+
+  spotAllowed      = false
+  maxMonthlyBudget = 120
+  piiData          = true
+  gdprRestricted   = true
+}
+
+// =====================================
+// Workflow principal (top-level)
+// =====================================
+
+MlWorkflow {
+  tasks = [
+    MlTask {
+      taskId = vps_prepare
+      type   = PREPARE
+      produces = [
+        Artifact { path = "data/prepared_vps" kind = DATASET }
+      ]
+    },
+    MlTask {
+      taskId = vps_train
+      type   = TRAIN
+      produces = [
+        Artifact { path = "models/resnet34_vps.pt" kind = MODEL }
+      ]
+      consumes = [
+        Artifact { path = "data/prepared_vps" kind = DATASET }
+      ]
+      
+    },
+    MlTask {
+      taskId = vps_eval
+      type   = EVAL
+      produces = [
+        Artifact { path = "metrics/eval_vps.json" kind = METRICS }
+      ]
+      consumes = [
+        Artifact { path = "models/resnet34_vps.pt" kind = MODEL }
+      ]
+      
+    },
+    MlTask {
+      taskId = vps_serve
+      type   = SERVE
+      produces = [
+        Artifact { path = "logs/serve_vps.log" kind = LOG }
+      ]
+      consumes = [
+        Artifact { path = "models/resnet34_vps.pt" kind = MODEL }
+      ]
+      
+    }
+  ]
+  edges = [
+    Edge { from = vps_prepare to = vps_train },
+    Edge { from = vps_train   to = vps_eval  },
+    Edge { from = vps_eval    to = vps_serve }
+  ]
+}
+
+// =====================================
+// ProjectSpec (références croisées)
+// =====================================
+
+ProjectSpec {
+  name       = "vision_defects_vps"
+  data       = defects_ds_v1_vps      // via location / QNP
+  features   = vision_defects_vps_v1  // via name
+  train      = pytorch_vps            // via framework
+  eval       = accuracy               // via 1er metric "accuracy"
+  registry   = mlflow_vps             // via kind
+  serving    = vps                    // via kind=API (selon ton QNP)
+  monitoring = ^monitoring      // selon ton naming provider
+}
+
+// =====================================
+// MetaModel racine (VPS)
+// =====================================
+
+MetaModelSpec {
+  version       = "0.3.0"
+  schemaVersion = "2025.02"
+  createdBy     = "mlops-team"
+  createdAt     = "2025-11-24"
+
+  project       = vision_defects_vps
+  plan          = vision_vps_2025Q1
+  infra         = vision_vps_pool
+
+  workflow      = MlWorkflow {
+    tasks = [
+      MlTask {
+        taskId = vps_prepare_meta
+        type   = PREPARE
+        produces = [
+          Artifact { path = "data/prepared_vps_meta" kind = DATASET }
+        ]
+      },
+      MlTask {
+        taskId = vps_train_meta
+        type   = TRAIN
+        produces = [
+          Artifact { path = "models/resnet34_vps_meta.pt" kind = MODEL }
+        ]
+        consumes = [
+          Artifact { path = "data/prepared_vps_meta" kind = DATASET }
+        ]
+        
+      }
+    ]
+    edges = [
+      Edge { from = vps_prepare_meta to = vps_train_meta }
+    ]
+  }
+}

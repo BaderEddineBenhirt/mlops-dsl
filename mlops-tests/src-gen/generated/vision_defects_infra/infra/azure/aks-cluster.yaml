@@ -1,0 +1,27 @@
+kind: aks-cluster-config
+metadata:
+  clusterName: vision-defects-infra
+  location: westeurope
+  resourceGroup: vision-defects-infra-rg
+  tags:
+    project: vision-defects-infra
+    managedBy: mlopsdsl
+identity:
+  type: SystemAssigned
+  workloadIdentityEnabled: true
+  managedIdentityClientId: "<FILL_ME_AZURE_MI_CLIENT_ID>"
+nodePool:
+  name: systempool
+  vmSize: Standard_B2s_v2
+  count: 1
+  mode: System
+networkProfile:
+  networkPlugin: azure
+  vnetName: vision-defects-infra-vnet
+  subnetName: vision-defects-infra-subnet
+  networkSecurityGroup: vision-defects-infra-nsg
+  dnsPrefix: vision-defects-infra
+monitoring:
+  backend: "Azure Monitor"
+  logAnalyticsWorkspace: "<FILL_ME_LOG_ANALYTICS_WORKSPACE>"
+  applicationInsights: "<FILL_ME_APPLICATION_INSIGHTS_NAME>"

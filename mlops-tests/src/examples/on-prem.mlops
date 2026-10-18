@@ -1,0 +1,237 @@
+DataAsset {
+  source       = IMAGE_FOLDER
+  modality     = IMAGE
+  location     = "factory_defects_v2"
+  format       = "jpg"
+  schema       = "file:///mnt/datasets/defects/schema.json"
+  version      = "2025-01"
+  sizeBytes    = 1800000000
+  recordCount  = 95000
+  splits = [
+    SplitSpec { name = "train" ratio = 0.80 },
+    SplitSpec { name = "valid" ratio = 0.10 },
+    SplitSpec { name = "test"  ratio = 0.10 }
+  ]
+}
+
+FeatureSet {
+  name = "factory_features_v1"
+}
+
+
+TrainingSpec {
+  framework   = "pytorch"
+  algorithm   = "efficientnet_b3"
+  hyperparams = [
+    Param { key = "epochs" value = "35" },
+    Param { key = "lr"     value = "0.0003" },
+    Param { key = "batch"  value = "32" }
+  ]
+  image       = "registry.local/ml/train-efficientnet:1.0.0"
+  command     = ["python","train.py"]
+  resources = [
+    Resource { key = "GPU"    amount = 1 },
+    Resource { key = "CPU"    amount = 8 },
+    Resource { key = "memory" amount = 32768 }
+  ]
+}
+
+
+EvaluationSpec {
+  metrics = ["accuracy","precision","recall","f1"]
+  thresholds = [
+    Threshold { key="accuracy" value=0.93 op=GE }
+  ]
+}
+
+
+RegistrySpec {
+  kind        = "harbor"
+  registerAs  = "factory_model_v3"
+  tags        = ["onprem","industrial","vision"]
+  description = "Industrial defects model trained on local datacenter"
+  stage       = STAGING
+}
+
+
+ServingSpec on_prem {
+  kind = API
+  port = 8080
+  healthPath    = "/healthz"
+  readinessPath = "/ready"
+  replicas      = 2
+  autoscaling   = false
+  timeoutSeconds = 25
+  resources = [
+    Resource { key="CPU"    amount=4 },
+    Resource { key="memory" amount=8192 }
+  ]
+  routes = ["/predict","/healthz"]
+}
+
+
+MonitoringSpec {
+  perfMetrics = ["p99_latency_ms","throughput_rps"]
+  modelDrift = [
+    DriftMetric { name="accuracy_drop" warn=0.05 fail=0.10 }
+  ]
+  alertChannel = "email://mlops-alerts@company.local"
+}
+
+
+FeatureStoreSpec {
+  kind         = "feast"
+  offlineStore = "ceph_offline"
+  onlineStore  = "redis_onprem"
+}
+
+
+OperationalPlan {
+  rationale    = "factory_2025Q1"
+  compute      = GPU_SINGLE
+  packaging    = CONTAINER
+  trainMode    = SCRIPT
+  servingMode  = API
+  entryCmd     = "python serve.py"
+  resources = [
+    Resource { key="GPU"    amount=1 },
+    Resource { key="CPU"    amount=4 },
+    Resource { key="memory" amount=16384 }
+  ]
+  secrets = [
+    SecretRef { name="vault-creds" }
+  ]
+  ciTarget  = GITLAB
+  baseImage = "ubuntu:22.04"
+  extraDeps = ["opencv-python","torchvision"]
+}
+
+
+InfraPlan {
+  provider     = ON_PREM
+  orchestrator = KUBERNETES
+  clusterName  = "factory_aks_onprem"
+  namespace    = "factory-serving"
+
+  network = NetworkSpec {
+    exposure     = PRIVATE
+    domain       = "vision.factory.local"
+    tls          = false
+    ingressClass = "nginx"
+    vpcId        = "/infra/networks/factory-vlan-120"   // LOCAL NETWORK ID
+    subnets      = ["vlan-120-front","vlan-120-back"]
+  }
+
+  storage = [
+    StorageTarget {
+      kind      = FILESYSTEM
+      purpose   = "datasets"
+      name      = "/mnt/ceph/datasets"
+      retention = "infinite"
+      encrypted = false
+    },
+    StorageTarget {
+      kind      = FILESYSTEM
+      purpose   = "models"
+      name      = "/mnt/ceph/models"
+      retention = "infinite"
+      encrypted = false
+    }
+  ]
+
+  secrets = SecretBackendSpec {
+    kind       = VAULT
+    pathPrefix = "secret/mlops/"
+  }
+
+  observability = ObservabilitySpec {
+    stack          = PROMETHEUS
+    logsEnabled    = true
+    metricsEnabled = true
+    tracesEnabled  = false
+  }
+
+  spotAllowed      = false
+  maxMonthlyBudget = 0    // on-prem pas de budget cloud
+  piiData          = false
+  gdprRestricted   = false
+}
+
+
+
+MlWorkflow {
+  tasks = [
+    MlTask {
+      taskId = p_prepare
+      type   = PREPARE
+      produces = [
+        Artifact { path="images/prepared" kind=DATASET }
+      ]
+    },
+    MlTask {
+      taskId = p_train
+      type   = TRAIN
+      produces = [
+        Artifact { path="models/model.pt" kind=MODEL }
+      ]
+      consumes = [
+        Artifact { path="images/prepared" kind=DATASET }
+      ]
+      
+    }
+  ]
+  edges = [
+    Edge { from=p_prepare to=p_train }
+  ]
+}
+
+
+
+ProjectSpec {
+  name       = "factory_defects_onprem"
+  data       = factory_defects_v2
+  features   = factory_features_v1
+  train      = pytorch
+  eval       = accuracy
+  registry   = harbor
+  serving    = on_prem
+  monitoring = ^monitoring
+}
+
+MetaModelSpec {
+  version       = "0.2.0"
+  schemaVersion = "2025.01"
+  createdBy     = "mlops-team"
+  createdAt     = "2025-10-11"
+
+  project  = factory_defects_onprem
+  plan     = factory_2025Q1
+  infra    = factory_aks_onprem
+  workflow = MlWorkflow {
+    tasks = [
+      MlTask {
+        taskId = w_prepare
+        type   = PREPARE
+        produces = [
+          Artifact { path = "images/prepared" kind = DATASET }
+        ]
+      },
+      MlTask {
+        taskId = w_train
+        type   = TRAIN
+        produces = [
+          Artifact { path = "models/resnet.pt" kind = MODEL }
+        ]
+        consumes = [
+          Artifact { path = "images/prepared" kind = DATASET }
+        ]
+        
+      }
+    ]
+    edges = [
+      Edge { from = w_prepare to = w_train }
+    ]
+  }
+}
+
+

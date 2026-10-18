@@ -1,0 +1,40 @@
+kind: terraform-network-stack
+cloudProvider: AZURE
+accountId: azure-subscription-1234
+region: westeurope
+loadBalancer:
+  type: application
+  name: vision_defects_infra-lb
+  internal: false
+  subnets:
+    - 10.50.1.0/24
+    - 10.50.2.0/24
+  waf:
+    enabled: true
+    allowedCountries:
+      - FR
+      - DE
+      - ES
+    rateLimitRps: 100
+    blockCommonBots: true
+  tls:
+    enabled: true
+    certificateRef: "<CERT_FOR_vision.azure.company.com>"
+    tlsProfile: STRONG
+  dns:
+    domain: vision.azure.company.com
+    zoneType: public
+    recordType: A
+    target: "${load_balancer_dns_name}"
+  tags:
+    project: vision_defects_infra
+    cloudProvider: AZURE
+    region: westeurope
+    accountId: azure-subscription-1234
+azureNetworking:
+  resourceGroup: vision_defects_infra-rg
+  virtualNetworkName: vision_defects_infra-vnet
+  subnetName: vision_defects_infra-subnet
+  networkSecurityGroup: vision_defects_infra-nsg
+  providerHint: "Azure Load Balancer / Application Gateway"
+ingressClass: nginx

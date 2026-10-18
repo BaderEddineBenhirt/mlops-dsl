@@ -1,0 +1,78 @@
+apiVersion: apps/v1
+kind: DaemonSet
+metadata:
+  name: obs-agent
+  namespace: vision-serving
+  labels:
+    app: obs-agent
+    observability-stack: datadog
+    team: mlops
+spec:
+  selector:
+    matchLabels:
+      app: obs-agent
+  template:
+    metadata:
+      labels:
+        app: obs-agent
+        observability-stack: datadog
+        compliance.gdpr: "true"
+        compliance.pii: "true"
+      annotations:
+        monitor.backend: "Azure Monitor"
+        monitor.logAnalytics: "<FILL_ME_LOG_ANALYTICS_WORKSPACE>"
+        monitor.applicationInsights: "<FILL_ME_APPLICATION_INSIGHTS_NAME>"
+    spec:
+      serviceAccountName: obs-agent-sa
+      nodeSelector:
+        node.eu-approved: "true"
+      tolerations:
+        -
+          key: node-role.kubernetes.io/infra
+          operator: Exists
+          effect: NoSchedule
+      containers:
+        -
+          name: observability-agent
+          image: gcr.io/datadoghq/agent:latest
+          resources:
+            requests:
+              cpu: 100m
+              memory: 128Mi
+            limits:
+              cpu: 500m
+              memory: 256Mi
+          env:
+            -
+              name: CLOUD_PROVIDER
+              value: AZURE
+            -
+              name: CLOUD_REGION
+              value: westeurope
+            -
+              name: OBS_STACK
+              value: datadog
+            -
+              name: LOGS_ENABLED
+              value: "true"
+            -
+              name: METRICS_ENABLED
+              value: "true"
+            -
+              name: TRACES_ENABLED
+              value: "true"
+            -
+              name: DATA_REGION_RESTRICTED
+              value: "true"
+            -
+              name: PII_DATA
+              value: "true"
+          volumeMounts:
+            -
+              name: agentlogs
+              mountPath: /var/log/datadog
+              readOnly: false
+      volumes:
+        -
+          name: agentlogs
+          emptyDir:

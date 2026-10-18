@@ -1,0 +1,45 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: train-model
+  namespace: vision-serving
+  labels:
+    app: mlops-trainer
+spec:
+  template:
+    metadata:
+      labels:
+        app: mlops-trainer
+    spec:
+      restartPolicy: Never
+      containers:
+        -
+          name: trainer
+          image: python:3.11-slim
+          command:
+            - /bin/sh
+            - -c
+            - "pip install scikit-learn joblib && python /app/train.py"
+          volumeMounts:
+            -
+              name: model-storage
+              mountPath: /model
+            -
+              name: train-script-volume
+              mountPath: /app
+          resources:
+            requests:
+              cpu: 250m
+              memory: 512Mi
+            limits:
+              cpu: 500m
+              memory: 1Gi
+      volumes:
+        -
+          name: model-storage
+          persistentVolumeClaim:
+            claimName: ml-model-pvc
+        -
+          name: train-script-volume
+          configMap:
+            name: train-script

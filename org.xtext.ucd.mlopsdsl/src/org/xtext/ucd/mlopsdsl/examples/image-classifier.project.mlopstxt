@@ -1,0 +1,50 @@
+ProjectSpec {
+  name = "image-classifier"
+
+  data = DataAsset {
+    source   = CSV
+    modality = IMAGE
+    location = "s3://datasets/mnist/"
+    format   = "csv"
+    schema   = "image_path:string,label:int"
+    version  = "2025-09-15"
+    sizeBytes   = 123456789
+    recordCount = 70000
+    license  = "CC-BY-4.0"
+    privacy  = "public"
+    hash     = "sha256:deadbeef"
+    splits = [
+      SplitSpec { name = "train" ratio = 0.8 },
+      SplitSpec { name = "test"  ratio = 0.2 }
+    ]
+    annotations = [
+      AnnotationSpec { labelSet = "0..9" guideline = "single digit per image" }
+    ]
+  }
+
+  features = FeatureSet { name = "img-28x28-gray" }
+
+  train = TrainingSpec {
+    framework = "pytorch==2.3"
+    algorithm = "cnn-simple"
+  }
+
+  eval = EvaluationSpec {
+    metrics = [ "accuracy", "f1_macro" ]
+    thresholds = [
+      Threshold { key = "accuracy" value = 0.97 },
+      Threshold { key = "f1_macro" value = 0.95 }
+    ]
+  }
+
+  registry = RegistrySpec { kind = "mlflow" registerAs = "mnist-cnn" }
+
+  serving = ServingSpec { kind = API port = 8080 healthPath = "/healthz" readinessPath = "/ready" }
+
+  monitoring = MonitoringSpec {
+    perfMetrics = [ "latency_p95_ms", "throughput_rps", "error_rate" ]
+    dataDrift   = [ DriftMetric { name = "pixel_mean" warn = 0.1 fail = 0.2 } ]
+    modelDrift  = [ DriftMetric { name = "acc_drop"   warn = 0.02 fail = 0.05 } ]
+    alertChannel = "slack://ml-alerts"
+  }
+}

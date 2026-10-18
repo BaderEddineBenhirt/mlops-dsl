@@ -1,0 +1,23 @@
+MlWorkflow {
+  tasks = [
+    MlTask { taskId = tokenize type = PREPARE
+      produces = [ Artifact { path = "artifacts/tokens.parquet" kind = DATASET } ] },
+    MlTask { taskId = train type = TRAIN
+      consumes = [ Artifact { path = "artifacts/tokens.parquet" kind = DATASET } ]
+      produces = [ Artifact { path = "artifacts/model.bin" kind = MODEL } ] },
+    MlTask { taskId = eval type = EVAL
+      consumes = [ Artifact { path = "artifacts/model.bin" kind = MODEL } ]
+      produces = [ Artifact { path = "artifacts/eval.json" kind = METRICS } ] },
+    MlTask { taskId = package type = PACKAGE
+      consumes = [ Artifact { path = "artifacts/model.bin" kind = MODEL } ]
+      produces = [ Artifact { path = "dist/app.whl" kind = WHEEL } ] },
+    MlTask { taskId = register type = REGISTER
+      consumes = [ Artifact { path = "dist/app.whl" kind = WHEEL } ] }
+  ]
+  edges = [
+    Edge { from = tokenize to = train },
+    Edge { from = train    to = eval  },
+    Edge { from = train    to = package },
+    Edge { from = package  to = register }
+  ]
+}

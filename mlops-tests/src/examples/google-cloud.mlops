@@ -1,0 +1,303 @@
+// =====================================
+// Données & Features
+// =====================================
+
+DataAsset {
+  source       = IMAGE_FOLDER
+  modality     = IMAGE
+  location     = "defects_ds_v1"
+  format       = "jpg"
+  schema       = "gs://defects/schema.json"
+  version      = "2025-01"
+  sizeBytes    = 2200000000
+  recordCount  = 125000
+  license      = "proprietary"
+  splits = [
+    SplitSpec {
+      name  = "train"
+      ratio = 0.80
+    },
+    SplitSpec {
+      name  = "valid"
+      ratio = 0.10
+    },
+    SplitSpec {
+      name  = "test"
+      ratio = 0.10
+    }
+  ]
+}
+
+FeatureSet {
+  name = "vision_defects_v1"
+}
+
+// =====================================
+// Training
+// =====================================
+
+TrainingSpec {
+  framework   = "pytorch"
+  algorithm   = "resnet50"
+  hyperparams = [
+    Param { key = "epochs" value = "40" },
+    Param { key = "lr"     value = "0.0005" },
+    Param { key = "batch"  value = "64" }
+  ]
+  image       = "gcr.io/vision/train-resnet:1.0.0"
+  command     = ["python","train.py"]
+  resources   = [
+    Resource { key = "GPU"    amount = 1 },
+    Resource { key = "CPU"    amount = 8 },
+    Resource { key = "memory" amount = 32768 }
+  ]
+}
+
+// =====================================
+// Evaluation
+// =====================================
+
+EvaluationSpec {
+  metrics = ["accuracy","precision","recall","f1","iou"]
+  thresholds = [
+    Threshold {
+      key   = "accuracy"
+      value = 0.92
+      op    = GE
+    },
+    Threshold {
+      key   = "iou"
+      value = 0.60
+      op    = GE
+    }
+  ]
+}
+
+// =====================================
+// Registry
+// =====================================
+
+RegistrySpec {
+  kind        = "mlflow"
+  registerAs  = "vision_defects_v1"
+  tags        = ["prod-candidate","resnet","pytorch"]
+  description = "Defect detector on 2025-01 dataset"
+  stage       = STAGING
+}
+
+// =====================================
+// Serving API
+// =====================================
+
+ServingSpec gcp {
+  kind = API
+  port = 8081
+  healthPath     = "/healthz"
+  readinessPath  = "/ready"
+  replicas       = 2
+  autoscaling    = true
+  timeoutSeconds = 25
+  resources = [
+    Resource { key = "CPU"    amount = 4 },
+    Resource { key = "memory" amount = 8192 }
+  ]
+  routes = ["/predict","/metrics","/healthz"]
+}
+
+// =====================================
+// Monitoring
+// =====================================
+
+MonitoringSpec {
+  perfMetrics = ["p95_latency_ms","throughput_rps"]
+  modelDrift = [
+    DriftMetric {
+      name = "accuracy_drop"
+      warn = 0.05
+      fail = 0.10
+    }
+  ]
+  alertChannel = "slack://#vision-alerts"
+}
+
+// =====================================
+// Feature store (si tu veux)
+// =====================================
+
+FeatureStoreSpec {
+  kind         = "feast"
+  offlineStore = "vision_offline_v1"
+  onlineStore  = "vision_online_redis"
+}
+
+// =====================================
+// Plan opérationnel
+// =====================================
+
+OperationalPlan {
+  rationale    = "vision_2025Q1"
+  compute      = GPU_SINGLE
+  packaging    = CONTAINER
+  trainMode    = SCRIPT
+  servingMode  = API
+  entryCmd     = "python serve.py"
+  resources    = [
+    Resource { key = "GPU"    amount = 1 },
+    Resource { key = "CPU"    amount = 8 },
+    Resource { key = "memory" amount = 32768 }
+  ]
+  featureStore = vision_offline_v1
+  secrets      = [
+    SecretRef { name = "vision-registry-creds" }
+  ]
+  ciTarget     = GITHUB
+}
+
+// =====================================
+// Infra GCP
+// =====================================
+
+InfraPlan {
+  provider     = GCP
+  accountId    = "vision-gcp-project"
+  region       = "europe-west1"
+  orchestrator = KUBERNETES
+  clusterName  = "vision_prod_gke"
+  namespace    = "vision-serving"
+
+  network = NetworkSpec {
+    exposure     = PUBLIC
+    domain       = "vision.api.company.com"
+    tls          = true
+    ingressClass = "gce"
+  }
+
+  storage = [
+    StorageTarget {
+      kind      = OBJECT_STORE
+      purpose   = "datasets"
+      name      = "gs://vision-datasets"
+      retention = "180d"
+      encrypted = true
+    }
+  ]
+
+  secrets = SecretBackendSpec {
+    kind       = GCP_SECRET_MANAGER
+    pathPrefix = "projects/vision-gcp-project/secrets/mlops/prod/vision/"
+  }
+
+  observability = ObservabilitySpec {
+    stack         = STACKDRIVER
+    logsEnabled   = true
+    metricsEnabled = true
+  }
+}
+
+// =====================================
+// Workflow
+// =====================================
+
+MlWorkflow {
+  tasks = [
+    MlTask {
+      taskId = t_prepare
+      type   = PREPARE
+      produces = [
+        Artifact { path = "images/prepared" kind = DATASET }
+      ]
+    },
+    MlTask {
+      taskId = t_train
+      type   = TRAIN
+      produces = [
+        Artifact { path = "models/resnet.pt" kind = MODEL }
+      ]
+      consumes = [
+        Artifact { path = "images/prepared" kind = DATASET }
+      ]
+      
+    },
+    MlTask {
+      taskId = t_eval
+      type   = EVAL
+      produces = [
+        Artifact { path = "metrics/eval.json" kind = METRICS }
+      ]
+      consumes = [
+        Artifact { path = "models/resnet.pt" kind = MODEL }
+      ]
+      
+    },
+    MlTask {
+      taskId = t_serve
+      type   = SERVE
+      produces = [
+        Artifact { path = "logs/serve.log" kind = LOG }
+      ]
+      consumes = [
+        Artifact { path = "models/resnet.pt" kind = MODEL }
+      ]
+      
+    }
+  ]
+  edges = [
+    Edge { from = t_prepare to = t_train },
+    Edge { from = t_train   to = t_eval  },
+    Edge { from = t_eval    to = t_serve }
+  ]	
+}
+
+// =====================================
+// ProjectSpec
+// =====================================
+
+ProjectSpec {
+  name       = "vision_defects_infra"
+  data       = defects_ds_v1        // DataAsset via location
+  features   = vision_defects_v1    // FeatureSet via name
+  train      = pytorch              // TrainingSpec via framework
+  eval       = accuracy             // EvaluationSpec via 1er metric
+  registry   = mlflow               // RegistrySpec via kind
+  serving    = gcp              // ServingSpec via kind=API
+  monitoring = ^monitoring           // suppose ID = "monitoring"
+}
+
+// =====================================
+// MetaModel racine
+// =====================================
+
+MetaModelSpec {
+  version       = "0.2.0"
+  schemaVersion = "2025.01"
+  createdBy     = "mlops-team"
+  createdAt     = "2025-10-10"
+  project       = vision_defects_infra
+  plan          = vision_2025Q1
+  infra         = vision_prod_gke
+  workflow      = MlWorkflow {
+  tasks = [
+    MlTask {
+      taskId = w_prepare
+      type   = PREPARE
+      produces = [
+        Artifact { path = "images/prepared" kind = DATASET }
+      ]
+    },
+    MlTask {
+      taskId = w_train
+      type   = TRAIN
+      produces = [
+        Artifact { path = "models/resnet.pt" kind = MODEL }
+      ]
+      consumes = [
+        Artifact { path = "images/prepared" kind = DATASET }
+      ]
+    }
+  ]
+  edges = [
+    Edge { from = w_prepare to = w_train }
+  ]
+}
+
+}

@@ -1,0 +1,26 @@
+# Eclipse workspace and build output
+.metadata/
+**/bin/
+**/target/
+*.class
+
+# Local environment
+.env
+.env.*
+!.env.example
+!.env.sample
+*.pem
+*.key
+*.pfx
+*.p12
+
+# Terraform local state
+**/.terraform/
+*.tfstate
+*.tfstate.*
+*.tfplan
+crash.log
+
+# Operating system files
+Thumbs.db
+.DS_Store

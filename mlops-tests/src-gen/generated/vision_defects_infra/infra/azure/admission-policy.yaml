@@ -1,0 +1,24 @@
+apiVersion: constraints.gatekeeper.sh/v1beta1
+kind: MLOpsNamespacePolicy
+metadata:
+  name: vision_defects_infra-ns-guard
+spec:
+  costEnforcement:
+    maxMonthlyBudgetUsd: 3000
+    requireCostCenterLabel: true
+  dataProtection:
+    piiData: true
+    gdprRestricted: true
+    requireGdprLabelIfTrue: true
+  requiredDeploymentLabels:
+    -
+      key: costCenter
+      message: "Deployment must set label: costCenter"
+    -
+      key: ownerTeam
+      message: "Deployment must set label: ownerTeam"
+    -
+      key: dataClassification
+      message: "Deployment must set label: dataClassification"
+  gpuPolicy:
+    enforceSpotForGpu: true

@@ -1,0 +1,425 @@
+// =====================================
+// Données & Features
+// =====================================
+
+DataAsset {
+  source       = CSV
+  modality     = TABULAR
+  location     = "fraud_ds_v1"      // becomes identifier via NameProvider
+  format       = "csv"
+  schema       = "s3://bucket/schema.avsc"
+  version      = "2025-01"
+  sizeBytes    = 125829120
+  recordCount  = 500000
+  license      = "cc-by-4.0"
+  splits = [
+    SplitSpec {
+      name  = "train"
+      ratio = 0.75
+    },
+    SplitSpec {
+      name  = "valid"
+      ratio = 0.15
+    },
+    SplitSpec {
+      name  = "test"
+      ratio = 0.10
+    }
+  ]
+}
+
+FeatureSet {
+  name = "fraud_features_v2"        // identifier: fraud_features_v2
+}
+
+// =====================================
+// Training avancé
+// =====================================
+
+TrainingSpec {
+  framework   = "pytorch"           // identifier: pytorch
+  algorithm   = "tabnet"
+  hyperparams = [
+    Param { key = "epochs" value = "50" },
+    Param { key = "lr"     value = "0.001" },
+    Param { key = "batch"  value = "512" },
+    Param { key = "seed"   value = "7" }
+  ]
+  image       = "ghcr.io/acme/fraud-train:1.2.3"
+  command     = ["python","-m","train","--cfg","configs/train.yaml"]
+  resources   = [
+    Resource { key = "CPU"    amount = 8 },
+    Resource { key = "memory" amount = 32768 }
+  ]
+  env         = [
+    Param { key = "WANDB_PROJECT"        value = "fraud-detect" },
+    Param { key = "CUDA_VISIBLE_DEVICES" value = "0" }
+  ]
+}
+
+// =====================================
+// Evaluation + thresholds
+// =====================================
+
+EvaluationSpec {
+  metrics = ["auc","f1","precision","recall"]    // identifier: "auc"
+  thresholds = [
+    Threshold {
+      key   = "auc"
+      value = 0.90
+      op    = GE
+    },
+    Threshold {
+      key   = "f1"
+      value = 0.70
+      op    = GE
+    }
+  ]
+}
+
+// =====================================
+// Registry
+// =====================================
+
+RegistrySpec {
+  kind        = "mlflow"            // identifier: "mlflow"
+  registerAs  = "fraud_detector_v2"
+  tags        = ["prod-candidate","tabnet","pytorch"]
+  description = "Fraud detector retrained on 2025-01 dataset"
+  stage       = STAGING
+}
+
+// =====================================
+// Serving API
+// =====================================
+
+ServingSpec aws {
+  kind = API                         // identifier: "svc_api" (NameProvider rule)
+  port = 8080
+  healthPath     = "/healthz"
+  readinessPath  = "/ready"
+  replicas       = 3
+  autoscaling    = true
+  timeoutSeconds = 20
+  resources = [
+    Resource { key = "CPU"    amount = 4 },
+    Resource { key = "memory" amount = 8192 }
+  ]
+  env = [
+    Param { key = "MODEL_NAME" value = "fraud_detector_v2" },
+    Param { key = "LOG_LEVEL"  value = "INFO" }
+  ]
+  routes = ["/predict","/metrics","/healthz"]
+}
+
+// =====================================
+// Monitoring : perf + drift
+// =====================================
+
+MonitoringSpec {
+  perfMetrics = ["p50_latency_ms","p95_latency_ms","throughput_rps"]
+  dataDrift = [
+    DriftMetric {
+      name = "psi_amount"
+      warn = 0.1
+      fail = 0.2
+    },
+    DriftMetric {
+      name = "psi_country"
+      warn = 0.1
+      fail = 0.25
+    }
+  ]
+  modelDrift = [
+    DriftMetric {
+      name = "f1_drop"
+      warn = 0.05
+      fail = 0.10
+    }
+  ]
+  alertChannel = "slack://#mlops-alerts"
+  // NameProvider can expose this whole MonitoringSpec as ID "monitoring"
+}
+
+// =====================================
+// Feature store
+// =====================================
+
+FeatureStoreSpec {
+  kind          = "feast"
+  offlineStore  = "feast_offline_v2"    // identifier: feast_offline_v2
+  onlineStore   = "feast_online_redis"
+}
+
+// =====================================
+// Plan opérationnel (runtime plan)
+// =====================================
+
+OperationalPlan {
+  rationale    = "batch_2025Q1"        // identifier: batch_2025Q1
+  compute      = GPU_MULTI
+  packaging    = CONTAINER
+  trainMode    = SCRIPT
+  servingMode  = API
+  entryCmd     = "python -m pipelines.run"
+  resources    = [
+    Resource { key = "gpu"    amount = 2 },
+    Resource { key = "CPU"    amount = 8 },
+    Resource { key = "memory" amount = 32768 }
+  ]
+  featureStore = feast_offline_v2
+  secrets      = [
+    SecretRef { name = "mlops-registry-creds" },
+    SecretRef { name = "slack-webhook" }
+  ]
+  ciTarget     = GITLAB
+
+  baseImage   = "nvidia/cuda:12.1.0-runtime-ubuntu22.04"
+  dockerfile  = "docker/Dockerfile"
+  extraDeps   = ["torch==2.4.0","pandas==2.2.2","feast==0.41.1"]
+
+  retries     = 2
+  cache       = true
+  queue       = "gpu-high"
+}
+
+// =====================================
+// InfraPlan (cloud / cluster / security / cost / compliance)
+// =====================================
+
+InfraPlan {
+  provider     = AWS                 // CloudProvider (consistent with ALB, CloudWatch, Secrets Manager)
+  accountId    = "123456789012"
+  region       = "eu-east-1"
+  orchestrator = KUBERNETES          // Orchestrator
+  clusterName  = "fraud_prod_eks"    // identifier: fraud_prod_eks
+  namespace    = "fraud-serving"
+
+  network = NetworkSpec {
+    exposure      = PUBLIC          // ExposureKind
+    domain        = "fraud.api.company.com"
+    tls           = true
+    ingressClass  = "alb"
+    vpcId         = "vpc-0abc123def456"
+    subnets       = ["subnet-aaa111","subnet-bbb222","subnet-ccc333"]
+  }
+
+  storage = [
+    StorageTarget {
+      kind       = OBJECT_STORE
+      purpose    = "datasets"
+      name       = "s3://fraud-raw-data"
+      retention  = "90d"
+      encrypted  = true
+    },
+    StorageTarget {
+      kind       = OBJECT_STORE
+      purpose    = "models"
+      name       = "s3://fraud-model-registry"
+      retention  = "infinite"
+      encrypted  = true
+    },
+    StorageTarget {
+      kind       = FILESYSTEM
+      purpose    = "logs"
+      name       = "efs-fraud-logs"
+      retention  = "30d"
+      encrypted  = false
+    }
+  ]
+
+  secrets = SecretBackendSpec {
+    kind       = AWS_SECRETS_MANAGER
+    pathPrefix = "mlops/prod/fraud/"
+  }
+
+  observability = ObservabilitySpec {
+    stack           = CLOUDWATCH      // ObservabilityStack
+    logsEnabled     = true
+    metricsEnabled  = true
+    tracesEnabled   = false
+  }
+
+  spotAllowed      = true
+  maxMonthlyBudget = 5000
+  piiData          = true
+  gdprRestricted   = true
+}
+
+// =====================================
+// Projet logique (links all specs)
+// =====================================
+
+ProjectSpec {
+  name       = "fraud_detector_infra"   // identifier: fraud_detector_infra
+  data       = fraud_ds_v1             // DataAsset via location
+  features   = fraud_features_v2       // FeatureSet via name
+  train      = pytorch                 // TrainingSpec via framework
+  eval       = auc                     // EvaluationSpec via "auc"
+  registry   = mlflow                  // RegistrySpec via kind
+  serving    = aws                 // ServingSpec via kind mapping
+  monitoring = ^monitoring              // MonitoringSpec via NameProvider "monitoring"
+}
+
+// =====================================
+// Pipeline / Workflow
+// =====================================
+
+MlWorkflow {
+  tasks = [
+    MlTask {
+      taskId = t_prepare
+      type   = PREPARE
+      params = [
+        Param { key = "normalize"        value = "true" },
+        Param { key = "impute_strategy"  value = "median" },
+        Param { key = "dedup"            value = "true" }
+      ]
+      produces = [
+        Artifact { path = "data/processed.parquet" kind = DATASET },
+        Artifact { path = "logs/prepare.log"       kind = LOG }
+      ]
+    },
+    MlTask {
+      taskId = t_train
+      type   = TRAIN
+      params = [
+        Param { key = "epochs" value = "50" },
+        Param { key = "lr"     value = "0.001" },
+        Param { key = "batch"  value = "512" },
+        Param { key = "seed"   value = "7" }
+      ]
+      produces = [
+        Artifact { path = "models/fraud.pt"     kind = MODEL },
+        Artifact { path = "metrics/train.json"  kind = METRICS },
+        Artifact { path = "logs/train.log"      kind = LOG }
+      ]
+      consumes = [
+        Artifact { path = "data/processed.parquet" kind = DATASET }
+      ]
+    },
+    MlTask {
+      taskId = t_eval
+      type   = EVAL
+      params = [
+        Param { key = "metrics"          value = "auc,f1,precision,recall" },
+        Param { key = "threshold_rules"  value = "auc>=0.90;f1>=0.70" }
+      ]
+      produces = [
+        Artifact { path = "metrics/eval.json" kind = METRICS },
+        Artifact { path = "logs/eval.log"     kind = LOG }
+      ]
+      consumes = [
+        Artifact { path = "models/fraud.pt" kind = MODEL }
+      ]
+    },
+    MlTask {
+      taskId = t_package
+      type   = PACKAGE
+      params = [
+        Param { key = "format" value = "image" },
+        Param { key = "base"   value = "nvidia/cuda:12.1.0-runtime-ubuntu22.04" }
+      ]
+      produces = [
+        Artifact { path = "images/serve.img" kind = IMAGE },
+        Artifact { path = "logs/package.log" kind = LOG }
+      ]
+      consumes = [
+        Artifact { path = "models/fraud.pt" kind = MODEL }
+      ]
+    },
+    MlTask {
+      taskId = t_register
+      type   = REGISTER
+      params = [
+        Param { key = "registry"    value = "mlflow" },
+        Param { key = "registerAs"  value = "fraud_detector_v2" },
+        Param { key = "stage"       value = "STAGING" }
+      ]
+      produces = [
+        Artifact { path = "metrics/register.json" kind = METRICS },
+        Artifact { path = "logs/register.log"     kind = LOG }
+      ]
+      consumes = [
+        Artifact { path = "images/serve.img" kind = IMAGE }
+      ]
+    },
+    MlTask {
+      taskId = t_serve
+      type   = SERVE
+      params = [
+        Param { key = "mode"      value = "API" },
+        Param { key = "port"      value = "8080" },
+        Param { key = "replicas"  value = "3" },
+        Param { key = "routes"    value = "/predict,/metrics,/healthz" }
+      ]
+      produces = [
+        Artifact { path = "logs/serve.log" kind = LOG }
+      ]
+      consumes = [
+        Artifact { path = "images/serve.img" kind = IMAGE }
+      ]
+    },
+    MlTask {
+      taskId = t_monitor
+      type   = MONITOR
+      params = [
+        Param { key = "perf"        value = "p50_latency_ms,p95_latency_ms,throughput_rps" },
+        Param { key = "data_drift"  value = "psi_amount<=0.2;psi_country<=0.25" },
+        Param { key = "model_drift" value = "f1_drop<=0.10" },
+        Param { key = "alert"       value = "slack://#mlops-alerts" }
+      ]
+      produces = [
+        Artifact { path = "metrics/monitor.json" kind = METRICS },
+        Artifact { path = "logs/monitor.log"     kind = LOG }
+      ]
+      consumes = [
+        Artifact { path = "metrics/eval.json" kind = METRICS }
+      ]
+    }
+  ]
+
+  edges = [
+    Edge { from = t_prepare  to = t_train    },
+    Edge { from = t_train    to = t_eval     },
+    Edge { from = t_eval     to = t_package  },
+    Edge { from = t_package  to = t_register },
+    Edge { from = t_register to = t_serve    },
+    Edge { from = t_serve    to = t_monitor  }
+  ]
+}
+
+// =====================================
+// Meta racine
+// =====================================
+
+MetaModelSpec {
+  version       = "0.2.0"
+  schemaVersion = "2025.01"
+  createdBy     = "mlops-team"
+  createdAt     = "2025-10-09"
+
+  project  = fraud_detector_infra   // ProjectSpec via 'name'
+  plan     = batch_2025Q1           // OperationalPlan via 'rationale'
+  infra    = fraud_prod_eks         // InfraPlan via 'clusterName'
+  workflow = MlWorkflow {
+    tasks = [
+      MlTask {
+        taskId = w_prepare
+        type   = PREPARE
+        params = [ Param { key = "normalize" value = "true" } ]
+        produces = [ Artifact { path = "data/processed.parquet" kind = DATASET } ]
+      },
+      MlTask {
+        taskId = w_train
+        type   = TRAIN
+        params = [ Param { key = "epochs" value = "50" } ]
+        produces = [ Artifact { path = "models/fraud.pt" kind = MODEL } ]
+        consumes = [ Artifact { path = "data/processed.parquet" kind = DATASET } ]
+      }
+    ]
+    edges = [
+      Edge { from = w_prepare to = w_train }
+    ]
+  }
+}

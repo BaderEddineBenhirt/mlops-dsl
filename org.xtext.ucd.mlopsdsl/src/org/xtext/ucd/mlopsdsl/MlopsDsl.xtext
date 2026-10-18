@@ -1,0 +1,553 @@
+grammar org.xtext.ucd.mlopsdsl.MlopsDsl with org.eclipse.xtext.common.Terminals
+
+hidden(WS, ML_COMMENT, SL_COMMENT)
+
+import "http://www.eclipse.org/emf/2002/Ecore" as ecore
+import "http://ucd.ac.ma/mlops" as mlops
+generate mlopsdsl "http://ucd.ac.ma/mlopsdsl"
+
+// =====================================
+// Racine
+// =====================================
+Script:
+    elements+=Model+
+;
+EnvironmentSpec returns mlops::EnvironmentSpec:
+  'EnvironmentSpec' '{'
+    'name' '=' name=STRING
+  '}'
+;
+
+TerraformBackendSpec returns mlops::TerraformBackendSpec:
+  'TerraformBackendSpec' '{'
+    'kind' '=' kind=STRING
+    ('bucket' '=' bucket=STRING)?
+    'key' '=' key=STRING
+    ('resourceGroup' '=' resourceGroup=STRING)?
+    ('storageAccount' '=' storageAccount=STRING)?
+    ('container' '=' container=STRING)?
+  '}'
+;
+
+NodePoolSpec returns mlops::NodePoolSpec:
+  'NodePoolSpec' '{'
+    'name' '=' name=STRING
+    'machineType' '=' machineType=STRING
+    'minNodes' '=' minNodes=INT
+    'desiredNodes' '=' desiredNodes=INT
+    'maxNodes' '=' maxNodes=INT
+    ('gpu' '=' gpu=BooleanValue)?
+    ('spot' '=' spot=BooleanValue)?
+  '}'
+;
+
+BooleanValue returns ecore::EBoolean:
+  'true' | 'false'
+;
+
+RuntimeSpec returns mlops::RuntimeSpec:
+  'RuntimeSpec' '{'
+    'nodePools' '=' '[' nodePools+=NodePoolSpec (',' nodePools+=NodePoolSpec)* ']'
+  '}'
+;
+Model returns ecore::EObject:
+      MetaModelSpec
+    | ProjectSpec
+    | DataAsset
+    | FeatureSet
+    | TrainingSpec
+    | EvaluationSpec
+    | RegistrySpec
+    | ServingSpec
+    | MonitoringSpec
+    | ExperimentTrackingSpec
+    | VersioningSpec
+    | ModelRegistrySpec
+    | DecisionPolicy
+    | RetrainingPolicy
+    | GovernanceSpec
+    | CiCdCtSpec
+    | FeatureStoreSpec
+    | OperationalPlan
+    | InfraPlan
+    | MlWorkflow
+    | EnvironmentSpec
+    | TerraformBackendSpec
+    | RuntimeSpec
+    | NodePoolSpec
+;
+
+// =====================================
+// MetaModelSpec (includes infra)
+// =====================================
+MetaModelSpec returns mlops::MetaModelSpec:
+  'MetaModelSpec' '{'
+    'version'        '=' version=STRING
+    ('schemaVersion' '=' schemaVersion=STRING)?
+    'createdBy'      '=' createdBy=STRING
+    'createdAt'      '=' createdAt=STRING
+    'project'        '=' project=[mlops::ProjectSpec|ID]
+    'plan'           '=' plan=[mlops::OperationalPlan|ID]
+    'infra'          '=' infra=[mlops::InfraPlan|ID]
+    'workflow'       '=' workflow=MlWorkflow
+  '}'
+;
+
+// =====================================
+// SPECIFICATION (réfs non-contained)
+// =====================================
+ProjectSpec returns mlops::ProjectSpec:
+  'ProjectSpec' '{'
+    'name'       '=' name=STRING
+    'data'       '=' data=[mlops::DataAsset|ID]
+    'features'   '=' features=[mlops::FeatureSet|ID]
+    'train'      '=' train=[mlops::TrainingSpec|ID]
+    'eval'       '=' eval=[mlops::EvaluationSpec|ID]
+    'registry'   '=' registry=[mlops::RegistrySpec|ID]
+    'serving'    '=' serving=[mlops::ServingSpec|ID]
+    'monitoring' '=' monitoring=[mlops::MonitoringSpec|ID]
+
+    'tracking'         '=' tracking=[mlops::ExperimentTrackingSpec|ID]
+    'versioning'       '=' versioning=[mlops::VersioningSpec|ID]
+    'modelRegistry'    '=' modelRegistry=[mlops::ModelRegistrySpec|ID]
+    'decisionPolicy'   '=' decisionPolicy=[mlops::DecisionPolicy|ID]
+    'retrainingPolicy' '=' retrainingPolicy=[mlops::RetrainingPolicy|ID]
+    'governance'       '=' governance=[mlops::GovernanceSpec|ID]
+    'cicdct'           '=' cicdct=[mlops::CiCdCtSpec|ID]
+  '}'
+;
+
+// ---------- Data & Feature ----------
+DataAsset returns mlops::DataAsset:
+  'DataAsset' name=ID '{'
+    'source'       '=' source=DataSource
+    'modality'     '=' modality=DataModality
+    'location'     '=' location=STRING
+    ('format'      '=' format=STRING)?
+    ('schema'      '=' schema=STRING)?
+    ('version'     '=' version=STRING)?
+    ('sizeBytes'   '=' sizeBytes=SignedLong)?
+    ('recordCount' '=' recordCount=SignedLong)?
+    ('license'     '=' license=STRING)?
+    ('privacy'     '=' privacy=STRING)?
+    ('hash'        '=' hash=STRING)?
+    ('splits'      '=' '[' splits+=SplitSpec (',' splits+=SplitSpec)* ']')?
+    ('annotations' '=' '[' annotations+=AnnotationSpec (',' annotations+=AnnotationSpec)* ']')?
+  '}'
+;
+
+SplitSpec returns mlops::SplitSpec:
+  'SplitSpec' '{'
+    'name'  '=' name=STRING
+    'ratio' '=' ratio=FLOAT
+  '}'
+;
+
+AnnotationSpec returns mlops::AnnotationSpec:
+  'AnnotationSpec' '{'
+    'labelSet'  '=' labelSet=STRING
+    'guideline' '=' guideline=STRING
+  '}'
+;
+
+FeatureSet returns mlops::FeatureSet:
+  'FeatureSet' name=ID '{'
+    'name' '=' name=STRING
+  '}'
+;
+
+// ---------- Training enrichi ----------
+TrainingSpec returns mlops::TrainingSpec:
+  'TrainingSpec' name=ID '{'
+    'framework'   '=' framework=STRING
+    ('algorithm'  '=' algorithm=STRING)?
+    ('hyperparams' '=' '[' hyperparams+=Param (',' hyperparams+=Param)* ']')?
+    ('image'      '=' image=STRING)?
+    ('command'    '=' '[' command+=STRING (',' command+=STRING)* ']')?
+    ('resources'  '=' '[' resources+=Resource (',' resources+=Resource)* ']')?
+    ('env'        '=' '[' env+=Param (',' env+=Param)* ']')?
+  '}'
+;
+
+// ---------- Evaluation ----------
+Threshold returns mlops::Threshold:
+  'Threshold' '{'
+    'key'   '=' key=STRING
+    'value' '=' value=FLOAT
+    ('op'   '=' operator=CompOp)?
+  '}'
+;
+
+EvaluationSpec returns mlops::EvaluationSpec:
+  'EvaluationSpec' name=ID '{'
+    'metrics'     '=' '[' metrics+=STRING (',' metrics+=STRING)* ']'
+    ('thresholds' '=' '[' thresholds+=Threshold (',' thresholds+=Threshold)* ']')?
+  '}'
+;
+
+// ---------- Registry enrichi ----------
+RegistrySpec returns mlops::RegistrySpec:
+  'RegistrySpec' name=ID '{'
+    'kind'        '=' kind=STRING
+    ('registerAs' '=' registerAs=STRING)?
+    ('tags'       '=' '[' tags+=STRING (',' tags+=STRING)* ']')?
+    ('description' '=' description=STRING)?
+    ('stage'      '=' stage=RegistryStage)?
+  '}'
+;
+
+// ---------- Serving avancé ----------
+ServingSpec returns mlops::ServingSpec:
+  'ServingSpec' name=ID  '{'
+    'kind' '=' kind=ServingKind
+    ('port' '=' port=INT)?
+    ('healthPath' '=' healthPath=STRING)?
+    ('readinessPath' '=' readinessPath=STRING)?
+    ('replicas' '=' replicas=INT)?
+    ('autoscaling' '=' autoscaling?=('true'|'false'))?
+    ('timeoutSeconds' '=' timeoutSeconds=INT)?
+    ('resources' '=' '[' resources+=Resource (',' resources+=Resource)* ']')?
+    ('env'       '=' '[' env+=Param (',' env+=Param)* ']')?
+    ('routes'    '=' '[' routes+=STRING (',' routes+=STRING)* ']')?
+  '}'
+;
+
+// =====================================
+// MONITORING
+// =====================================
+DriftMetric returns mlops::DriftMetric:
+  'DriftMetric' '{'
+    'name' '=' name=STRING
+    ('warn' '=' warn=FLOAT)?
+    ('fail' '=' fail=FLOAT)?
+  '}'
+;
+
+MonitoringSpec returns mlops::MonitoringSpec:
+  'MonitoringSpec' name=ID '{'
+    ('perfMetrics'  '=' '[' perfMetrics+=STRING (',' perfMetrics+=STRING)* ']')?
+    ('dataDrift'    '=' '[' dataDrift+=DriftMetric (',' dataDrift+=DriftMetric)* ']')?
+    ('modelDrift'   '=' '[' modelDrift+=DriftMetric (',' modelDrift+=DriftMetric)* ']')?
+    ('alertChannel' '=' alertChannel=STRING)?
+  '}'
+;
+ExperimentTrackingSpec returns mlops::ExperimentTrackingSpec:
+  'ExperimentTrackingSpec' name=ID '{'
+    'backend' '=' backend=TrackingBackend
+    'experimentName' '=' experimentName=STRING
+    ('trackingUri' '=' trackingUri=STRING)?
+    ('logParams' '=' logParams=BooleanValue)?
+    ('logMetrics' '=' logMetrics=BooleanValue)?
+    ('logArtifacts' '=' logArtifacts=BooleanValue)?
+    ('logModel' '=' logModel=BooleanValue)?
+  '}'
+;
+
+VersioningSpec returns mlops::VersioningSpec:
+  'VersioningSpec' name=ID '{'
+    'backend' '=' backend=VersioningBackend
+    ('versionData' '=' versionData=BooleanValue)?
+    ('versionCode' '=' versionCode=BooleanValue)?
+    ('versionModels' '=' versionModels=BooleanValue)?
+    ('versionParams' '=' versionParams=BooleanValue)?
+    ('remoteUri' '=' remoteUri=STRING)?
+  '}'
+;
+
+ModelRegistrySpec returns mlops::ModelRegistrySpec:
+  'ModelRegistrySpec' name=ID '{'
+    'backend' '=' backend=RegistryBackend
+    'modelName' '=' modelName=STRING
+    ('enableStaging' '=' enableStaging=BooleanValue)?
+    ('enableProduction' '=' enableProduction=BooleanValue)?
+    ('rollbackEnabled' '=' rollbackEnabled=BooleanValue)?
+    ('approvalMode' '=' approvalMode=STRING)?
+  '}'
+;
+
+DecisionCriterion returns mlops::DecisionCriterion:
+  'DecisionCriterion' '{'
+    'name' '=' name=STRING
+    'weight' '=' weight=FLOAT
+    ('minValue' '=' minValue=FLOAT)?
+    ('maxValue' '=' maxValue=FLOAT)?
+    ('required' '=' required=BooleanValue)?
+  '}'
+;
+
+DecisionPolicy returns mlops::DecisionPolicy:
+  'DecisionPolicy' name=ID '{'
+    ('autoPromote' '=' autoPromote=BooleanValue)?
+    ('minAccuracy' '=' minAccuracy=FLOAT)?
+    ('minF1' '=' minF1=FLOAT)?
+    ('maxLatencyMs' '=' maxLatencyMs=FLOAT)?
+    ('maxCost' '=' maxCost=FLOAT)?
+    ('maxDrift' '=' maxDrift=FLOAT)?
+    ('minTraceabilityScore' '=' minTraceabilityScore=FLOAT)?
+    'criteria' '=' '[' criteria+=DecisionCriterion (',' criteria+=DecisionCriterion)* ']'
+  '}'
+;
+
+
+
+RetrainingPolicy returns mlops::RetrainingPolicy:
+  'RetrainingPolicy' name=ID '{'
+    'strategy' '=' strategy=RetrainingStrategy
+    'driftThreshold' '=' driftThreshold=FLOAT
+    ('performanceDropThreshold' '=' performanceDropThreshold=FLOAT)?
+    ('schedule' '=' schedule=STRING)?
+    ('autoTrigger' '=' autoTrigger=BooleanValue)?
+    ('retrainingQueue' '=' retrainingQueue=STRING)?
+  '}'
+;
+
+GovernanceSpec returns mlops::GovernanceSpec:
+  'GovernanceSpec' name=ID '{'
+    ('traceabilityRequired' '=' traceabilityRequired=BooleanValue)?
+    ('explainDecision' '=' explainDecision=BooleanValue)?
+    ('auditTrail' '=' auditTrail=BooleanValue)?
+    ('riskReport' '=' riskReport=BooleanValue)?
+    ('complianceFramework' '=' complianceFramework=STRING)?
+  '}'
+;
+
+PipelineStage returns mlops::PipelineStage:
+  'PipelineStage' '{'
+    'kind' '=' kind=PipelineStageKind
+    'name' '=' name=STRING
+    ('required' '=' required=BooleanValue)?
+    ('tool' '=' tool=STRING)?
+    ('outputArtifact' '=' outputArtifact=STRING)?
+  '}'
+;
+
+CiCdCtSpec returns mlops::CiCdCtSpec:
+  'CiCdCtSpec' name=ID '{'
+    'target' '=' target=CITarget
+    'pipelineFile' '=' pipelineFile=STRING
+    ('enableCI' '=' enableCI=BooleanValue)?
+    ('enableCD' '=' enableCD=BooleanValue)?
+    ('enableCT' '=' enableCT=BooleanValue)?
+    'stages' '=' '[' stages+=PipelineStage (',' stages+=PipelineStage)* ']'
+  '}'
+;
+
+// =====================================
+// PLAN (ops/runtime)
+// =====================================
+Resource returns mlops::Resource:
+  'Resource' '{'
+    'key'    '=' key=STRING
+    'amount' '=' amount=INT
+  '}'
+;
+
+FeatureStoreSpec returns mlops::FeatureStoreSpec:
+  'FeatureStoreSpec' name=ID '{'
+    'kind'          '=' kind=STRING
+    'offlineStore'  '=' offlineStore=STRING
+    'onlineStore'   '=' onlineStore=STRING
+  '}'
+;
+
+SecretRef returns mlops::SecretRef:
+  'SecretRef' '{'
+    'name' '=' name=STRING
+  '}'
+;
+
+OperationalPlan returns mlops::OperationalPlan:
+  'OperationalPlan' name=ID '{'
+    'rationale'    '=' rationale=STRING
+    'compute'      '=' compute=ComputeProfile
+    'packaging'    '=' packaging=Packaging
+    'trainMode'    '=' trainMode=TrainMode
+    'servingMode'  '=' servingMode=ServingKind
+    'entryCmd'     '=' entryCmd=STRING
+    ('resources'    '=' '[' resources+=Resource (',' resources+=Resource)* ']')?
+    ('featureStore' '=' featureStore=[mlops::FeatureStoreSpec|ID])?
+    ('secrets'      '=' '[' secrets+=SecretRef (',' secrets+=SecretRef)* ']')?
+    'ciTarget'      '=' ciTarget=CITarget
+    ('baseImage'  '=' baseImage=STRING)?
+    ('dockerfile' '=' dockerfile=STRING)?
+    ('extraDeps'  '=' '[' extraDeps+=STRING (',' extraDeps+=STRING)* ']')?
+    ('retries' '=' retries=INT)?
+    ('cache'   '=' cache?=('true'|'false'))?
+    ('queue'   '=' queue=STRING)?
+  '}'
+;
+
+// =====================================
+// INFRA
+// =====================================
+
+// network config
+NetworkSpec returns mlops::NetworkSpec:
+  'NetworkSpec' '{'
+    'exposure' '=' exposure=ExposureKind
+    ('domain' '=' domain=STRING)?
+    ('tls' '=' tls?=('true'|'false'))?
+    ('ingressClass' '=' ingressClass=STRING)?
+    ('vpcId' '=' vpcId=STRING)?
+    ('cidr' '=' cidr=STRING)?
+    ('subnets' '=' '[' subnets+=STRING (',' subnets+=STRING)* ']')?
+  '}'
+;
+// storage targets
+StorageTarget returns mlops::StorageTarget:
+  'StorageTarget' '{'
+    'kind'       '=' kind=StorageClass
+    'purpose'    '=' purpose=STRING
+    'name'       '=' name=STRING
+    ('retention' '=' retention=STRING)?
+    ('encrypted' '=' encrypted?=('true'|'false'))?
+  '}'
+;
+
+// secret backend
+SecretBackendSpec returns mlops::SecretBackendSpec:
+  'SecretBackendSpec' '{'
+    'kind'       '=' kind=SecretBackend
+    'pathPrefix' '=' pathPrefix=STRING
+  '}'
+;
+
+// observability
+ObservabilitySpec returns mlops::ObservabilitySpec:
+  'ObservabilitySpec' '{'
+    'stack'          '=' stack=ObservabilityStack
+    ('logsEnabled'    '=' logsEnabled?=('true'|'false'))?
+    ('metricsEnabled' '=' metricsEnabled?=('true'|'false'))?
+    ('tracesEnabled'  '=' tracesEnabled?=('true'|'false'))?
+  '}'
+;
+
+// infra plan
+InfraPlan returns mlops::InfraPlan:
+  'InfraPlan' name=ID '{'
+    'provider' '=' provider=CloudProvider
+    ('accountId' '=' accountId=STRING)?
+    ('region' '=' region=STRING)?
+    'orchestrator' '=' orchestrator=Orchestrator
+    'clusterName' '=' clusterName=STRING
+    'namespace' '=' namespace=STRING
+
+    'environment' '=' environment=EnvironmentSpec
+    'backend' '=' backend=TerraformBackendSpec
+    'runtime' '=' runtime=RuntimeSpec
+
+    'network' '=' network=NetworkSpec
+    'storage' '=' '[' storage+=StorageTarget (',' storage+=StorageTarget)* ']'
+    'secrets' '=' secrets=SecretBackendSpec
+    'observability' '=' observability=ObservabilitySpec
+
+    ('spotAllowed' '=' spotAllowed?=('true'|'false'))?
+    ('maxMonthlyBudget' '=' maxMonthlyBudget=INT)?
+    ('piiData' '=' piiData?=('true'|'false'))?
+    ('gdprRestricted' '=' gdprRestricted?=('true'|'false'))?
+  '}'
+;
+// =====================================
+// WORKFLOW
+// =====================================
+Param returns mlops::Param:
+  'Param' '{'
+    'key'   '=' key=STRING
+    'value' '=' value=STRING
+  '}'
+;
+
+Artifact returns mlops::Artifact:
+  'Artifact' '{'
+    'path' '=' path=STRING
+    'kind' '=' kind=ArtifactKind
+  '}'
+;
+
+MlTask returns mlops::MlTask:
+  'MlTask' '{'
+    'taskId' '=' taskId=ID
+    'type'   '=' type=TaskType
+    ('params'   '=' '[' params+=Param (',' params+=Param)* ']')?
+    ('produces' '=' '[' produces+=Artifact (',' produces+=Artifact)* ']')?
+    ('consumes' '=' '[' consumes+=Artifact (',' consumes+=Artifact)* ']')?
+  '}'
+;
+
+Edge returns mlops::Edge:
+  'Edge' '{'
+    'from' '=' from=[mlops::MlTask|ID]
+    'to'   '=' to=[mlops::MlTask|ID]
+  '}'
+;
+
+MlWorkflow returns mlops::MlWorkflow:
+  'MlWorkflow' '{'
+    'tasks' '=' '[' tasks+=MlTask (',' tasks+=MlTask)* ']'
+    'edges' '=' '[' edges+=Edge  (',' edges+=Edge)*  ']'
+  '}'
+;
+
+// =====================================
+// ENUMS
+// =====================================
+enum ComputeProfile      returns mlops::ComputeProfile      : CPU_SMALL | GPU_SINGLE | GPU_MULTI ;
+enum Packaging           returns mlops::Packaging           : NONE | WHEEL | CONTAINER ;
+enum ServingKind         returns mlops::ServingKind         : NONE | API | BATCH | APP ;
+enum TaskType returns mlops::TaskType:
+    PREPARE | TRAIN | EVAL | PACKAGE | REGISTER | SERVE | MONITOR
+  | VERSION | TRACK | DECIDE | DEPLOY | RETRAIN | GOVERN
+;
+enum TrainMode           returns mlops::TrainMode           : NOTEBOOK | SCRIPT ;
+enum CITarget            returns mlops::CITarget            : GITHUB | GITLAB | AZURE | JENKINS ;
+enum CompOp              returns mlops::CompOp              : GT | GE | LT | LE | EQ ;
+enum RegistryStage       returns mlops::RegistryStage       : STAGING | PROD | ARCHIVED ;
+
+enum CloudProvider       returns mlops::CloudProvider       : AWS | GCP | AZURE | ON_PREM | VPS ;
+enum Orchestrator        returns mlops::Orchestrator        : KUBERNETES | ECS | VM_POOL | SERVERLESS_FN ;
+enum StorageClass        returns mlops::StorageClass        : OBJECT_STORE | BLOCK | FILESYSTEM ;
+enum ExposureKind        returns mlops::ExposureKind        : PRIVATE | PUBLIC | INTERNAL_ONLY ;
+enum SecretBackend       returns mlops::SecretBackend       : AWS_SECRETS_MANAGER | GCP_SECRET_MANAGER | VAULT | K8S_SECRET | FILE_ENV ;
+enum ObservabilityStack  returns mlops::ObservabilityStack  : PROMETHEUS | CLOUDWATCH | STACKDRIVER | DATADOG | ELK ;
+
+enum DataSource          returns mlops::DataSource          :
+    CSV | PARQUET | JSONL | IMAGE_FOLDER | VIDEO_FOLDER | AUDIO_FOLDER | TEXT_CORPUS |
+    HUGGINGFACE_DATASET | S3 | GCS | AZURE_BLOB | BIGQUERY | SQL | NOSQL | KAFKA | REST | GRAPH ;
+
+enum DataModality        returns mlops::DataModality        : TABULAR | IMAGE | AUDIO | VIDEO | TEXT | MULTIMODAL ;
+enum ArtifactKind        returns mlops::ArtifactKind        : DATASET | MODEL | METRICS | IMAGE | WHEEL | LOG | OTHER ;
+enum PipelineStageKind returns mlops::PipelineStageKind:
+    INGEST | VALIDATE_DATA | VERSION_DATA | TRAIN | TRACK_EXPERIMENT
+  | EVALUATE | REGISTER_MODEL | DECISION_GATE | DEPLOY | MONITOR | RETRAIN
+;
+
+enum DecisionAction returns mlops::DecisionAction:
+    REJECT | ACCEPT | PROMOTE_STAGING | PROMOTE_PROD | RETRAIN | KEEP_CURRENT
+;
+
+enum RetrainingStrategy returns mlops::RetrainingStrategy:
+    MANUAL | SCHEDULED | DRIFT_BASED | PERFORMANCE_BASED | HYBRID
+;
+
+enum TrackingBackend returns mlops::TrackingBackend:
+    MLFLOW | WANDB | TENSORBOARD | CUSTOM
+;
+
+enum VersioningBackend returns mlops::VersioningBackend:
+    DVC | GIT_LFS | LAKEFS | CUSTOM
+;
+
+enum RegistryBackend returns mlops::RegistryBackend:
+    MLFLOW_REGISTRY | AZURE_ML | SAGEMAKER | VERTEX_AI | CUSTOM
+;
+
+// =====================================
+// TERMINAUX
+// =====================================
+terminal FLOAT returns ecore::EFloat:
+    ('+'|'-')? (INT '.' INT? | '.' INT) (('e'|'E') ('+'|'-')? INT)?
+;
+
+SignedLong returns ecore::ELong:
+    ('+'|'-')? INT
+;

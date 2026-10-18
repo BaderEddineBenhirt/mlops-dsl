@@ -1,0 +1,31 @@
+version: "0.3.0"
+schemaVersion: "2026.05"
+createdBy: "mlops-team"
+createdAt: "2026-05-11"
+project:
+  name: "vision_defects_s03_public_without_tls_v2"
+  data:
+    source: IMAGE_FOLDER
+    modality: IMAGE
+    location: "defects_ds_v1"
+    version: "2025-01"
+    privacy: "non_pii"
+mlopsLifecycle:
+  tracking: MLFLOW
+  versioning: DVC
+  registry: AZURE_ML
+  decisionGate: enabled
+  retraining: HYBRID
+operationalPlan:
+  ciTarget: AZURE
+  compute: GPU_SINGLE
+  packaging: CONTAINER
+  trainMode: SCRIPT
+  servingMode: API
+infra:
+  provider: AZURE
+  region: "westeurope"
+  orchestrator: KUBERNETES
+  clusterName: "vision_prod_aks"
+  namespace: "vision-serving"
+  complianceLevel: "STRICT"

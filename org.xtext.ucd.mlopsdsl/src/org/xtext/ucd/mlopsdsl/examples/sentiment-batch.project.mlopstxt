@@ -1,0 +1,35 @@
+ProjectSpec {
+  name = "sentiment-batch"
+
+  data = DataAsset {
+    source   = JSONL
+    modality = TEXT
+    location = "s3://datasets/reviews/"
+    format   = "jsonl"
+    schema   = "text:string,label:int"
+    version  = "2025-09-01"
+    recordCount = 1500000
+    splits = [
+      SplitSpec { name = "train" ratio = 0.9 },
+      SplitSpec { name = "test"  ratio = 0.1 }
+    ]
+  }
+
+  features = FeatureSet { name = "bert-base-uncased-tokens" }
+
+  train = TrainingSpec { framework = "transformers==4.44" algorithm = "bert-finetune" }
+
+  eval = EvaluationSpec {
+    metrics = [ "accuracy", "f1_binary" ]
+    thresholds = [ Threshold { key = "f1_binary" value = 0.88 } ]
+  }
+
+  registry = RegistrySpec { kind = "mlflow" registerAs = "sentiment-bert" }
+
+  serving = ServingSpec { kind = BATCH }
+
+  monitoring = MonitoringSpec {
+    perfMetrics = [ "throughput_docs_s", "errors" ]
+    dataDrift   = [ DriftMetric { name = "vocab_ood_rate" warn = 0.1 fail = 0.2 } ]
+  }
+}

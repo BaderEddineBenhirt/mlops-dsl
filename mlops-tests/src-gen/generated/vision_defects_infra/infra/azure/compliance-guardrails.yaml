@@ -1,0 +1,42 @@
+kind: compliance-guardrails
+metadata:
+  project: vision_defects_infra
+  cloudProvider: AZURE
+  region: westeurope
+  complianceLevel: STRICT
+cost:
+  maxMonthlyBudgetUsd: 3000
+  costCenter: vision_defects_infra
+  enforceSpotForGpu: true
+  alertAtBudgetFraction: 0.8
+  requireCostCenterLabelOnNamespace: true
+  requireCostCenterLabelOnDeployment: true
+dataProtection:
+  piiData: true
+  gdprRestricted: true
+  requireEncryptionAtRest: true
+  requireAccessLogging: true
+  maskSensitiveFieldsInLogs: true
+  restrictPublicExposureForPiiServices: true
+  requiresDpia: true
+dataResidency:
+  gdprRestricted: true
+  residencyMode: EU_ONLY
+  allowedZones:
+    - EU
+    - EEA
+  allowCrossRegionReplication: false
+runtimeSecurity:
+  requireNetworkPolicyForNamespacesWithPii: true
+  requireTlsForIngress: true
+  disallowPublicLoadBalancersForPii: true
+  requireMutualTlsForInternalApis: true
+admissionPolicyHints:
+  requiredDeploymentLabels:
+    - costCenter
+    - ownerTeam
+    - dataClassification
+  rejectIfNamespaceMissingLabels: true
+  blockIfPublicIngressWithoutTls: true
+  blockIfWorkloadWithPiiWithoutNetworkPolicy: true
+  blockIfMissingDataClassificationLabelForPii: true

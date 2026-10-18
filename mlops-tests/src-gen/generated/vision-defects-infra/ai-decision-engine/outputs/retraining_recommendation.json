@@ -1,0 +1,13 @@
+{
+  "retraining_recommendation": {
+    "required": false,
+    "action": "no_retraining_required",
+    "strategy": "HYBRID",
+    "retraining_queue": "gpu-training",
+    "reason": {
+      "drift_score": 0.0,
+      "drift_threshold": 0.15,
+      "decision_gate": "promote"
+    }
+  }
+}

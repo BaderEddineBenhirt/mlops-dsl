@@ -1,0 +1,27 @@
+kind: serving-api
+imageRef: servingApiImage
+port: 8080
+healthPath: /health
+readinessPath: /ready
+replicas: 2
+autoscaling: true
+timeoutSeconds: 20
+resources:
+  -
+    key: CPU
+    amount: 2
+  -
+    key: memory
+    amount: 4096
+env:
+  MODEL_NAME: vision_defects_model_v1
+  MODEL_STAGE: staging
+routes:
+  - /predict
+  - /health
+  - /ready
+secrets:
+  -
+    name: mlops-registry-creds
+    mountAs: env
+    pathPrefix: "<mlops/prod/fraud/>"

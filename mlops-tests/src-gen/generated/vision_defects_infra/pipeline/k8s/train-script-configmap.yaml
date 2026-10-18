@@ -1,0 +1,20 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: train-script
+  namespace: vision-serving
+data:
+  train.py: |
+    from sklearn.datasets import load_iris
+    from sklearn.linear_model import LogisticRegression
+    import joblib
+    import os
+    
+    X, y = load_iris(return_X_y=True)
+    model = LogisticRegression(max_iter=200)
+    model.fit(X, y)
+    
+    os.makedirs('/model', exist_ok=True)
+    joblib.dump(model, '/model/model.joblib')
+    print('model saved to /model/model.joblib')
+    
