@@ -1,0 +1,563 @@
+DataAsset defects_ds_v1 {
+  source = IMAGE_FOLDER
+  modality = IMAGE
+  location = "defects_ds_v1"
+  format = "jpg"
+  schema = "https://storage.azure.com/schema/defects.json"
+  version = "2025-01"
+  sizeBytes = 2150000000
+  recordCount = 120000
+  license = "proprietary"
+  privacy = "non_pii"
+  hash = "sha256:vision-defects-v1"
+
+  splits = [
+    SplitSpec { name = "train" ratio = 0.80 },
+    SplitSpec { name = "valid" ratio = 0.10 },
+    SplitSpec { name = "test" ratio = 0.10 }
+  ]
+
+  annotations = [
+    AnnotationSpec {
+      labelSet = "surface_defects_v1"
+      guideline = "bbox classification: scratch, crack, stain, deformation"
+    }
+  ]
+}
+
+FeatureSet vision_features_v1 {
+  name = "vision_features_v1"
+}
+
+TrainingSpec pytorch {
+  framework = "pytorch"
+  algorithm = "resnet50"
+
+  hyperparams = [
+    Param { key = "epochs" value = "30" },
+    Param { key = "lr" value = "0.0005" },
+    Param { key = "batch" value = "64" },
+    Param { key = "optimizer" value = "adamw" }
+  ]
+
+  image = "mcr.microsoft.com/azureml/pytorch:2.1-cuda11.8"
+  command = ["python","train.py"]
+
+  resources = [
+    Resource { key = "GPU" amount = 1 },
+    Resource { key = "CPU" amount = 4 },
+    Resource { key = "memory" amount = 16384 }
+  ]
+
+  env = [
+    Param { key = "DATASET_PATH" value = "defects_ds_v1" },
+    Param { key = "MODEL_OUTPUT" value = "models/resnet.pt" }
+  ]
+}
+
+EvaluationSpec accuracy {
+  metrics = ["accuracy","precision","recall","f1","auc"]
+
+  thresholds = [
+    Threshold { key = "accuracy" value = 0.90 op = GE },
+    Threshold { key = "f1" value = 0.88 op = GE }
+  ]
+}
+
+RegistrySpec azureml {
+  kind = "azureml"
+  registerAs = "vision_defects_model_v1"
+
+  tags = [
+    "vision",
+    "resnet50",
+    "azure",
+    "aks",
+    "industrial-qa",
+    "defect-detection",
+    "mlops"
+  ]
+
+  description = "Defects detection model for industrial quality assurance"
+  stage = STAGING
+}
+
+ServingSpec azure {
+  kind = API
+  port = 8080
+  healthPath = "/health"
+  readinessPath = "/ready"
+  replicas = 2
+  autoscaling = true
+  timeoutSeconds = 20
+
+  resources = [
+    Resource { key = "CPU" amount = 2 },
+    Resource { key = "memory" amount = 4096 }
+  ]
+
+  env = [
+    Param { key = "MODEL_NAME" value = "vision_defects_model_v1" },
+    Param { key = "MODEL_STAGE" value = "staging" }
+  ]
+
+  routes = ["/predict","/health","/ready"]
+}
+
+MonitoringSpec monitoring_policy {
+  perfMetrics = ["p95_latency_ms","p99_latency_ms","throughput_rps","error_rate"]
+
+  dataDrift = [
+    DriftMetric { name = "image_brightness_shift" warn = 0.15 fail = 0.30 }
+  ]
+
+  modelDrift = [
+    DriftMetric { name = "accuracy_drop" warn = 0.05 fail = 0.10 }
+  ]
+
+  alertChannel = "slack://#azure-monitoring"
+}
+
+ExperimentTrackingSpec tracking_mlflow {
+  backend = MLFLOW
+  experimentName = "vision_defects_experiment"
+  trackingUri = "http://mlflow.local:5000"
+  logParams = true
+  logMetrics = true
+  logArtifacts = true
+  logModel = true
+}
+
+VersioningSpec dvc_versioning {
+  backend = DVC
+  versionData = true
+  versionCode = true
+  versionModels = true
+  versionParams = true
+  remoteUri = "azure://vision-datasets/dvc"
+}
+
+ModelRegistrySpec model_registry {
+  backend = AZURE_ML
+  modelName = "vision_defects_model_v1"
+  enableStaging = true
+  enableProduction = true
+  rollbackEnabled = true
+  approvalMode = "automatic"
+}
+
+DecisionPolicy deployment_gate {
+  autoPromote = true
+  minAccuracy = 0.90
+  minF1 = 0.88
+  maxLatencyMs = 200.0
+  maxCost = 50.0
+  maxDrift = 0.15
+  minTraceabilityScore = 0.95
+
+  criteria = [
+    DecisionCriterion {
+      name = "performance"
+      weight = 0.35
+      minValue = 0.90
+      required = true
+    },
+    DecisionCriterion {
+      name = "robustness"
+      weight = 0.20
+      minValue = 0.85
+      required = true
+    },
+    DecisionCriterion {
+      name = "drift_stability"
+      weight = 0.15
+      maxValue = 0.15
+      required = true
+    },
+    DecisionCriterion {
+      name = "latency"
+      weight = 0.10
+      maxValue = 200.0
+      required = true
+    },
+    DecisionCriterion {
+      name = "traceability"
+      weight = 0.20
+      minValue = 0.95
+      required = true
+    }
+  ]
+}
+
+RetrainingPolicy drift_retraining {
+  strategy = HYBRID
+  driftThreshold = 0.15
+  performanceDropThreshold = 0.08
+  schedule = "weekly"
+  autoTrigger = true
+  retrainingQueue = "gpu-training"
+}
+
+GovernanceSpec governance_policy {
+  traceabilityRequired = true
+  explainDecision = true
+  auditTrail = true
+  riskReport = true
+  complianceFramework = "NIST-AI-RMF"
+}
+
+CiCdCtSpec cicdct_pipeline {
+  target = AZURE
+  pipelineFile = "azure-pipelines.yml"
+  enableCI = true
+  enableCD = true
+  enableCT = true
+
+  stages = [
+    PipelineStage {
+      kind = VALIDATE_DATA
+      name = "data_validation"
+      required = true
+      tool = "python"
+      outputArtifact = "reports/data-quality.json"
+    },
+    PipelineStage {
+      kind = VERSION_DATA
+      name = "data_versioning"
+      required = true
+      tool = "dvc"
+      outputArtifact = "dvc.lock"
+    },
+    PipelineStage {
+      kind = TRAIN
+      name = "training"
+      required = true
+      tool = "pytorch"
+      outputArtifact = "models/resnet.pt"
+    },
+    PipelineStage {
+      kind = TRACK_EXPERIMENT
+      name = "experiment_tracking"
+      required = true
+      tool = "mlflow"
+      outputArtifact = "mlruns"
+    },
+    PipelineStage {
+      kind = EVALUATE
+      name = "evaluation"
+      required = true
+      tool = "python"
+      outputArtifact = "metrics/eval.json"
+    },
+    PipelineStage {
+      kind = REGISTER_MODEL
+      name = "model_registry"
+      required = true
+      tool = "azureml"
+      outputArtifact = "registry/vision_defects_model_v1"
+    },
+    PipelineStage {
+      kind = DECISION_GATE
+      name = "decision_gate"
+      required = true
+      tool = "mlopsdsl"
+      outputArtifact = "reports/decision.json"
+    },
+    PipelineStage {
+      kind = DEPLOY
+      name = "deployment"
+      required = true
+      tool = "terraform"
+      outputArtifact = "infra/terraform/tfplan"
+    },
+    PipelineStage {
+      kind = MONITOR
+      name = "monitoring"
+      required = true
+      tool = "datadog"
+      outputArtifact = "metrics/runtime.json"
+    },
+    PipelineStage {
+      kind = RETRAIN
+      name = "retraining_check"
+      required = true
+      tool = "mlopsdsl"
+      outputArtifact = "reports/retraining-decision.json"
+    }
+  ]
+}
+
+FeatureStoreSpec azure_blob_offline {
+  kind = "feast"
+  offlineStore = "azure_blob_offline"
+  onlineStore = "redis-online"
+}
+
+OperationalPlan vision_2025Q1 {
+  rationale = "vision_2025Q1"
+  compute = GPU_SINGLE
+  packaging = CONTAINER
+  trainMode = SCRIPT
+  servingMode = API
+  entryCmd = "python serve.py"
+
+  resources = [
+    Resource { key = "GPU" amount = 1 },
+    Resource { key = "CPU" amount = 4 },
+    Resource { key = "memory" amount = 16384 }
+  ]
+
+  featureStore = azure_blob_offline
+
+  secrets = [
+    SecretRef { name = "azure-ml-registry-creds" },
+    SecretRef { name = "azure-storage-creds" }
+  ]
+
+  ciTarget = AZURE
+  baseImage = "mcr.microsoft.com/azureml/openmpi4.1.0-ubuntu20.04"
+  extraDeps = ["torchvision==0.17.0","opencv-python==4.9.0","mlflow==2.10.0"]
+
+  retries = 2
+  cache = true
+  queue = "gpu-training"
+}
+
+InfraPlan vision_prod_aks {
+  provider = AZURE
+  accountId = "azure-subscription-1234"
+  region = "westeurope"
+  orchestrator = KUBERNETES
+  clusterName = "vision_prod_aks"
+  namespace = "vision-serving"
+
+  environment = EnvironmentSpec {
+    name = "prod"
+  }
+
+  backend = TerraformBackendSpec {
+    kind = "azurerm"
+    key = "vision/prod/terraform.tfstate"
+    resourceGroup = "rg-vision-tfstate"
+    storageAccount = "visiontfstateprod"
+    container = "tfstate"
+  }
+
+  runtime = RuntimeSpec {
+    nodePools = [
+      NodePoolSpec {
+        name = "system"
+        machineType = "Standard_D2s_v5"
+        minNodes = 1
+        desiredNodes = 2
+        maxNodes = 4
+        gpu = false
+        spot = false
+      },
+      NodePoolSpec {
+        name = "compute"
+        machineType = "Standard_D2s_v5"
+        minNodes = 1
+        desiredNodes = 1
+        maxNodes = 1
+        gpu = false
+        spot = false
+      }
+    ]
+  }
+
+  network = NetworkSpec {
+    exposure = PUBLIC
+    domain = "vision.azure.company.com"
+    tls = false
+    ingressClass = "nginx"
+    cidr = "10.50.0.0/16"
+    subnets = ["10.50.1.0/24","10.50.2.0/24"]
+  }
+
+  storage = [
+    StorageTarget {
+      kind = OBJECT_STORE
+      purpose = "datasets"
+      name = "azure://vision-datasets"
+      retention = "180d"
+      encrypted = true
+    },
+    StorageTarget {
+      kind = OBJECT_STORE
+      purpose = "models"
+      name = "azure://vision-model-registry"
+      retention = "infinite"
+      encrypted = true
+    },
+    StorageTarget {
+      kind = OBJECT_STORE
+      purpose = "metrics"
+      name = "azure://vision-metrics"
+      retention = "365d"
+      encrypted = true
+    }
+  ]
+
+  secrets = SecretBackendSpec {
+    kind = VAULT
+    pathPrefix = "kv/vision-prod/"
+  }
+
+  observability = ObservabilitySpec {
+    stack = DATADOG
+    logsEnabled = true
+    metricsEnabled = true
+    tracesEnabled = false
+  }
+
+  spotAllowed = false
+  maxMonthlyBudget = 3000
+  piiData = false
+  gdprRestricted = true
+}
+
+ProjectSpec {
+  name = "validation_s03"
+  data = defects_ds_v1
+  features = vision_features_v1
+  train = pytorch
+  eval = accuracy
+  registry = azureml
+  serving = azure
+  monitoring = ^monitoring
+
+  tracking = tracking_mlflow
+  versioning = dvc_versioning
+  modelRegistry = model_registry
+  decisionPolicy = deployment_gate
+  retrainingPolicy = drift_retraining
+  governance = governance_policy
+  cicdct = cicdct_pipeline
+}
+
+MetaModelSpec {
+  version = "0.3.0"
+  schemaVersion = "2026.05"
+  createdBy = "mlops-team"
+  createdAt = "2026-05-11"
+
+  project = validation_s03
+  plan = vision_2025Q1
+  infra = vision_prod_aks
+
+  workflow = MlWorkflow {
+  tasks = [
+    MlTask {
+      taskId = w_prepare
+      type = PREPARE
+      produces = [
+        Artifact { path = "images/prepared" kind = DATASET }
+      ]
+    },
+    MlTask {
+      taskId = w_version
+      type = VERSION
+      produces = [
+        Artifact { path = "dvc.lock" kind = OTHER }
+      ]
+      consumes = [
+        Artifact { path = "images/prepared" kind = DATASET }
+      ]
+    },
+    MlTask {
+      taskId = w_train
+      type = TRAIN
+      produces = [
+        Artifact { path = "models/resnet.pt" kind = MODEL }
+      ]
+      consumes = [
+        Artifact { path = "images/prepared" kind = DATASET }
+      ]
+    },
+    MlTask {
+      taskId = w_track
+      type = TRACK
+      produces = [
+        Artifact { path = "mlruns" kind = OTHER }
+      ]
+      consumes = [
+        Artifact { path = "models/resnet.pt" kind = MODEL }
+      ]
+    },
+    MlTask {
+      taskId = w_eval
+      type = EVAL
+      produces = [
+        Artifact { path = "metrics/eval.json" kind = METRICS }
+      ]
+      consumes = [
+        Artifact { path = "models/resnet.pt" kind = MODEL }
+      ]
+    },
+    MlTask {
+      taskId = w_decide
+      type = DECIDE
+      produces = [
+        Artifact { path = "reports/decision.json" kind = OTHER }
+      ]
+      consumes = [
+        Artifact { path = "metrics/eval.json" kind = METRICS }
+      ]
+    },
+    MlTask {
+      taskId = w_register
+      type = REGISTER
+      produces = [
+        Artifact { path = "registry/vision_defects_model_v1" kind = MODEL }
+      ]
+      consumes = [
+        Artifact { path = "models/resnet.pt" kind = MODEL },
+        Artifact { path = "reports/decision.json" kind = OTHER }
+      ]
+    },
+    MlTask {
+      taskId = w_deploy
+      type = DEPLOY
+      produces = [
+        Artifact { path = "infra/terraform/tfplan" kind = OTHER }
+      ]
+      consumes = [
+        Artifact { path = "registry/vision_defects_model_v1" kind = MODEL }
+      ]
+    },
+    MlTask {
+      taskId = w_monitor
+      type = MONITOR
+      produces = [
+        Artifact { path = "metrics/runtime.json" kind = METRICS }
+      ]
+      consumes = [
+        Artifact { path = "infra/terraform/tfplan" kind = OTHER }
+      ]
+    },
+    MlTask {
+      taskId = w_retrain
+      type = RETRAIN
+      produces = [
+        Artifact { path = "reports/retraining-decision.json" kind = OTHER }
+      ]
+      consumes = [
+        Artifact { path = "metrics/runtime.json" kind = METRICS }
+      ]
+    }
+  ]
+
+  edges = [
+    Edge { from = w_prepare to = w_version },
+    Edge { from = w_version to = w_train },
+    Edge { from = w_train to = w_track },
+    Edge { from = w_train to = w_eval },
+    Edge { from = w_eval to = w_decide },
+    Edge { from = w_decide to = w_register },
+    Edge { from = w_register to = w_deploy },
+    Edge { from = w_deploy to = w_monitor },
+    Edge { from = w_monitor to = w_retrain }
+  ]
+}
+}

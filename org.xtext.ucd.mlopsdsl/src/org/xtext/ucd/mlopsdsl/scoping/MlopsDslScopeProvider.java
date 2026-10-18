@@ -21,6 +21,7 @@ import mlops.DataAsset;
 import mlops.EvaluationSpec;
 import mlops.FeatureSet;
 import mlops.FeatureStoreSpec;
+import mlops.InfraPlan;
 import mlops.MlTask;
 import mlops.MlWorkflow;
 import mlops.MlopsPackage;
@@ -44,6 +45,9 @@ public class MlopsDslScopeProvider extends AbstractMlopsDslScopeProvider {
         }
         if (reference == MlopsPackage.Literals.META_MODEL_SPEC__PLAN) {
             return scopeByType(context, OperationalPlan.class);
+        }
+        if (reference == MlopsPackage.Literals.META_MODEL_SPEC__INFRA) {
+            return scopeByType(context, InfraPlan.class);
         }
 
         // ----- ProjectSpec -----
@@ -75,27 +79,24 @@ public class MlopsDslScopeProvider extends AbstractMlopsDslScopeProvider {
         return super.getScope(context, reference);
     }
 
-    /** Construit un scope global pour tous les objets de type T dans le ResourceSet courant. */
+    /** Local declarations shadow equally named declarations in other files. */
     private <T extends EObject> IScope scopeByType(EObject context, Class<T> type) {
-        Iterable<T> candidates = allInResourceSet(context, type);
-        return Scopes.scopeFor(candidates, qnp, IScope.NULLSCOPE);
-    }
-
-    /** Collecte tous les objets du type demandé dans le ResourceSet. */
-    private <T extends EObject> Iterable<T> allInResourceSet(EObject context, Class<T> type) {
-        List<T> out = new ArrayList<>();
-        if (context == null) return out;
-        Resource res = context.eResource();
-        if (res == null) return out;
-        ResourceSet rs = res.getResourceSet();
-
-        if (rs != null) {
-            for (Resource r : rs.getResources()) {
-                out.addAll(org.eclipse.xtext.EcoreUtil2.getAllContentsOfType(r, type));
-            }
-        } else {
-            out.addAll(org.eclipse.xtext.EcoreUtil2.getAllContentsOfType(res, type));
+        if (context == null || context.eResource() == null) {
+            return IScope.NULLSCOPE;
         }
-        return out;
+        Resource current = context.eResource();
+        List<T> external = new ArrayList<>();
+        ResourceSet resourceSet = current.getResourceSet();
+        if (resourceSet != null) {
+            for (Resource other : resourceSet.getResources()) {
+                if (other != current) {
+                    external.addAll(EcoreUtil2.getAllContentsOfType(other, type));
+                }
+            }
+        }
+        IScope fallback = Scopes.scopeFor(external, qnp, IScope.NULLSCOPE);
+        return Scopes.scopeFor(
+            EcoreUtil2.getAllContentsOfType(current, type), qnp, fallback);
     }
 }
+
