@@ -1,0 +1,69 @@
+{
+  "schema_version": 1,
+  "as_of": "2026-10-18",
+  "work_packages": [
+    {
+      "id": "WP1",
+      "title": "DSL correction/diagnostics",
+      "status": "partial",
+      "acceptance_criteria": "JUnit XML and independent run logs",
+      "reference": "evaluation/validation/README.md",
+      "completed": false,
+      "evidence_records": []
+    },
+    {
+      "id": "WP2",
+      "title": "Equivalence across Terraform/Kubernetes/policies",
+      "status": "partial",
+      "acceptance_criteria": "Reviewed full baseline, scope and downstream validation",
+      "reference": "evaluation/journal/equivalence-review.md",
+      "completed": false,
+      "evidence_records": []
+    },
+    {
+      "id": "WP3",
+      "title": "Paired seeded error detection",
+      "status": "not_run",
+      "acceptance_criteria": "Executed fault pairs including missed/false-alarm cases and logs",
+      "reference": "evaluation/journal/fault-pairs.tsv",
+      "completed": false,
+      "evidence_records": []
+    },
+    {
+      "id": "WP4",
+      "title": "Paired configuration evolution",
+      "status": "not_run",
+      "acceptance_criteria": "Real runtime port experiment and independent additional change tasks",
+      "reference": "evaluation/journal/evolution-tasks.tsv",
+      "completed": false,
+      "evidence_records": []
+    },
+    {
+      "id": "WP5",
+      "title": "Source specification size and duplication",
+      "status": "not_run",
+      "acceptance_criteria": "Equivalent-scope measured metrics plus manual duplication assessment",
+      "reference": "tools/measure_authoring_sources.py",
+      "completed": false,
+      "evidence_records": []
+    },
+    {
+      "id": "WP6",
+      "title": "Deployment and ML execution if claimed",
+      "status": "not_run",
+      "acceptance_criteria": "Real deployment, inference, ML lifecycle observations and cleanup",
+      "reference": "evaluation/journal/deployment-evidence.md",
+      "completed": false,
+      "evidence_records": []
+    },
+    {
+      "id": "WP7",
+      "title": "Reviewer replication/manuscript integrity",
+      "status": "partial",
+      "acceptance_criteria": "Complete meta-model, pinned toolchain, raw logs and immutable accessible release",
+      "reference": "evaluation/journal/replication-release.md",
+      "completed": false,
+      "evidence_records": []
+    }
+  ]
+}

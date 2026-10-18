@@ -1,0 +1,4 @@
+case_id	scope	origin	status	notes
+C00	complex_azure	existing_valid	partial	10 selected Kubernetes checks; complete equivalence not reviewed
+C01	minimal_cpu_serving	proposed	not_run	Freeze independent requirements, author both configurations
+C02	medium_lifecycle	proposed	not_run	Freeze lifecycle requirements, author both configurations
