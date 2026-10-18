@@ -1,0 +1,4 @@
+task_id	case	requested_change	layers	status	postconditions
+E01	C00	API port 8080 to 9090	kubernetes	tooling_ready	All six dependent ports and original postconditions verified; both before/after source diffs
+E02	TBD reviewed valid case	model registry name migration	registry_and_policy	proposed	Registry and all corresponding policy references updated
+E03	TBD reviewed valid case	private to public exposure with TLS/domain	kubernetes_and_security	proposed	Ingress host/TLS and secret/controller preconditions hold

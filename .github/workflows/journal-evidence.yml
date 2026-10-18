@@ -1,0 +1,34 @@
+name: Journal evidence tooling tests
+on:
+  pull_request:
+    paths:
+      - 'evaluation/journal/**'
+      - 'tools/audit_journal_evidence.py'
+      - 'tools/summarize_fault_pairs.py'
+      - 'tools/measure_authoring_sources.py'
+      - 'tests/test_journal_evidence.py'
+      - '.github/workflows/journal-evidence.yml'
+  push:
+    paths:
+      - 'evaluation/journal/**'
+      - 'tools/audit_journal_evidence.py'
+      - 'tools/summarize_fault_pairs.py'
+      - 'tools/measure_authoring_sources.py'
+      - 'tests/test_journal_evidence.py'
+      - '.github/workflows/journal-evidence.yml'
+permissions:
+  contents: read
+jobs:
+  evidence-tools:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Unit-test evidence tools (not DSL experiments)
+        run: python -m unittest discover -s tests -p "test_journal_*.py" -v
+      - name: Check study ledger and pair-matrix consistency
+        run: |
+          python tools/audit_journal_evidence.py
+          python tools/summarize_fault_pairs.py --matrix evaluation/journal/fault-pairs.tsv
