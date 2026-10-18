@@ -8,6 +8,7 @@ import mlops.DecisionPolicy;
 import mlops.ExposureKind;
 import mlops.InfraPlan;
 import mlops.MlopsPackage;
+import mlops.NodePoolSpec;
 import mlops.OperationalPlan;
 import mlops.Resource;
 import mlops.ServingKind;
@@ -108,6 +109,46 @@ public class MlopsDslValidator extends AbstractMlopsDslValidator {
                     INVALID_CONFIGURATION
                 );
             }
+        }
+    }
+
+    @Check
+    public void checkCloudRegion(InfraPlan infra) {
+        if (infra == null || infra.getProvider() == null) {
+            return;
+        }
+        switch (infra.getProvider()) {
+        case AZURE:
+        case AWS:
+        case GCP:
+            if (isBlank(infra.getRegion())) {
+                error("InfraPlan.region is required for cloud providers.",
+                    infra, MlopsPackage.Literals.INFRA_PLAN__REGION,
+                    INVALID_CONFIGURATION);
+            }
+            break;
+        default:
+            break;
+        }
+    }
+
+    @Check
+    public void checkNodePoolCounts(NodePoolSpec pool) {
+        if (pool != null && (pool.getMinNodes() < 0
+                || pool.getMinNodes() > pool.getDesiredNodes()
+                || pool.getDesiredNodes() > pool.getMaxNodes())) {
+            error("Node pool counts must satisfy minNodes <= desiredNodes <= maxNodes.",
+                pool, MlopsPackage.Literals.NODE_POOL_SPEC__DESIRED_NODES,
+                INVALID_CONFIGURATION);
+        }
+    }
+
+    @Check
+    public void checkEntryCommand(OperationalPlan plan) {
+        if (plan != null && isBlank(plan.getEntryCmd())) {
+            error("OperationalPlan.entryCmd is required.",
+                plan, MlopsPackage.Literals.OPERATIONAL_PLAN__ENTRY_CMD,
+                INVALID_CONFIGURATION);
         }
     }
 
