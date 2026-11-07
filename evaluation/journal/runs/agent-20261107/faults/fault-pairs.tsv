@@ -1,0 +1,33 @@
+case_id	case_kind	rule_category	requirement	baseline_layer	approach	dsl_fixture	outcome	detection_stage	evidence_path	n_a_reason
+S01	fault	semantic	dataset split sum	policy	dsl	mlops-tests/src/validation/s01_invalid_split.mlops	NOT_RUN			
+S01	fault	semantic	dataset split sum	policy	baseline	mlops-tests/src/validation/s01_invalid_split.mlops	NOT_APPLICABLE			Dataset split ratios are not emitted in the selected target configurations
+S02	fault	semantic	GPU profile resource	terraform	dsl	mlops-tests/src/validation/s02_missing_gpu.mlops	NOT_RUN			
+S02	fault	semantic	GPU profile resource	terraform	baseline	mlops-tests/src/validation/s02_missing_gpu.mlops	NOT_APPLICABLE			Operational training GPU allocation is not represented by the selected serving-infrastructure baseline
+S03	fault	semantic	public exposure requires TLS	kubernetes	dsl	mlops-tests/src/validation/s03_public_without_tls.mlops	NOT_RUN			
+S03	fault	semantic	public exposure requires TLS	kubernetes	baseline	mlops-tests/src/validation/s03_public_without_tls.mlops	DETECTED	study_domain_guard	mutations/S03/observation.json	
+S04	fault	semantic	API port required	kubernetes	dsl	mlops-tests/src/validation/s04_missing_api_port.mlops	NOT_RUN			
+S04	fault	semantic	API port required	kubernetes	baseline	mlops-tests/src/validation/s04_missing_api_port.mlops	DETECTED	kustomize_build	mutations/S04/observation.json	
+S05	fault	semantic	cloud region required	terraform	dsl	mlops-tests/src/validation/s05_missing_cloud_region.mlops	NOT_RUN			
+S05	fault	semantic	cloud region required	terraform	baseline	mlops-tests/src/validation/s05_missing_cloud_region.mlops	DETECTED	study_domain_guard	mutations/S05/observation.json	
+S06	fault	semantic	public domain required	kubernetes	dsl	mlops-tests/src/validation/s06_missing_public_domain.mlops	NOT_RUN			
+S06	fault	semantic	public domain required	kubernetes	baseline	mlops-tests/src/validation/s06_missing_public_domain.mlops	DETECTED	study_domain_guard	mutations/S06/observation.json	
+S07	fault	semantic	node pool bounds	terraform	dsl	mlops-tests/src/validation/s07_invalid_node_counts.mlops	NOT_RUN			
+S07	fault	semantic	node pool bounds	terraform	baseline	mlops-tests/src/validation/s07_invalid_node_counts.mlops	DETECTED	study_domain_guard	mutations/S07/observation.json	
+S08	fault	semantic	decision weights sum	policy	dsl	mlops-tests/src/validation/s08_invalid_decision_weights.mlops	NOT_RUN			
+S08	fault	semantic	decision weights sum	policy	baseline	mlops-tests/src/validation/s08_invalid_decision_weights.mlops	DETECTED	study_domain_guard	mutations/S08/observation.json	
+S09	fault	semantic	criterion bounds consistent	policy	dsl	mlops-tests/src/validation/s09_contradictory_criterion_bounds.mlops	NOT_RUN			
+S09	fault	semantic	criterion bounds consistent	policy	baseline	mlops-tests/src/validation/s09_contradictory_criterion_bounds.mlops	DETECTED	study_domain_guard	mutations/S09/observation.json	
+S10	fault	linking	workflow reference resolves	policy	dsl	mlops-tests/src/validation/s10_broken_workflow_reference.mlops	NOT_RUN			
+S10	fault	linking	workflow reference resolves	policy	baseline	mlops-tests/src/validation/s10_broken_workflow_reference.mlops	NOT_APPLICABLE			Resolved model-task identities/edges are not emitted in the lifecycle-policy baseline
+S11	fault	semantic	entry command nonempty	kubernetes	dsl	mlops-tests/src/validation/s11_empty_entry_command.mlops	NOT_RUN			
+S11	fault	semantic	entry command nonempty	kubernetes	baseline	mlops-tests/src/validation/s11_empty_entry_command.mlops	NOT_APPLICABLE			The generated Deployment does not preserve OperationalPlan.entryCmd
+S12	fault	semantic	individual split ratio positive	policy	dsl	mlops-tests/src/validation/s12_zero_split_ratio.mlops	NOT_RUN			
+S12	fault	semantic	individual split ratio positive	policy	baseline	mlops-tests/src/validation/s12_zero_split_ratio.mlops	NOT_APPLICABLE			Dataset split ratios are not emitted in the selected target configurations
+C00	control	control	valid Azure reference	all_layers	dsl	mlops-tests/src/validation/c00_valid_azure.mlops	NOT_RUN			
+C00	control	control	valid Azure reference	all_layers	baseline	mlops-tests/src/validation/c00_valid_azure.mlops	PASS	none	mutations/C00/observation.json	
+C01	control	control	private without TLS valid	kubernetes	dsl	mlops-tests/src/validation/c01_valid_private_without_tls.mlops	NOT_RUN			
+C01	control	control	private without TLS valid	kubernetes	baseline	mlops-tests/src/validation/c01_valid_private_without_tls.mlops	PASS	none	mutations/C01/observation.json	
+C02	control	control	port lower boundary valid	kubernetes	dsl	mlops-tests/src/validation/c02_valid_min_api_port.mlops	NOT_RUN			
+C02	control	control	port lower boundary valid	kubernetes	baseline	mlops-tests/src/validation/c02_valid_min_api_port.mlops	PASS	none	mutations/C02/observation.json	
+C03	control	control	port upper boundary valid	kubernetes	dsl	mlops-tests/src/validation/c03_valid_max_api_port.mlops	NOT_RUN			
+C03	control	control	port upper boundary valid	kubernetes	baseline	mlops-tests/src/validation/c03_valid_max_api_port.mlops	PASS	none	mutations/C03/observation.json	

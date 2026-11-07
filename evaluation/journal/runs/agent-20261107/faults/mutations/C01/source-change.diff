@@ -1,0 +1,109 @@
+--- control/infra/terraform/main.tf
++++ C01/infra/terraform/main.tf
+@@ -13,7 +13,7 @@
+ }
+ variable "public_exposure" {
+   type    = bool
+-  default = true
++  default = false
+ }
+ locals {
+   prefix = "validation-c00-prod"
+--- control/kustomization.yaml
++++ C01/kustomization.yaml
+@@ -1,42 +1,30 @@
+ apiVersion: kustomize.config.k8s.io/v1beta1
+ kind: Kustomization
+ resources:
+-  - runtime/k8s/namespace.yaml
+-  - runtime/k8s/deployment.yaml
+-  - runtime/k8s/service.yaml
+-  - runtime/k8s/ingress.yaml
++- runtime/k8s/namespace.yaml
++- runtime/k8s/deployment.yaml
++- runtime/k8s/service.yaml
++- runtime/k8s/ingress.yaml
+ replacements:
+-  # Service.port is the single maintained API port for this baseline.
+-  - source:
++- source:
++    kind: Service
++    name: validation-c00-serving
++    fieldPath: spec.ports.0.port
++  targets:
++  - select:
+       kind: Service
+       name: validation-c00-serving
+-      fieldPath: spec.ports.0.port
+-    targets:
+-      - select:
+-          kind: Service
+-          name: validation-c00-serving
+-        fieldPaths:
+-          - spec.ports.0.targetPort
+-      - select:
+-          kind: Deployment
+-          name: validation-c00-serving
+-        fieldPaths:
+-          - spec.template.spec.containers.0.ports.0.containerPort
+-          - spec.template.spec.containers.0.readinessProbe.httpGet.port
+-          - spec.template.spec.containers.0.livenessProbe.httpGet.port
+-      - select:
+-          kind: Ingress
+-          name: validation-c00-serving
+-        fieldPaths:
+-          - spec.rules.0.http.paths.0.backend.service.port.number
+-  # The public routing host is also the TLS host.
+-  - source:
++    fieldPaths:
++    - spec.ports.0.targetPort
++  - select:
++      kind: Deployment
++      name: validation-c00-serving
++    fieldPaths:
++    - spec.template.spec.containers.0.ports.0.containerPort
++    - spec.template.spec.containers.0.readinessProbe.httpGet.port
++    - spec.template.spec.containers.0.livenessProbe.httpGet.port
++  - select:
+       kind: Ingress
+       name: validation-c00-serving
+-      fieldPath: spec.rules.0.host
+-    targets:
+-      - select:
+-          kind: Ingress
+-          name: validation-c00-serving
+-        fieldPaths:
+-          - spec.tls.0.hosts.0
++    fieldPaths:
++    - spec.rules.0.http.paths.0.backend.service.port.number
+--- control/runtime/k8s/ingress.yaml
++++ C01/runtime/k8s/ingress.yaml
+@@ -5,18 +5,14 @@
+   name: validation-c00-serving
+ spec:
+   ingressClassName: nginx
+-  tls:
+-    - secretName: validation-c00-serving-tls
+-      hosts:
+-        - placeholder.invalid # Replaced from the routing host by Kustomize.
+   rules:
+-    - host: vision.azure.company.com
+-      http:
+-        paths:
+-          - pathType: Prefix
+-            path: /
+-            backend:
+-              service:
+-                port:
+-                  number: 80 # Replaced by Kustomize.
+-                name: validation-c00-serving
++  - host: vision.azure.company.com
++    http:
++      paths:
++      - pathType: Prefix
++        path: /
++        backend:
++          service:
++            port:
++              number: 80
++            name: validation-c00-serving

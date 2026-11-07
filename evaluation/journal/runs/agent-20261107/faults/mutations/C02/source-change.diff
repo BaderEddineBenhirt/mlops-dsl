@@ -1,0 +1,14 @@
+--- control/runtime/k8s/service.yaml
++++ C02/runtime/k8s/service.yaml
+@@ -7,7 +7,7 @@
+   selector:
+     app: validation-c00-serving
+   ports:
+-    - name: http
+-      protocol: TCP
+-      port: 8080
+-      targetPort: 80 # Replaced from port by Kustomize.
++  - name: http
++    protocol: TCP
++    port: 1
++    targetPort: 80

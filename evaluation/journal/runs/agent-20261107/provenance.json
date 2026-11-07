@@ -1,0 +1,82 @@
+{
+  "recorded_at_utc": "2026-11-07T13:57:10.217918+00:00",
+  "source_base_commit": "0a6ee6cb83b76052c3206af5d1fa46905476bf93",
+  "historical_generated_snapshot_commit": "1071c1cb98c23878d236b286aa19eab279a6b603",
+  "historical_generated_snapshot_path": "evaluation/comparison/generated/c00-after-tls",
+  "tool_qa_exit_code": 0,
+  "java_syntax_only_exit_code": 0,
+  "expanded_eclipse_junit": "NOT_RUN",
+  "actual_dsl_evolution": "NOT_RUN",
+  "powershell_wrapper": "NOT_RUN_ON_WINDOWS",
+  "notes": [
+    "Archived Terraform schema startup failure is BLOCKED, not a seeded-fault detection",
+    "Compact fault evidence keeps raw rendered YAML CLI output, frozen control sources, source diffs and per-case diagnostics; no provider binaries included",
+    "Python source-count totals have unequal full functional scope; no reduction percentage or productivity claim"
+  ],
+  "components": [
+    {
+      "path": "tools/audit_journal_evidence.py",
+      "sha256": "10b236ca866e2f38f150e084f1a7b2b381afcf90e4c9af671a11f3c62ed09b3c"
+    },
+    {
+      "path": "tools/journal_common.py",
+      "sha256": "3bf950753d6155ba2861b1a977f57f4586721e3bce1b84924fa00d9ab9500e9e"
+    },
+    {
+      "path": "tools/run_configuration_evolution.py",
+      "sha256": "6bc2d8a9c05f0db976c4e3af74dd22faafa709618b8eb119b0ddca0bf06a0d8b"
+    },
+    {
+      "path": "tools/build_replication_package.py",
+      "sha256": "b1c98054b7dd3662242eb826e56ec84699253f72a55a567436916cdb1cafb5a9"
+    },
+    {
+      "path": "tools/summarize_fault_pairs.py",
+      "sha256": "497d44246137525ad0ccdd7bde1bf4bbcd823d539d3bb8574bb548cd730c527a"
+    },
+    {
+      "path": "tools/run_comparison.py",
+      "sha256": "1aef0e1ebbf8a0f69e31931be1ecec6dabe7358ca5ef152bdb503c1f94b2f630"
+    },
+    {
+      "path": "tools/run_port_evolution.py",
+      "sha256": "061a4ea2f69e194b2e1d3640749cf1727aacc273918bbaa26072e5d40640d8a4"
+    },
+    {
+      "path": "tools/run_journal_comparison.py",
+      "sha256": "803153b2f50051168c3635aeec503cff1a883181ce841b7272540bc4ffe78bf4"
+    },
+    {
+      "path": "tools/run_fault_comparison.py",
+      "sha256": "5d28b2b96a1471061cfa868b776cbf973e003205ba1c247b8146b7089ebc06da"
+    },
+    {
+      "path": "tools/measure_authoring_sources.py",
+      "sha256": "67275021f328aeb5c09e106effded9ed849adc707542091a640e782e84e9673b"
+    },
+    {
+      "path": "tools/run_runtime_comparison.py",
+      "sha256": "a797c6f185c9e82f663879cca9b2a5040eadf25c722f83f2c57214e3b0a53ad2"
+    },
+    {
+      "path": "tools/prepare_validation_suite.py",
+      "sha256": "f09527b63bf4d9215eb7667627ed694517578dae2d6da415bd478bee2c7db628"
+    },
+    {
+      "path": "tools/Run-JournalEvaluation.ps1",
+      "sha256": "9c4179b69d1a8c44ece635bd63606b5d4331e5b520d2d4a243dd13122dc2a16e"
+    },
+    {
+      "path": "tools/Sync-EclipseWorkspace.ps1",
+      "sha256": "0be02b0df92cf3c4214b6a816f2d3c5ee8bf9e77d6b34cde94fc8b59e289fffa"
+    },
+    {
+      "path": "org.xtext.ucd.mlopsdsl/src/org/xtext/ucd/mlopsdsl/generator/MlopsGenerator.java",
+      "sha256": "68568c352a51582c43d37d648c13b33600f91328eac181656d2208bef5ea2f64"
+    },
+    {
+      "path": "org.xtext.ucd.mlopsdsl.tests/src/org/xtext/ucd/mlopsdsl/tests/MlopsDslValidationTest.java",
+      "sha256": "6cabde86781b33333a582dba5f6687ae1e5801bb9a4457fcf74828531b1e75fb"
+    }
+  ]
+}

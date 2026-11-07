@@ -35,6 +35,7 @@ class JournalEvidenceTest(unittest.TestCase):
         plan = json.loads((ROOT / "evaluation/journal/work-packages.json").read_text(encoding="utf-8"))
         plan["work_packages"][0]["completed"] = True
         plan["work_packages"][0]["status"] = "complete"
+        plan["work_packages"][0]["evidence_records"] = []
         errors, _ = audit.audit(plan)
         self.assertTrue(any("requires status complete and evidence" in e for e in errors))
 
@@ -115,3 +116,4 @@ class JournalEvidenceTest(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
+

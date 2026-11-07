@@ -1,0 +1,21 @@
+{
+  "recorded_at_utc": "2026-11-07T15:09:18.594319+00:00",
+  "source_filename": "Pasted text(20261107-150359).txt",
+  "uploaded_source_sha256": "6cca826d54a60274820522d7cfc1193c824520873c3193e951b989224befe882",
+  "console_normalization": "UTF-8 with LF line endings",
+  "scope": "Author-provided diagnostic excerpt; full failed trial remains in the Windows run directory",
+  "reported_generated_failed_requirements": [
+    "cicdct:cicdct.stages",
+    "decision-gate:decisionGate.criteria",
+    "model-registry:modelRegistry.modelName",
+    "vnet_cidr",
+    "subnet_cidr_literals"
+  ],
+  "reported_domain_issues": [
+    {
+      "rule": "S09",
+      "detail": "Criterion minValue exceeds maxValue"
+    }
+  ],
+  "reported_baseline_remaining": []
+}

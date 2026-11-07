@@ -1,0 +1,71 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: vision-serving
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: validation-c00-serving
+  namespace: vision-serving
+spec:
+  ports:
+  - name: http
+    port: 65535
+    protocol: TCP
+    targetPort: 65535
+  selector:
+    app: validation-c00-serving
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: validation-c00-serving
+  namespace: vision-serving
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: validation-c00-serving
+  template:
+    metadata:
+      labels:
+        app: validation-c00-serving
+    spec:
+      containers:
+      - image: mcr.microsoft.com/azureml/openmpi4.1.0-ubuntu20.04
+        livenessProbe:
+          httpGet:
+            path: /health
+            port: 65535
+        name: serving
+        ports:
+        - containerPort: 65535
+          name: http
+        readinessProbe:
+          httpGet:
+            path: /ready
+            port: 65535
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: validation-c00-serving
+  namespace: vision-serving
+spec:
+  ingressClassName: nginx
+  rules:
+  - host: vision.azure.company.com
+    http:
+      paths:
+      - backend:
+          service:
+            name: validation-c00-serving
+            port:
+              number: 65535
+        path: /
+        pathType: Prefix
+  tls:
+  - hosts:
+    - vision.azure.company.com
+    secretName: validation-c00-serving-tls

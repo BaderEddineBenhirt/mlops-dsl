@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "as_of": "2026-10-18",
+  "as_of": "2026-11-07",
   "work_packages": [
     {
       "id": "WP1",
@@ -9,7 +9,20 @@
       "acceptance_criteria": "JUnit XML and independent run logs",
       "reference": "evaluation/validation/README.md",
       "completed": false,
-      "evidence_records": []
+      "evidence_records": [
+        {
+          "path": "evaluation/journal/author-results-20261107.md",
+          "sha256": "539052e509773d9929c2b8dee982a4c04ade304addf39c263c5de3d8eeddd03a",
+          "scope": "Interpretation checked against the native uploaded archive, including output-lock and formatting confounds; unequal full-scope size totals do not support superiority.",
+          "recorded_at_utc": "2026-11-07T15:46:10.536580+00:00"
+        },
+        {
+          "path": "evaluation/journal/replication-audit-20261107.json",
+          "sha256": "3be663e81d24c8ef3ff03396044ea0061581369a2eac8ec3a5eb99bfce3d9006",
+          "scope": "Original uploaded archive verified: all listed hashes, 23 JUnit cases, native logs and static replay of frozen configurations. Full equivalence/public reviewer access and independent clean Eclipse build remain open.",
+          "recorded_at_utc": "2026-11-07T16:15:34.087405+00:00"
+        }
+      ]
     },
     {
       "id": "WP2",
@@ -18,34 +31,110 @@
       "acceptance_criteria": "Reviewed full baseline, scope and downstream validation",
       "reference": "evaluation/journal/equivalence-review.md",
       "completed": false,
-      "evidence_records": []
+      "evidence_records": [
+        {
+          "path": "evaluation/journal/runs/agent-20261107/broader/report.json",
+          "sha256": "18912e84a23fc7aee7e9df8991e4e9b9414b7c13aa074d28209a69dd57bae358",
+          "scope": "79 selected checks; historical generated defects observed; native provider validation blocked; equivalence pending",
+          "recorded_at_utc": "2026-11-07T13:57:10.218519+00:00"
+        },
+        {
+          "path": "evaluation/journal/author-results-20261107.md",
+          "sha256": "539052e509773d9929c2b8dee982a4c04ade304addf39c263c5de3d8eeddd03a",
+          "scope": "Interpretation checked against the native uploaded archive, including output-lock and formatting confounds; unequal full-scope size totals do not support superiority.",
+          "recorded_at_utc": "2026-11-07T15:46:10.536596+00:00"
+        },
+        {
+          "path": "evaluation/journal/replication-audit-20261107.json",
+          "sha256": "3be663e81d24c8ef3ff03396044ea0061581369a2eac8ec3a5eb99bfce3d9006",
+          "scope": "Original uploaded archive verified: all listed hashes, 23 JUnit cases, native logs and static replay of frozen configurations. Full equivalence/public reviewer access and independent clean Eclipse build remain open.",
+          "recorded_at_utc": "2026-11-07T16:15:34.087654+00:00"
+        }
+      ]
     },
     {
       "id": "WP3",
       "title": "Paired seeded error detection",
-      "status": "not_run",
+      "status": "partial",
       "acceptance_criteria": "Executed fault pairs including missed/false-alarm cases and logs",
       "reference": "evaluation/journal/fault-pairs.tsv",
       "completed": false,
-      "evidence_records": []
+      "evidence_records": [
+        {
+          "path": "evaluation/journal/runs/agent-20261107/faults/report.json",
+          "sha256": "3f56337fa807676564a82f8b4c5c4a5bfd06e4d51a093d9f5bae54d8ede7b888",
+          "scope": "Baseline side executed only; actual Eclipse JSON missing, zero executed pairs",
+          "recorded_at_utc": "2026-11-07T13:57:10.218542+00:00"
+        },
+        {
+          "path": "evaluation/journal/author-results-20261107.md",
+          "sha256": "539052e509773d9929c2b8dee982a4c04ade304addf39c263c5de3d8eeddd03a",
+          "scope": "Interpretation checked against the native uploaded archive, including output-lock and formatting confounds; unequal full-scope size totals do not support superiority.",
+          "recorded_at_utc": "2026-11-07T15:46:10.536606+00:00"
+        },
+        {
+          "path": "evaluation/journal/replication-audit-20261107.json",
+          "sha256": "3be663e81d24c8ef3ff03396044ea0061581369a2eac8ec3a5eb99bfce3d9006",
+          "scope": "Original uploaded archive verified: all listed hashes, 23 JUnit cases, native logs and static replay of frozen configurations. Full equivalence/public reviewer access and independent clean Eclipse build remain open.",
+          "recorded_at_utc": "2026-11-07T16:15:34.087701+00:00"
+        }
+      ]
     },
     {
       "id": "WP4",
       "title": "Paired configuration evolution",
-      "status": "not_run",
+      "status": "partial",
       "acceptance_criteria": "Real runtime port experiment and independent additional change tasks",
       "reference": "evaluation/journal/evolution-tasks.tsv",
       "completed": false,
-      "evidence_records": []
+      "evidence_records": [
+        {
+          "path": "evaluation/journal/runs/author-evolution-progress-20261107/observations.json",
+          "sha256": "8506c14a739eb08a59bd9d431c2cd6998f6991fedaaad09ed9f9a8e5ae29a815",
+          "scope": "Native archives for all three C00 tasks verified and replayed from the uploaded ZIP; complete functional equivalence remains unestablished.",
+          "recorded_at_utc": "2026-11-07T15:46:10.536616+00:00"
+        },
+        {
+          "path": "evaluation/journal/author-results-20261107.md",
+          "sha256": "539052e509773d9929c2b8dee982a4c04ade304addf39c263c5de3d8eeddd03a",
+          "scope": "Interpretation checked against the native uploaded archive, including output-lock and formatting confounds; unequal full-scope size totals do not support superiority.",
+          "recorded_at_utc": "2026-11-07T15:46:10.536625+00:00"
+        },
+        {
+          "path": "evaluation/journal/replication-audit-20261107.json",
+          "sha256": "3be663e81d24c8ef3ff03396044ea0061581369a2eac8ec3a5eb99bfce3d9006",
+          "scope": "Original uploaded archive verified: all listed hashes, 23 JUnit cases, native logs and static replay of frozen configurations. Full equivalence/public reviewer access and independent clean Eclipse build remain open.",
+          "recorded_at_utc": "2026-11-07T16:15:34.087741+00:00"
+        }
+      ]
     },
     {
       "id": "WP5",
       "title": "Source specification size and duplication",
-      "status": "not_run",
+      "status": "partial",
       "acceptance_criteria": "Equivalent-scope measured metrics plus manual duplication assessment",
       "reference": "tools/measure_authoring_sources.py",
       "completed": false,
-      "evidence_records": []
+      "evidence_records": [
+        {
+          "path": "evaluation/journal/runs/agent-20261107/source-size.json",
+          "sha256": "2d6a2d5c1add936766a82f784f67ea58a72d379bbc61ebbd087b1d9ff57a25cb",
+          "scope": "Descriptive maintained-source counts only; unequal scope, no superiority ratio",
+          "recorded_at_utc": "2026-11-07T13:57:10.218557+00:00"
+        },
+        {
+          "path": "evaluation/journal/author-results-20261107.md",
+          "sha256": "539052e509773d9929c2b8dee982a4c04ade304addf39c263c5de3d8eeddd03a",
+          "scope": "Interpretation checked against the native uploaded archive, including output-lock and formatting confounds; unequal full-scope size totals do not support superiority.",
+          "recorded_at_utc": "2026-11-07T15:46:10.536633+00:00"
+        },
+        {
+          "path": "evaluation/journal/replication-audit-20261107.json",
+          "sha256": "3be663e81d24c8ef3ff03396044ea0061581369a2eac8ec3a5eb99bfce3d9006",
+          "scope": "Original uploaded archive verified: all listed hashes, 23 JUnit cases, native logs and static replay of frozen configurations. Full equivalence/public reviewer access and independent clean Eclipse build remain open.",
+          "recorded_at_utc": "2026-11-07T16:15:34.087880+00:00"
+        }
+      ]
     },
     {
       "id": "WP6",
@@ -63,7 +152,14 @@
       "acceptance_criteria": "Complete meta-model, pinned toolchain, raw logs and immutable accessible release",
       "reference": "evaluation/journal/replication-release.md",
       "completed": false,
-      "evidence_records": []
+      "evidence_records": [
+        {
+          "path": "evaluation/journal/replication-audit-20261107.json",
+          "sha256": "3be663e81d24c8ef3ff03396044ea0061581369a2eac8ec3a5eb99bfce3d9006",
+          "scope": "Original uploaded archive verified: all listed hashes, 23 JUnit cases, native logs and static replay of frozen configurations. Full equivalence/public reviewer access and independent clean Eclipse build remain open.",
+          "recorded_at_utc": "2026-11-07T16:15:34.087895+00:00"
+        }
+      ]
     }
   ]
 }

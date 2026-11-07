@@ -1,0 +1,1053 @@
+{
+  "case": "C00",
+  "scope": "Selected Azure resources, runtime and nine lifecycle policies; no deployment/execution equivalence",
+  "checks": [
+    {
+      "id": "cicdct:cicdct.target",
+      "kind": "yaml",
+      "file": "mlops/cicdct.yaml",
+      "path": [
+        "cicdct",
+        "target"
+      ],
+      "expected": [
+        "AZURE"
+      ]
+    },
+    {
+      "id": "cicdct:cicdct.pipelineFile",
+      "kind": "yaml",
+      "file": "mlops/cicdct.yaml",
+      "path": [
+        "cicdct",
+        "pipelineFile"
+      ],
+      "expected": [
+        "azure-pipelines.yml"
+      ]
+    },
+    {
+      "id": "cicdct:cicdct.enableCI",
+      "kind": "yaml",
+      "file": "mlops/cicdct.yaml",
+      "path": [
+        "cicdct",
+        "enableCI"
+      ],
+      "expected": [
+        true
+      ]
+    },
+    {
+      "id": "cicdct:cicdct.enableCD",
+      "kind": "yaml",
+      "file": "mlops/cicdct.yaml",
+      "path": [
+        "cicdct",
+        "enableCD"
+      ],
+      "expected": [
+        true
+      ]
+    },
+    {
+      "id": "cicdct:cicdct.enableCT",
+      "kind": "yaml",
+      "file": "mlops/cicdct.yaml",
+      "path": [
+        "cicdct",
+        "enableCT"
+      ],
+      "expected": [
+        true
+      ]
+    },
+    {
+      "id": "cicdct:cicdct.stages",
+      "kind": "yaml",
+      "file": "mlops/cicdct.yaml",
+      "path": [
+        "cicdct",
+        "stages"
+      ],
+      "expected": [
+        [
+          {
+            "kind": "VALIDATE_DATA",
+            "name": "data_validation",
+            "required": true,
+            "tool": "python",
+            "outputArtifact": "reports/data-quality.json"
+          },
+          {
+            "kind": "VERSION_DATA",
+            "name": "data_versioning",
+            "required": true,
+            "tool": "dvc",
+            "outputArtifact": "dvc.lock"
+          },
+          {
+            "kind": "TRAIN",
+            "name": "training",
+            "required": true,
+            "tool": "pytorch",
+            "outputArtifact": "models/resnet.pt"
+          },
+          {
+            "kind": "TRACK_EXPERIMENT",
+            "name": "experiment_tracking",
+            "required": true,
+            "tool": "mlflow",
+            "outputArtifact": "mlruns"
+          },
+          {
+            "kind": "EVALUATE",
+            "name": "evaluation",
+            "required": true,
+            "tool": "python",
+            "outputArtifact": "metrics/eval.json"
+          },
+          {
+            "kind": "REGISTER_MODEL",
+            "name": "model_registry",
+            "required": true,
+            "tool": "azureml",
+            "outputArtifact": "registry/vision_defects_model_v1"
+          },
+          {
+            "kind": "DECISION_GATE",
+            "name": "decision_gate",
+            "required": true,
+            "tool": "mlopsdsl",
+            "outputArtifact": "reports/decision.json"
+          },
+          {
+            "kind": "DEPLOY",
+            "name": "deployment",
+            "required": true,
+            "tool": "terraform",
+            "outputArtifact": "infra/terraform/tfplan"
+          },
+          {
+            "kind": "MONITOR",
+            "name": "monitoring",
+            "required": true,
+            "tool": "datadog",
+            "outputArtifact": "metrics/runtime.json"
+          },
+          {
+            "kind": "RETRAIN",
+            "name": "retraining_check",
+            "required": true,
+            "tool": "mlopsdsl",
+            "outputArtifact": "reports/retraining-decision.json"
+          }
+        ]
+      ]
+    },
+    {
+      "id": "decision-gate:decisionGate.autoPromote",
+      "kind": "yaml",
+      "file": "mlops/decision-gate.yaml",
+      "path": [
+        "decisionGate",
+        "autoPromote"
+      ],
+      "expected": [
+        true
+      ]
+    },
+    {
+      "id": "decision-gate:decisionGate.minAccuracy",
+      "kind": "yaml",
+      "file": "mlops/decision-gate.yaml",
+      "path": [
+        "decisionGate",
+        "minAccuracy"
+      ],
+      "expected": [
+        0.9
+      ]
+    },
+    {
+      "id": "decision-gate:decisionGate.minF1",
+      "kind": "yaml",
+      "file": "mlops/decision-gate.yaml",
+      "path": [
+        "decisionGate",
+        "minF1"
+      ],
+      "expected": [
+        0.88
+      ]
+    },
+    {
+      "id": "decision-gate:decisionGate.maxLatencyMs",
+      "kind": "yaml",
+      "file": "mlops/decision-gate.yaml",
+      "path": [
+        "decisionGate",
+        "maxLatencyMs"
+      ],
+      "expected": [
+        200.0
+      ]
+    },
+    {
+      "id": "decision-gate:decisionGate.maxCost",
+      "kind": "yaml",
+      "file": "mlops/decision-gate.yaml",
+      "path": [
+        "decisionGate",
+        "maxCost"
+      ],
+      "expected": [
+        50.0
+      ]
+    },
+    {
+      "id": "decision-gate:decisionGate.maxDrift",
+      "kind": "yaml",
+      "file": "mlops/decision-gate.yaml",
+      "path": [
+        "decisionGate",
+        "maxDrift"
+      ],
+      "expected": [
+        0.15
+      ]
+    },
+    {
+      "id": "decision-gate:decisionGate.minTraceabilityScore",
+      "kind": "yaml",
+      "file": "mlops/decision-gate.yaml",
+      "path": [
+        "decisionGate",
+        "minTraceabilityScore"
+      ],
+      "expected": [
+        0.95
+      ]
+    },
+    {
+      "id": "decision-gate:decisionGate.criteria",
+      "kind": "yaml",
+      "file": "mlops/decision-gate.yaml",
+      "path": [
+        "decisionGate",
+        "criteria"
+      ],
+      "expected": [
+        [
+          {
+            "name": "performance",
+            "weight": 0.35,
+            "minValue": 0.9,
+            "required": true
+          },
+          {
+            "name": "robustness",
+            "weight": 0.2,
+            "minValue": 0.85,
+            "required": true
+          },
+          {
+            "name": "drift_stability",
+            "weight": 0.15,
+            "maxValue": 0.15,
+            "required": true
+          },
+          {
+            "name": "latency",
+            "weight": 0.1,
+            "maxValue": 200.0,
+            "required": true
+          },
+          {
+            "name": "traceability",
+            "weight": 0.2,
+            "minValue": 0.95,
+            "required": true
+          }
+        ]
+      ]
+    },
+    {
+      "id": "governance:governance.traceabilityRequired",
+      "kind": "yaml",
+      "file": "mlops/governance.yaml",
+      "path": [
+        "governance",
+        "traceabilityRequired"
+      ],
+      "expected": [
+        true
+      ]
+    },
+    {
+      "id": "governance:governance.explainDecision",
+      "kind": "yaml",
+      "file": "mlops/governance.yaml",
+      "path": [
+        "governance",
+        "explainDecision"
+      ],
+      "expected": [
+        true
+      ]
+    },
+    {
+      "id": "governance:governance.auditTrail",
+      "kind": "yaml",
+      "file": "mlops/governance.yaml",
+      "path": [
+        "governance",
+        "auditTrail"
+      ],
+      "expected": [
+        true
+      ]
+    },
+    {
+      "id": "governance:governance.riskReport",
+      "kind": "yaml",
+      "file": "mlops/governance.yaml",
+      "path": [
+        "governance",
+        "riskReport"
+      ],
+      "expected": [
+        true
+      ]
+    },
+    {
+      "id": "governance:governance.complianceFramework",
+      "kind": "yaml",
+      "file": "mlops/governance.yaml",
+      "path": [
+        "governance",
+        "complianceFramework"
+      ],
+      "expected": [
+        "NIST-AI-RMF"
+      ]
+    },
+    {
+      "id": "lifecycle:project",
+      "kind": "yaml",
+      "file": "mlops/lifecycle.yaml",
+      "path": [
+        "project"
+      ],
+      "expected": [
+        "validation_c00"
+      ]
+    },
+    {
+      "id": "lifecycle:pipeline",
+      "kind": "yaml",
+      "file": "mlops/lifecycle.yaml",
+      "path": [
+        "pipeline"
+      ],
+      "expected": [
+        [
+          "data_validation",
+          "data_versioning",
+          "training",
+          "experiment_tracking",
+          "evaluation",
+          "model_registry",
+          "ai_decision_gate",
+          "deployment",
+          "monitoring",
+          "retraining_trigger"
+        ]
+      ]
+    },
+    {
+      "id": "lifecycle:tools.tracking",
+      "kind": "yaml",
+      "file": "mlops/lifecycle.yaml",
+      "path": [
+        "tools",
+        "tracking"
+      ],
+      "expected": [
+        "MLFLOW"
+      ]
+    },
+    {
+      "id": "lifecycle:tools.versioning",
+      "kind": "yaml",
+      "file": "mlops/lifecycle.yaml",
+      "path": [
+        "tools",
+        "versioning"
+      ],
+      "expected": [
+        "DVC"
+      ]
+    },
+    {
+      "id": "lifecycle:tools.registry",
+      "kind": "yaml",
+      "file": "mlops/lifecycle.yaml",
+      "path": [
+        "tools",
+        "registry"
+      ],
+      "expected": [
+        "AZURE_ML"
+      ]
+    },
+    {
+      "id": "lifecycle:tools.cicdct",
+      "kind": "yaml",
+      "file": "mlops/lifecycle.yaml",
+      "path": [
+        "tools",
+        "cicdct"
+      ],
+      "expected": [
+        "AZURE"
+      ]
+    },
+    {
+      "id": "lifecycle:generatedArtifacts.terraform",
+      "kind": "yaml",
+      "file": "mlops/lifecycle.yaml",
+      "path": [
+        "generatedArtifacts",
+        "terraform"
+      ],
+      "expected": [
+        "infra/terraform"
+      ]
+    },
+    {
+      "id": "lifecycle:generatedArtifacts.cicdct",
+      "kind": "yaml",
+      "file": "mlops/lifecycle.yaml",
+      "path": [
+        "generatedArtifacts",
+        "cicdct"
+      ],
+      "expected": [
+        "pipelines/"
+      ]
+    },
+    {
+      "id": "lifecycle:generatedArtifacts.mlopsPolicies",
+      "kind": "yaml",
+      "file": "mlops/lifecycle.yaml",
+      "path": [
+        "generatedArtifacts",
+        "mlopsPolicies"
+      ],
+      "expected": [
+        "mlops/"
+      ]
+    },
+    {
+      "id": "lifecycle:generatedArtifacts.runtime",
+      "kind": "yaml",
+      "file": "mlops/lifecycle.yaml",
+      "path": [
+        "generatedArtifacts",
+        "runtime"
+      ],
+      "expected": [
+        "runtime/k8s"
+      ]
+    },
+    {
+      "id": "model-registry:modelRegistry.backend",
+      "kind": "yaml",
+      "file": "mlops/model-registry.yaml",
+      "path": [
+        "modelRegistry",
+        "backend"
+      ],
+      "expected": [
+        "AZURE_ML"
+      ]
+    },
+    {
+      "id": "model-registry:modelRegistry.modelName",
+      "kind": "yaml",
+      "file": "mlops/model-registry.yaml",
+      "path": [
+        "modelRegistry",
+        "modelName"
+      ],
+      "expected": [
+        "vision_defects_model_v1"
+      ]
+    },
+    {
+      "id": "model-registry:modelRegistry.enableStaging",
+      "kind": "yaml",
+      "file": "mlops/model-registry.yaml",
+      "path": [
+        "modelRegistry",
+        "enableStaging"
+      ],
+      "expected": [
+        true
+      ]
+    },
+    {
+      "id": "model-registry:modelRegistry.enableProduction",
+      "kind": "yaml",
+      "file": "mlops/model-registry.yaml",
+      "path": [
+        "modelRegistry",
+        "enableProduction"
+      ],
+      "expected": [
+        true
+      ]
+    },
+    {
+      "id": "model-registry:modelRegistry.rollbackEnabled",
+      "kind": "yaml",
+      "file": "mlops/model-registry.yaml",
+      "path": [
+        "modelRegistry",
+        "rollbackEnabled"
+      ],
+      "expected": [
+        true
+      ]
+    },
+    {
+      "id": "model-registry:modelRegistry.approvalMode",
+      "kind": "yaml",
+      "file": "mlops/model-registry.yaml",
+      "path": [
+        "modelRegistry",
+        "approvalMode"
+      ],
+      "expected": [
+        "automatic"
+      ]
+    },
+    {
+      "id": "monitoring-policy:monitoring.alertChannel",
+      "kind": "yaml",
+      "file": "mlops/monitoring-policy.yaml",
+      "path": [
+        "monitoring",
+        "alertChannel"
+      ],
+      "expected": [
+        "slack://#azure-monitoring"
+      ]
+    },
+    {
+      "id": "monitoring-policy:monitoring.perfMetrics",
+      "kind": "yaml",
+      "file": "mlops/monitoring-policy.yaml",
+      "path": [
+        "monitoring",
+        "perfMetrics"
+      ],
+      "expected": [
+        [
+          "p95_latency_ms",
+          "p99_latency_ms",
+          "throughput_rps",
+          "error_rate"
+        ]
+      ]
+    },
+    {
+      "id": "monitoring-policy:monitoring.dataDrift",
+      "kind": "yaml",
+      "file": "mlops/monitoring-policy.yaml",
+      "path": [
+        "monitoring",
+        "dataDrift"
+      ],
+      "expected": [
+        [
+          {
+            "name": "image_brightness_shift",
+            "warn": 0.15,
+            "fail": 0.3
+          }
+        ]
+      ]
+    },
+    {
+      "id": "monitoring-policy:monitoring.modelDrift",
+      "kind": "yaml",
+      "file": "mlops/monitoring-policy.yaml",
+      "path": [
+        "monitoring",
+        "modelDrift"
+      ],
+      "expected": [
+        [
+          {
+            "name": "accuracy_drop",
+            "warn": 0.05,
+            "fail": 0.1
+          }
+        ]
+      ]
+    },
+    {
+      "id": "retraining-policy:retraining.strategy",
+      "kind": "yaml",
+      "file": "mlops/retraining-policy.yaml",
+      "path": [
+        "retraining",
+        "strategy"
+      ],
+      "expected": [
+        "HYBRID"
+      ]
+    },
+    {
+      "id": "retraining-policy:retraining.driftThreshold",
+      "kind": "yaml",
+      "file": "mlops/retraining-policy.yaml",
+      "path": [
+        "retraining",
+        "driftThreshold"
+      ],
+      "expected": [
+        0.15
+      ]
+    },
+    {
+      "id": "retraining-policy:retraining.performanceDropThreshold",
+      "kind": "yaml",
+      "file": "mlops/retraining-policy.yaml",
+      "path": [
+        "retraining",
+        "performanceDropThreshold"
+      ],
+      "expected": [
+        0.08
+      ]
+    },
+    {
+      "id": "retraining-policy:retraining.schedule",
+      "kind": "yaml",
+      "file": "mlops/retraining-policy.yaml",
+      "path": [
+        "retraining",
+        "schedule"
+      ],
+      "expected": [
+        "weekly"
+      ]
+    },
+    {
+      "id": "retraining-policy:retraining.autoTrigger",
+      "kind": "yaml",
+      "file": "mlops/retraining-policy.yaml",
+      "path": [
+        "retraining",
+        "autoTrigger"
+      ],
+      "expected": [
+        true
+      ]
+    },
+    {
+      "id": "retraining-policy:retraining.retrainingQueue",
+      "kind": "yaml",
+      "file": "mlops/retraining-policy.yaml",
+      "path": [
+        "retraining",
+        "retrainingQueue"
+      ],
+      "expected": [
+        "gpu-training"
+      ]
+    },
+    {
+      "id": "tracking:tracking.backend",
+      "kind": "yaml",
+      "file": "mlops/tracking.yaml",
+      "path": [
+        "tracking",
+        "backend"
+      ],
+      "expected": [
+        "MLFLOW"
+      ]
+    },
+    {
+      "id": "tracking:tracking.experimentName",
+      "kind": "yaml",
+      "file": "mlops/tracking.yaml",
+      "path": [
+        "tracking",
+        "experimentName"
+      ],
+      "expected": [
+        "vision_defects_experiment"
+      ]
+    },
+    {
+      "id": "tracking:tracking.trackingUri",
+      "kind": "yaml",
+      "file": "mlops/tracking.yaml",
+      "path": [
+        "tracking",
+        "trackingUri"
+      ],
+      "expected": [
+        "http://mlflow.local:5000"
+      ]
+    },
+    {
+      "id": "tracking:tracking.logParams",
+      "kind": "yaml",
+      "file": "mlops/tracking.yaml",
+      "path": [
+        "tracking",
+        "logParams"
+      ],
+      "expected": [
+        true
+      ]
+    },
+    {
+      "id": "tracking:tracking.logMetrics",
+      "kind": "yaml",
+      "file": "mlops/tracking.yaml",
+      "path": [
+        "tracking",
+        "logMetrics"
+      ],
+      "expected": [
+        true
+      ]
+    },
+    {
+      "id": "tracking:tracking.logArtifacts",
+      "kind": "yaml",
+      "file": "mlops/tracking.yaml",
+      "path": [
+        "tracking",
+        "logArtifacts"
+      ],
+      "expected": [
+        true
+      ]
+    },
+    {
+      "id": "tracking:tracking.logModel",
+      "kind": "yaml",
+      "file": "mlops/tracking.yaml",
+      "path": [
+        "tracking",
+        "logModel"
+      ],
+      "expected": [
+        true
+      ]
+    },
+    {
+      "id": "versioning:versioning.backend",
+      "kind": "yaml",
+      "file": "mlops/versioning.yaml",
+      "path": [
+        "versioning",
+        "backend"
+      ],
+      "expected": [
+        "DVC"
+      ]
+    },
+    {
+      "id": "versioning:versioning.versionData",
+      "kind": "yaml",
+      "file": "mlops/versioning.yaml",
+      "path": [
+        "versioning",
+        "versionData"
+      ],
+      "expected": [
+        true
+      ]
+    },
+    {
+      "id": "versioning:versioning.versionCode",
+      "kind": "yaml",
+      "file": "mlops/versioning.yaml",
+      "path": [
+        "versioning",
+        "versionCode"
+      ],
+      "expected": [
+        true
+      ]
+    },
+    {
+      "id": "versioning:versioning.versionModels",
+      "kind": "yaml",
+      "file": "mlops/versioning.yaml",
+      "path": [
+        "versioning",
+        "versionModels"
+      ],
+      "expected": [
+        true
+      ]
+    },
+    {
+      "id": "versioning:versioning.versionParams",
+      "kind": "yaml",
+      "file": "mlops/versioning.yaml",
+      "path": [
+        "versioning",
+        "versionParams"
+      ],
+      "expected": [
+        true
+      ]
+    },
+    {
+      "id": "versioning:versioning.remoteUri",
+      "kind": "yaml",
+      "file": "mlops/versioning.yaml",
+      "path": [
+        "versioning",
+        "remoteUri"
+      ],
+      "expected": [
+        "azure://vision-datasets/dvc"
+      ]
+    },
+    {
+      "id": "deployment_namespace",
+      "file": "runtime/k8s/deployment.yaml",
+      "path": [
+        "metadata",
+        "namespace"
+      ],
+      "expected": [
+        "vision-serving"
+      ],
+      "kind": "yaml"
+    },
+    {
+      "id": "replicas",
+      "file": "runtime/k8s/deployment.yaml",
+      "path": [
+        "spec",
+        "replicas"
+      ],
+      "expected": [
+        2
+      ],
+      "kind": "yaml"
+    },
+    {
+      "id": "container_port",
+      "file": "runtime/k8s/deployment.yaml",
+      "path": [
+        "spec",
+        "template",
+        "spec",
+        "containers",
+        "*",
+        "ports",
+        "*",
+        "containerPort"
+      ],
+      "expected": [
+        8080
+      ],
+      "kind": "yaml"
+    },
+    {
+      "id": "readiness_port",
+      "file": "runtime/k8s/deployment.yaml",
+      "path": [
+        "spec",
+        "template",
+        "spec",
+        "containers",
+        "*",
+        "readinessProbe",
+        "httpGet",
+        "port"
+      ],
+      "expected": [
+        8080
+      ],
+      "kind": "yaml"
+    },
+    {
+      "id": "liveness_port",
+      "file": "runtime/k8s/deployment.yaml",
+      "path": [
+        "spec",
+        "template",
+        "spec",
+        "containers",
+        "*",
+        "livenessProbe",
+        "httpGet",
+        "port"
+      ],
+      "expected": [
+        8080
+      ],
+      "kind": "yaml"
+    },
+    {
+      "id": "service_port",
+      "file": "runtime/k8s/service.yaml",
+      "path": [
+        "spec",
+        "ports",
+        "*",
+        "port"
+      ],
+      "expected": [
+        8080
+      ],
+      "kind": "yaml"
+    },
+    {
+      "id": "service_target_port",
+      "file": "runtime/k8s/service.yaml",
+      "path": [
+        "spec",
+        "ports",
+        "*",
+        "targetPort"
+      ],
+      "expected": [
+        8080
+      ],
+      "kind": "yaml"
+    },
+    {
+      "id": "public_host",
+      "file": "runtime/k8s/ingress.yaml",
+      "path": [
+        "spec",
+        "rules",
+        "*",
+        "host"
+      ],
+      "expected": [
+        "vision.azure.company.com"
+      ],
+      "kind": "yaml"
+    },
+    {
+      "id": "ingress_backend_port",
+      "file": "runtime/k8s/ingress.yaml",
+      "path": [
+        "spec",
+        "rules",
+        "*",
+        "http",
+        "paths",
+        "*",
+        "backend",
+        "service",
+        "port",
+        "number"
+      ],
+      "expected": [
+        8080
+      ],
+      "kind": "yaml"
+    },
+    {
+      "id": "explicit_tls_host",
+      "file": "runtime/k8s/ingress.yaml",
+      "path": [
+        "spec",
+        "tls",
+        "*",
+        "hosts",
+        "*"
+      ],
+      "expected": [
+        "vision.azure.company.com"
+      ],
+      "kind": "yaml"
+    },
+    {
+      "id": "azurerm_virtual_network",
+      "kind": "resource",
+      "resource": "azurerm_virtual_network",
+      "minimum": 1
+    },
+    {
+      "id": "azurerm_subnet",
+      "kind": "resource",
+      "resource": "azurerm_subnet",
+      "minimum": 1
+    },
+    {
+      "id": "azurerm_kubernetes_cluster",
+      "kind": "resource",
+      "resource": "azurerm_kubernetes_cluster",
+      "minimum": 1
+    },
+    {
+      "id": "azurerm_kubernetes_cluster_node_pool",
+      "kind": "resource",
+      "resource": "azurerm_kubernetes_cluster_node_pool",
+      "minimum": 1
+    },
+    {
+      "id": "azurerm_storage_account",
+      "kind": "resource",
+      "resource": "azurerm_storage_account",
+      "minimum": 1
+    },
+    {
+      "id": "azurerm_storage_container",
+      "kind": "resource",
+      "resource": "azurerm_storage_container",
+      "minimum": 1
+    },
+    {
+      "id": "azurerm_key_vault",
+      "kind": "resource",
+      "resource": "azurerm_key_vault",
+      "minimum": 1
+    },
+    {
+      "id": "azurerm_log_analytics_workspace",
+      "kind": "resource",
+      "resource": "azurerm_log_analytics_workspace",
+      "minimum": 1
+    },
+    {
+      "id": "region",
+      "kind": "region",
+      "expected": "westeurope"
+    },
+    {
+      "id": "vnet_cidr",
+      "kind": "network",
+      "expected": [
+        "10.50.0.0/16"
+      ]
+    },
+    {
+      "id": "subnet_cidr_literals",
+      "kind": "subnet_literals",
+      "expected": [
+        "10.50.1.0/24",
+        "10.50.2.0/24"
+      ]
+    }
+  ]
+}

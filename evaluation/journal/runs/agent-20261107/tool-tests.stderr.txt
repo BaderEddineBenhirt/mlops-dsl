@@ -1,0 +1,26 @@
+test_committed_plan_is_well_formed_and_incomplete (test_journal_evidence.JournalEvidenceTest.test_committed_plan_is_well_formed_and_incomplete) ... ok
+test_completion_without_evidence_is_invalid (test_journal_evidence.JournalEvidenceTest.test_completion_without_evidence_is_invalid) ... ok
+test_distinguish_source_from_generated (test_journal_evidence.JournalEvidenceTest.test_distinguish_source_from_generated) ... ok
+test_fault_matrix_is_valid_but_unexecuted (test_journal_evidence.JournalEvidenceTest.test_fault_matrix_is_valid_but_unexecuted) ... ok
+test_missing_evidence_is_rejected (test_journal_evidence.JournalEvidenceTest.test_missing_evidence_is_rejected) ... ok
+test_not_applicable_requires_reason (test_journal_evidence.JournalEvidenceTest.test_not_applicable_requires_reason) ... ok
+test_paired_semantic_detection_does_not_count_linking (test_journal_evidence.JournalEvidenceTest.test_paired_semantic_detection_does_not_count_linking) ... ok
+test_source_report_never_claims_superiority (test_journal_evidence.JournalEvidenceTest.test_source_report_never_claims_superiority) ... ok
+test_strict_gate_fails_when_tasks_pending (test_journal_evidence.JournalEvidenceTest.test_strict_gate_fails_when_tasks_pending) ... ok
+test_all_policy_requirements_have_explicit_expected_values (test_journal_execution.JournalExecutionTest.test_all_policy_requirements_have_explicit_expected_values) ... ok
+test_all_valid_controls_have_no_false_alarm (test_journal_execution.JournalExecutionTest.test_all_valid_controls_have_no_false_alarm) ... ok
+test_archived_generator_defects_are_detected (test_journal_execution.JournalExecutionTest.test_archived_generator_defects_are_detected) ... ok
+test_each_applicable_mutation_hits_its_target (test_journal_execution.JournalExecutionTest.test_each_applicable_mutation_hits_its_target) ... ok
+test_evolution_contract_updates_registry_references (test_journal_execution.JournalExecutionTest.test_evolution_contract_updates_registry_references) ... ok
+test_evolution_detects_changed_files_and_separate_hunks (test_journal_execution.JournalExecutionTest.test_evolution_detects_changed_files_and_separate_hunks) ... ok
+test_faults_not_represented_are_excluded_with_reasons (test_journal_execution.JournalExecutionTest.test_faults_not_represented_are_excluded_with_reasons) ... ok
+test_matched_recall_excludes_one_sided_and_inapplicable_cases (test_journal_execution.JournalExecutionTest.test_matched_recall_excludes_one_sided_and_inapplicable_cases) ... ok
+test_nonfinite_weights_are_rejected (test_journal_execution.JournalExecutionTest.test_nonfinite_weights_are_rejected) ... ok
+test_replication_rejects_incomplete_junit_xml (test_journal_execution.JournalExecutionTest.test_replication_rejects_incomplete_junit_xml) ... ok
+test_replication_requires_real_external_metamodel (test_journal_execution.JournalExecutionTest.test_replication_requires_real_external_metamodel) ... ok
+test_replication_skips_state_credentials_and_build_products (test_journal_execution.JournalExecutionTest.test_replication_skips_state_credentials_and_build_products) ... ok
+
+----------------------------------------------------------------------
+Ran 21 tests in 0.371s
+
+OK

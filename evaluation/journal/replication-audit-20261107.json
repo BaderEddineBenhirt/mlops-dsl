@@ -1,0 +1,265 @@
+{
+  "recorded_at_utc": "2026-11-07T16:15:34.074748+00:00",
+  "archive_filename": "mlops-dsl-replication-draft.zip",
+  "archive_sha256": "8ffaced045525762300f8f579c662a1f94a3ddfcf8555573e7a58c76bf8952b5",
+  "archive_bytes": 5477077,
+  "archive_entries": 2547,
+  "manifest_entries_verified": 2545,
+  "manifest_entries_total": 2545,
+  "manifest_mismatches": [],
+  "unlisted_control_files": [
+    "evidence/manifest.json",
+    "evidence/preflight.json"
+  ],
+  "captured_git_commit": "7b772df1458e38af0dc0537c483b49e7c7470144",
+  "junit_xml_sha256": "7df567430975486c0156a99fd4010a53bd5f13fa919b6babd1d48ba7ca432b66",
+  "junit_totals": {
+    "name": "MlopsDslValidationTest",
+    "project": "org.xtext.ucd.mlopsdsl.tests",
+    "tests": "23",
+    "started": "23",
+    "failures": "0",
+    "errors": "0",
+    "ignored": "0"
+  },
+  "fixture_hashes_verified": 16,
+  "fixture_copies_checked": 2,
+  "metamodel": {
+    "ecore": "meta-model/model/mlops.ecore",
+    "genmodel": "meta-model/model/mlops.genmodel",
+    "namespace": "http://ucd.ac.ma/mlops",
+    "classifier_count": 63,
+    "java_sources": 113
+  },
+  "comparison_replays": [
+    {
+      "run": "author-20261107-143624-693",
+      "side": "baseline",
+      "requirements_match_recorded": true,
+      "domain_match_recorded": true,
+      "native_terraform_recorded_status": "BLOCKED"
+    },
+    {
+      "run": "author-20261107-143624-693",
+      "side": "generated",
+      "requirements_match_recorded": true,
+      "domain_match_recorded": true,
+      "native_terraform_recorded_status": "PASS"
+    },
+    {
+      "run": "author-20261107-144731-354",
+      "side": "baseline",
+      "requirements_match_recorded": true,
+      "domain_match_recorded": true,
+      "native_terraform_recorded_status": "PASS"
+    },
+    {
+      "run": "author-20261107-144731-354",
+      "side": "generated",
+      "requirements_match_recorded": true,
+      "domain_match_recorded": true,
+      "native_terraform_recorded_status": "PASS"
+    }
+  ],
+  "evolution_replays": [
+    {
+      "run": "registry-author-01",
+      "recorded_status": "FAIL",
+      "phases": {
+        "before_baseline": {
+          "requirement_count": 79,
+          "failed_requirement_ids": [],
+          "domain_issues": [],
+          "parsing_errors": []
+        },
+        "before_generated": {
+          "requirement_count": 79,
+          "failed_requirement_ids": [],
+          "domain_issues": [],
+          "parsing_errors": []
+        },
+        "after_baseline": {
+          "requirement_count": 79,
+          "failed_requirement_ids": [],
+          "domain_issues": [],
+          "parsing_errors": []
+        },
+        "after_generated": {
+          "requirement_count": 79,
+          "failed_requirement_ids": [
+            "cicdct:cicdct.stages",
+            "decision-gate:decisionGate.criteria",
+            "model-registry:modelRegistry.modelName",
+            "vnet_cidr",
+            "subnet_cidr_literals"
+          ],
+          "domain_issues": [
+            {
+              "rule": "S09",
+              "detail": "Criterion minValue exceeds maxValue"
+            }
+          ],
+          "parsing_errors": []
+        }
+      }
+    },
+    {
+      "run": "registry-author-01-retry-01",
+      "recorded_status": "FAIL",
+      "phases": {
+        "before_baseline": {
+          "requirement_count": 79,
+          "failed_requirement_ids": [],
+          "domain_issues": [],
+          "parsing_errors": []
+        },
+        "before_generated": {
+          "requirement_count": 79,
+          "failed_requirement_ids": [],
+          "domain_issues": [],
+          "parsing_errors": []
+        },
+        "after_baseline": {
+          "requirement_count": 79,
+          "failed_requirement_ids": [],
+          "domain_issues": [],
+          "parsing_errors": []
+        },
+        "after_generated": {
+          "requirement_count": 79,
+          "failed_requirement_ids": [
+            "decision-gate:decisionGate.criteria",
+            "vnet_cidr",
+            "subnet_cidr_literals"
+          ],
+          "domain_issues": [
+            {
+              "rule": "S09",
+              "detail": "Criterion minValue exceeds maxValue"
+            }
+          ],
+          "parsing_errors": []
+        }
+      }
+    },
+    {
+      "run": "registry-author-01-retry-02",
+      "recorded_status": "PASS_SELECTED_EVOLUTION",
+      "phases": {
+        "before_baseline": {
+          "requirement_count": 79,
+          "failed_requirement_ids": [],
+          "domain_issues": [],
+          "parsing_errors": []
+        },
+        "before_generated": {
+          "requirement_count": 79,
+          "failed_requirement_ids": [],
+          "domain_issues": [],
+          "parsing_errors": []
+        },
+        "after_baseline": {
+          "requirement_count": 79,
+          "failed_requirement_ids": [],
+          "domain_issues": [],
+          "parsing_errors": []
+        },
+        "after_generated": {
+          "requirement_count": 79,
+          "failed_requirement_ids": [],
+          "domain_issues": [],
+          "parsing_errors": []
+        }
+      }
+    },
+    {
+      "run": "exposure-author-01",
+      "recorded_status": "PASS_SELECTED_EVOLUTION",
+      "phases": {
+        "before_baseline": {
+          "requirement_count": 78,
+          "failed_requirement_ids": [],
+          "domain_issues": [],
+          "parsing_errors": []
+        },
+        "before_generated": {
+          "requirement_count": 78,
+          "failed_requirement_ids": [],
+          "domain_issues": [],
+          "parsing_errors": []
+        },
+        "after_baseline": {
+          "requirement_count": 79,
+          "failed_requirement_ids": [],
+          "domain_issues": [],
+          "parsing_errors": []
+        },
+        "after_generated": {
+          "requirement_count": 79,
+          "failed_requirement_ids": [],
+          "domain_issues": [],
+          "parsing_errors": []
+        }
+      }
+    },
+    {
+      "run": "port-author-01",
+      "recorded_status": "PASS_SELECTED_EVOLUTION",
+      "phases": {
+        "before_baseline": {
+          "requirement_count": 79,
+          "failed_requirement_ids": [],
+          "domain_issues": [],
+          "parsing_errors": []
+        },
+        "before_generated": {
+          "requirement_count": 79,
+          "failed_requirement_ids": [],
+          "domain_issues": [],
+          "parsing_errors": []
+        },
+        "after_baseline": {
+          "requirement_count": 79,
+          "failed_requirement_ids": [],
+          "domain_issues": [],
+          "parsing_errors": []
+        },
+        "after_generated": {
+          "requirement_count": 79,
+          "failed_requirement_ids": [],
+          "domain_issues": [],
+          "parsing_errors": []
+        }
+      }
+    }
+  ],
+  "tooling_tests": {
+    "passed": 27,
+    "python": "3.12.14",
+    "scope": "Packaged Python unit tests; not fresh Xtext or cloud execution"
+  },
+  "java_versions": {
+    "junit": "21.0.8",
+    "command_line": "21.0.5"
+  },
+  "output_change_classification": {
+    "registry": {
+      "raw_changed": 3,
+      "generated_configuration_files": 2,
+      "auxiliary_dependency_lock_removals": 1
+    },
+    "exposure": {
+      "raw_changed": 4,
+      "generated_configuration_files": 3,
+      "documentation_files": 1
+    },
+    "port": {
+      "raw_changed": 3,
+      "generated_configuration_files": 3
+    }
+  },
+  "full_functional_equivalence": "NOT_ESTABLISHED",
+  "fresh_independent_eclipse_build": "NOT_RUN",
+  "reviewer_access": "NOT_VERIFIED",
+  "scope": "One C00 case, three controlled tasks; retries retained as attempts of the same task"
+}

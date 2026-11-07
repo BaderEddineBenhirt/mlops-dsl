@@ -1,0 +1,33 @@
+--- control/runtime/k8s/ingress.yaml
++++ S06/runtime/k8s/ingress.yaml
+@@ -6,17 +6,17 @@
+ spec:
+   ingressClassName: nginx
+   tls:
+-    - secretName: validation-c00-serving-tls
+-      hosts:
+-        - placeholder.invalid # Replaced from the routing host by Kustomize.
++  - secretName: validation-c00-serving-tls
++    hosts:
++    - placeholder.invalid
+   rules:
+-    - host: vision.azure.company.com
+-      http:
+-        paths:
+-          - pathType: Prefix
+-            path: /
+-            backend:
+-              service:
+-                port:
+-                  number: 80 # Replaced by Kustomize.
+-                name: validation-c00-serving
++  - host: ''
++    http:
++      paths:
++      - pathType: Prefix
++        path: /
++        backend:
++          service:
++            port:
++              number: 80
++            name: validation-c00-serving

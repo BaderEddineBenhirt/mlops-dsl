@@ -1,0 +1,11 @@
+--- control/infra/terraform/main.tf
++++ S05/infra/terraform/main.tf
+@@ -9,7 +9,7 @@
+ }
+ variable "region" {
+   type    = string
+-  default = "westeurope"
++  default = ""
+ }
+ variable "public_exposure" {
+   type    = bool

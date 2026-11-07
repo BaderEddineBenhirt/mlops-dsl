@@ -1,0 +1,505 @@
+{
+  "recorded_at_utc": "2026-11-07T13:57:10.218698+00:00",
+  "files": [
+    {
+      "path": "broader/baseline/infra/terraform/.terraform.lock.hcl",
+      "sha256": "a67a33e5e7876dc2267d478d87eeec12cfe739a00335019ca27e1047116caa9e"
+    },
+    {
+      "path": "broader/generated/infra/terraform/.terraform.lock.hcl",
+      "sha256": "831c08c7d7fd16d44c0d89d785f5e7c9f1a75694e6c9eff34f09eb5c5c078260"
+    },
+    {
+      "path": "broader/logs/baseline/init.stderr.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "broader/logs/baseline/init.stdout.txt",
+      "sha256": "12b20e101cfe27bc6075f570750239e0a6367ca5024c3d38cb9667ebbc8347bb"
+    },
+    {
+      "path": "broader/logs/baseline/validate.stderr.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "broader/logs/baseline/validate.stdout.txt",
+      "sha256": "60c23e7faff2e493d74e0a665281c73abb1953dd45ae29f428505261afc79f4a"
+    },
+    {
+      "path": "broader/logs/baseline/version.stderr.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "broader/logs/baseline/version.stdout.txt",
+      "sha256": "e2e196f9a2f995e7d3f574622ad420c7f73c7231c5fcccff55ec2c25eb330f8c"
+    },
+    {
+      "path": "broader/logs/generated/init.stderr.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "broader/logs/generated/init.stdout.txt",
+      "sha256": "81e6d0c5ef70fb067ccd3a82a364f4321b39e351dd2c3aa642c6de5376246ae8"
+    },
+    {
+      "path": "broader/logs/generated/validate.stderr.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "broader/logs/generated/validate.stdout.txt",
+      "sha256": "60c23e7faff2e493d74e0a665281c73abb1953dd45ae29f428505261afc79f4a"
+    },
+    {
+      "path": "broader/logs/generated/version.stderr.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "broader/logs/generated/version.stdout.txt",
+      "sha256": "8e64c209c7b5f749e3c83ff31ec8e559bcf026f16a92914a674ce2284d975e9b"
+    },
+    {
+      "path": "broader/logs/kubectl-version.stderr.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "broader/logs/kubectl-version.stdout.txt",
+      "sha256": "90670ccd939e9e15881baa2ccf7fd7dffc3f14789d4bd3049e935d9ed7adcbe7"
+    },
+    {
+      "path": "broader/logs/kustomize.stderr.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "broader/logs/kustomize.stdout.txt",
+      "sha256": "f3b66b683135e024e01f7376cf2527be3d6e3d890b55de850ee9a49d6a415abc"
+    },
+    {
+      "path": "broader/report.json",
+      "sha256": "18912e84a23fc7aee7e9df8991e4e9b9414b7c13aa074d28209a69dd57bae358"
+    },
+    {
+      "path": "faults/baseline-control/infra/terraform/.terraform.lock.hcl",
+      "sha256": "a67a33e5e7876dc2267d478d87eeec12cfe739a00335019ca27e1047116caa9e"
+    },
+    {
+      "path": "faults/baseline-source-control/README.md",
+      "sha256": "4fdd1389f72f87147a107b9e4f1b97972fbbdf8afcd8c2297a37c49b0a2288b3"
+    },
+    {
+      "path": "faults/baseline-source-control/infra/terraform/.terraform.lock.hcl",
+      "sha256": "a67a33e5e7876dc2267d478d87eeec12cfe739a00335019ca27e1047116caa9e"
+    },
+    {
+      "path": "faults/baseline-source-control/infra/terraform/main.tf",
+      "sha256": "851d99a3b0e1165513487b2d85a1d27181c058e9a7227fc929247a7fd3f74736"
+    },
+    {
+      "path": "faults/baseline-source-control/kustomization.yaml",
+      "sha256": "3acb4414e7afd08103e3c620935761f7d575e0318eb2f309303cc074f37fe213"
+    },
+    {
+      "path": "faults/baseline-source-control/mlops/cicdct.yaml",
+      "sha256": "6849352086a52cd1d4a61ded022bf534955bfd7165666605d9c80b6509701d38"
+    },
+    {
+      "path": "faults/baseline-source-control/mlops/decision-gate.yaml",
+      "sha256": "385eb6d51e8b125a76cb78ac0443854711bebee94c01b5b0648d2edfae6b1b58"
+    },
+    {
+      "path": "faults/baseline-source-control/mlops/governance.yaml",
+      "sha256": "5a691f74f1083d367004437e7bce111af99f26cc24a8ab1c7c26391088296a19"
+    },
+    {
+      "path": "faults/baseline-source-control/mlops/lifecycle.yaml",
+      "sha256": "3c0aeefbf1d1d31187f415cb41f044a0ad2dcfd85add6f24abffff3bd0a23c67"
+    },
+    {
+      "path": "faults/baseline-source-control/mlops/model-registry.yaml",
+      "sha256": "c92b22f2ab16cdcf5764d1a49fb5768570fb9eaddbbb47f744ffa4032d8ca182"
+    },
+    {
+      "path": "faults/baseline-source-control/mlops/monitoring-policy.yaml",
+      "sha256": "37f65ddff6aae78ba26e3b6e94355e9b00696a5baccbbec2d9a45ab39d6e6f6d"
+    },
+    {
+      "path": "faults/baseline-source-control/mlops/retraining-policy.yaml",
+      "sha256": "185ccb2728cb09e485d3c11e0ebfa633b1c7ccf61b3245c7b6d855380a98377f"
+    },
+    {
+      "path": "faults/baseline-source-control/mlops/tracking.yaml",
+      "sha256": "cc214042a55373d3e5bb677b2795cdd67f3808f081da5e1c0a1bdf2ca6409cae"
+    },
+    {
+      "path": "faults/baseline-source-control/mlops/versioning.yaml",
+      "sha256": "80d5e3f6d0ff87f1b88084a4566b576c1751b1b89421b71155143cd9a0f426c7"
+    },
+    {
+      "path": "faults/baseline-source-control/runtime/k8s/deployment.yaml",
+      "sha256": "14303b7b23637f6d621046d2023ceefad679e7ecb9e52e20803bf09a61c05455"
+    },
+    {
+      "path": "faults/baseline-source-control/runtime/k8s/ingress.yaml",
+      "sha256": "93fd4076db5b9167ed4fd66d77b3621ed2ea3ece6bb9ddb78bd05150b90641a0"
+    },
+    {
+      "path": "faults/baseline-source-control/runtime/k8s/namespace.yaml",
+      "sha256": "68117174a7d465f25c07b5de04c39d24ef1d1d66dc70ffe8b5465598149af79b"
+    },
+    {
+      "path": "faults/baseline-source-control/runtime/k8s/service.yaml",
+      "sha256": "a37a43dfffc369ad1b31f81836836b3901d542580fee5e4a168d3120eaa3e7ef"
+    },
+    {
+      "path": "faults/fault-pairs.tsv",
+      "sha256": "3ff54c598f295afa8b01cae8240bfd783177828777f1fe63725c14f35517374d"
+    },
+    {
+      "path": "faults/logs/kustomize.stderr.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "faults/logs/kustomize.stdout.txt",
+      "sha256": "f3b66b683135e024e01f7376cf2527be3d6e3d890b55de850ee9a49d6a415abc"
+    },
+    {
+      "path": "faults/mutations/C00/artifacts/infra/terraform/.terraform.lock.hcl",
+      "sha256": "a67a33e5e7876dc2267d478d87eeec12cfe739a00335019ca27e1047116caa9e"
+    },
+    {
+      "path": "faults/mutations/C00/native-logs/kustomize.stderr.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "faults/mutations/C00/native-logs/kustomize.stdout.txt",
+      "sha256": "f3b66b683135e024e01f7376cf2527be3d6e3d890b55de850ee9a49d6a415abc"
+    },
+    {
+      "path": "faults/mutations/C00/observation.json",
+      "sha256": "4d526614d6ddca70a23134d89b1a4fcd13491f101dd7cf8d795e61b826b0774d"
+    },
+    {
+      "path": "faults/mutations/C00/source/infra/terraform/.terraform.lock.hcl",
+      "sha256": "a67a33e5e7876dc2267d478d87eeec12cfe739a00335019ca27e1047116caa9e"
+    },
+    {
+      "path": "faults/mutations/C00/source-change.diff",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "faults/mutations/C01/artifacts/infra/terraform/.terraform.lock.hcl",
+      "sha256": "a67a33e5e7876dc2267d478d87eeec12cfe739a00335019ca27e1047116caa9e"
+    },
+    {
+      "path": "faults/mutations/C01/native-logs/kustomize.stderr.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "faults/mutations/C01/native-logs/kustomize.stdout.txt",
+      "sha256": "3d8debc2bdbf159ebf04cf5a92ef53573a22fc1e847b993275978a7725089fd5"
+    },
+    {
+      "path": "faults/mutations/C01/observation.json",
+      "sha256": "0be672dda70a619f3762eca63440dbe54fed60dfa4c13fd074a80b915c9bc917"
+    },
+    {
+      "path": "faults/mutations/C01/source/infra/terraform/.terraform.lock.hcl",
+      "sha256": "a67a33e5e7876dc2267d478d87eeec12cfe739a00335019ca27e1047116caa9e"
+    },
+    {
+      "path": "faults/mutations/C01/source-change.diff",
+      "sha256": "b9f14f5374e96ebbfee4e6b8f29071d5a5bf2e659b4f80ea43ca9e33dc6890e5"
+    },
+    {
+      "path": "faults/mutations/C02/artifacts/infra/terraform/.terraform.lock.hcl",
+      "sha256": "a67a33e5e7876dc2267d478d87eeec12cfe739a00335019ca27e1047116caa9e"
+    },
+    {
+      "path": "faults/mutations/C02/native-logs/kustomize.stderr.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "faults/mutations/C02/native-logs/kustomize.stdout.txt",
+      "sha256": "41768d559ad80c185ce4d7c8e50a0602a6d748d4e2442a4d82d6bbd5e5e09e8d"
+    },
+    {
+      "path": "faults/mutations/C02/observation.json",
+      "sha256": "98ab8dbdf470c7399a207bfb58a2b834d3d6bf33bb8f892c3b1727724f064f64"
+    },
+    {
+      "path": "faults/mutations/C02/source/infra/terraform/.terraform.lock.hcl",
+      "sha256": "a67a33e5e7876dc2267d478d87eeec12cfe739a00335019ca27e1047116caa9e"
+    },
+    {
+      "path": "faults/mutations/C02/source-change.diff",
+      "sha256": "56f2bbc78e88a6cd508dd328bcb95a27b37babd560166c0ccb64fb94acdb2493"
+    },
+    {
+      "path": "faults/mutations/C03/artifacts/infra/terraform/.terraform.lock.hcl",
+      "sha256": "a67a33e5e7876dc2267d478d87eeec12cfe739a00335019ca27e1047116caa9e"
+    },
+    {
+      "path": "faults/mutations/C03/native-logs/kustomize.stderr.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "faults/mutations/C03/native-logs/kustomize.stdout.txt",
+      "sha256": "220040a270cd01872782355765c02e68aca0b6503748c8a271122f2581cb0609"
+    },
+    {
+      "path": "faults/mutations/C03/observation.json",
+      "sha256": "7384e2218ee6f0efa89d44aad015eee03a8d7b1c3dc7e325c02a673abf2ba011"
+    },
+    {
+      "path": "faults/mutations/C03/source/infra/terraform/.terraform.lock.hcl",
+      "sha256": "a67a33e5e7876dc2267d478d87eeec12cfe739a00335019ca27e1047116caa9e"
+    },
+    {
+      "path": "faults/mutations/C03/source-change.diff",
+      "sha256": "c9d6bfff4519e22b553e84632140f0df671eb4789d15693e4d588a5c82c62457"
+    },
+    {
+      "path": "faults/mutations/S03/artifacts/infra/terraform/.terraform.lock.hcl",
+      "sha256": "a67a33e5e7876dc2267d478d87eeec12cfe739a00335019ca27e1047116caa9e"
+    },
+    {
+      "path": "faults/mutations/S03/native-logs/kustomize.stderr.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "faults/mutations/S03/native-logs/kustomize.stdout.txt",
+      "sha256": "3d8debc2bdbf159ebf04cf5a92ef53573a22fc1e847b993275978a7725089fd5"
+    },
+    {
+      "path": "faults/mutations/S03/observation.json",
+      "sha256": "4fdf09a0aa4e093480ec65dc93f82b939ed204e3f714a78883d3217ba094ea67"
+    },
+    {
+      "path": "faults/mutations/S03/source/infra/terraform/.terraform.lock.hcl",
+      "sha256": "a67a33e5e7876dc2267d478d87eeec12cfe739a00335019ca27e1047116caa9e"
+    },
+    {
+      "path": "faults/mutations/S03/source-change.diff",
+      "sha256": "1bcd87a29885ef418dae61f160c2e8109dcb3d9f92166bc9206573701c190203"
+    },
+    {
+      "path": "faults/mutations/S04/artifacts/infra/terraform/.terraform.lock.hcl",
+      "sha256": "a67a33e5e7876dc2267d478d87eeec12cfe739a00335019ca27e1047116caa9e"
+    },
+    {
+      "path": "faults/mutations/S04/native-logs/kustomize.stderr.txt",
+      "sha256": "75ede623ab54f7d34438e17c714fef4cd470ef7fb1aa94035285939d4a116a57"
+    },
+    {
+      "path": "faults/mutations/S04/native-logs/kustomize.stdout.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "faults/mutations/S04/observation.json",
+      "sha256": "aa7ba7138e004655576ada727fc83b979a43a432d6242c627c93fbda0d276423"
+    },
+    {
+      "path": "faults/mutations/S04/source/infra/terraform/.terraform.lock.hcl",
+      "sha256": "a67a33e5e7876dc2267d478d87eeec12cfe739a00335019ca27e1047116caa9e"
+    },
+    {
+      "path": "faults/mutations/S04/source-change.diff",
+      "sha256": "3cabe81368fe270f311f3a127fe45521ac097f51e49367b8ce18be5645c1c6c2"
+    },
+    {
+      "path": "faults/mutations/S05/artifacts/infra/terraform/.terraform.lock.hcl",
+      "sha256": "a67a33e5e7876dc2267d478d87eeec12cfe739a00335019ca27e1047116caa9e"
+    },
+    {
+      "path": "faults/mutations/S05/native-logs/kustomize.stderr.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "faults/mutations/S05/native-logs/kustomize.stdout.txt",
+      "sha256": "f3b66b683135e024e01f7376cf2527be3d6e3d890b55de850ee9a49d6a415abc"
+    },
+    {
+      "path": "faults/mutations/S05/native-logs/terraform/init.stderr.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "faults/mutations/S05/native-logs/terraform/init.stdout.txt",
+      "sha256": "12b20e101cfe27bc6075f570750239e0a6367ca5024c3d38cb9667ebbc8347bb"
+    },
+    {
+      "path": "faults/mutations/S05/native-logs/terraform/validate.stderr.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "faults/mutations/S05/native-logs/terraform/validate.stdout.txt",
+      "sha256": "60c23e7faff2e493d74e0a665281c73abb1953dd45ae29f428505261afc79f4a"
+    },
+    {
+      "path": "faults/mutations/S05/native-logs/terraform/version.stderr.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "faults/mutations/S05/native-logs/terraform/version.stdout.txt",
+      "sha256": "e2e196f9a2f995e7d3f574622ad420c7f73c7231c5fcccff55ec2c25eb330f8c"
+    },
+    {
+      "path": "faults/mutations/S05/observation.json",
+      "sha256": "27cf61e20622cf3f3c8b33dc7c72af559c3e048bbd010991ef12caeda97d1ad1"
+    },
+    {
+      "path": "faults/mutations/S05/source/infra/terraform/.terraform.lock.hcl",
+      "sha256": "a67a33e5e7876dc2267d478d87eeec12cfe739a00335019ca27e1047116caa9e"
+    },
+    {
+      "path": "faults/mutations/S05/source-change.diff",
+      "sha256": "9edf6bb449bdad0e676d50ec4ec0f998f5e0786b5005bb319718497510940fb2"
+    },
+    {
+      "path": "faults/mutations/S06/artifacts/infra/terraform/.terraform.lock.hcl",
+      "sha256": "a67a33e5e7876dc2267d478d87eeec12cfe739a00335019ca27e1047116caa9e"
+    },
+    {
+      "path": "faults/mutations/S06/native-logs/kustomize.stderr.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "faults/mutations/S06/native-logs/kustomize.stdout.txt",
+      "sha256": "1378722ae4d533a944275099b7d98d1e7f4bd2e029ec1dd329b47075ff9bfa12"
+    },
+    {
+      "path": "faults/mutations/S06/observation.json",
+      "sha256": "a4471f69f35ac7edf45c03b3c4ca0505d20c6b5befba178f7ed33082e9f2390d"
+    },
+    {
+      "path": "faults/mutations/S06/source/infra/terraform/.terraform.lock.hcl",
+      "sha256": "a67a33e5e7876dc2267d478d87eeec12cfe739a00335019ca27e1047116caa9e"
+    },
+    {
+      "path": "faults/mutations/S06/source-change.diff",
+      "sha256": "bd0f4fe511fa22bbb54123b2e3880fccf9b4cd2bf1fb435c15a8fcc1da5e733a"
+    },
+    {
+      "path": "faults/mutations/S07/artifacts/infra/terraform/.terraform.lock.hcl",
+      "sha256": "a67a33e5e7876dc2267d478d87eeec12cfe739a00335019ca27e1047116caa9e"
+    },
+    {
+      "path": "faults/mutations/S07/native-logs/kustomize.stderr.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "faults/mutations/S07/native-logs/kustomize.stdout.txt",
+      "sha256": "f3b66b683135e024e01f7376cf2527be3d6e3d890b55de850ee9a49d6a415abc"
+    },
+    {
+      "path": "faults/mutations/S07/native-logs/terraform/init.stderr.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "faults/mutations/S07/native-logs/terraform/init.stdout.txt",
+      "sha256": "12b20e101cfe27bc6075f570750239e0a6367ca5024c3d38cb9667ebbc8347bb"
+    },
+    {
+      "path": "faults/mutations/S07/native-logs/terraform/validate.stderr.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "faults/mutations/S07/native-logs/terraform/validate.stdout.txt",
+      "sha256": "60c23e7faff2e493d74e0a665281c73abb1953dd45ae29f428505261afc79f4a"
+    },
+    {
+      "path": "faults/mutations/S07/native-logs/terraform/version.stderr.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "faults/mutations/S07/native-logs/terraform/version.stdout.txt",
+      "sha256": "e2e196f9a2f995e7d3f574622ad420c7f73c7231c5fcccff55ec2c25eb330f8c"
+    },
+    {
+      "path": "faults/mutations/S07/observation.json",
+      "sha256": "572fb4c1cbcccad07a99517049a372bcb95ba79fd8b1bd34434563f9c221a119"
+    },
+    {
+      "path": "faults/mutations/S07/source/infra/terraform/.terraform.lock.hcl",
+      "sha256": "a67a33e5e7876dc2267d478d87eeec12cfe739a00335019ca27e1047116caa9e"
+    },
+    {
+      "path": "faults/mutations/S07/source-change.diff",
+      "sha256": "c701c33e8a75e9d86e952da70a4a9dcf60b5b65dae3ede1b5884fca283390618"
+    },
+    {
+      "path": "faults/mutations/S08/artifacts/infra/terraform/.terraform.lock.hcl",
+      "sha256": "a67a33e5e7876dc2267d478d87eeec12cfe739a00335019ca27e1047116caa9e"
+    },
+    {
+      "path": "faults/mutations/S08/native-logs/kustomize.stderr.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "faults/mutations/S08/native-logs/kustomize.stdout.txt",
+      "sha256": "f3b66b683135e024e01f7376cf2527be3d6e3d890b55de850ee9a49d6a415abc"
+    },
+    {
+      "path": "faults/mutations/S08/observation.json",
+      "sha256": "32c80679b46c99370747cdbc5e5be52bd9f5a80fdfc3322a75c4aa6bff6357bc"
+    },
+    {
+      "path": "faults/mutations/S08/source/infra/terraform/.terraform.lock.hcl",
+      "sha256": "a67a33e5e7876dc2267d478d87eeec12cfe739a00335019ca27e1047116caa9e"
+    },
+    {
+      "path": "faults/mutations/S08/source-change.diff",
+      "sha256": "94c9cc8e1fc86a35f642aadf527ad30119047d4cbf7b4cfe9e25f22693c325f4"
+    },
+    {
+      "path": "faults/mutations/S09/artifacts/infra/terraform/.terraform.lock.hcl",
+      "sha256": "a67a33e5e7876dc2267d478d87eeec12cfe739a00335019ca27e1047116caa9e"
+    },
+    {
+      "path": "faults/mutations/S09/native-logs/kustomize.stderr.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "faults/mutations/S09/native-logs/kustomize.stdout.txt",
+      "sha256": "f3b66b683135e024e01f7376cf2527be3d6e3d890b55de850ee9a49d6a415abc"
+    },
+    {
+      "path": "faults/mutations/S09/observation.json",
+      "sha256": "3762a0a79d5d59d2938f943cefa91f8a2ed1f37601830ecf92d06f19fe22f7a7"
+    },
+    {
+      "path": "faults/mutations/S09/source/infra/terraform/.terraform.lock.hcl",
+      "sha256": "a67a33e5e7876dc2267d478d87eeec12cfe739a00335019ca27e1047116caa9e"
+    },
+    {
+      "path": "faults/mutations/S09/source-change.diff",
+      "sha256": "dee10b189c885415ae7efcd300e92330926cf7efd73adadf6d1d4a96c4a105d4"
+    },
+    {
+      "path": "faults/report.json",
+      "sha256": "3f56337fa807676564a82f8b4c5c4a5bfd06e4d51a093d9f5bae54d8ede7b888"
+    },
+    {
+      "path": "java-syntax.stderr.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "java-syntax.stdout.txt",
+      "sha256": "e195f09645cff3fa7a25f10b38cb0ed97657a4a60e851cf6f7c858953569c586"
+    },
+    {
+      "path": "provenance.json",
+      "sha256": "e31e73dde53097993f074f6257ab8652cddb9185b11a4d63093192b8fc092448"
+    },
+    {
+      "path": "source-size.json",
+      "sha256": "2d6a2d5c1add936766a82f784f67ea58a72d379bbc61ebbd087b1d9ff57a25cb"
+    },
+    {
+      "path": "tool-tests.stderr.txt",
+      "sha256": "45941ea57102eb8a8c84de22c73b2c01d9e06dcdd004b657287f97443e38dcaf"
+    },
+    {
+      "path": "tool-tests.stdout.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  ]
+}

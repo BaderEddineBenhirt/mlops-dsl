@@ -1,0 +1,138 @@
+{
+  "scope_equivalence": "NOT_REVIEWED",
+  "baseline_provenance": "Requires human review and documentation",
+  "claimed_productivity_or_maintainability": null,
+  "method": "UTF-8 physical nonblank/non-full-line-comment and regex lexical token proxies",
+  "limitations": [
+    "Inline comments and multiline syntax are not language-aware stripped",
+    "Generated output excluded when the selected input is authoritative only",
+    "Different-scope DSL and baseline totals must not be interpreted comparatively",
+    "Source locations duplicated and actual editing time require separate observation"
+  ],
+  "dsl": {
+    "files": [
+      {
+        "path": "c00_valid_azure.mlops",
+        "bytes": 12684,
+        "sha256": "12e1fbc33d29cfc521b3742799360c3be71edc349a5969b63b9ae8ed71ad9681",
+        "nonblank_noncomment_physical_lines_proxy": 511,
+        "lexical_token_proxy": 1726
+      }
+    ],
+    "file_count": 1,
+    "line_proxy_total": 511,
+    "token_proxy_total": 1726
+  },
+  "baseline": {
+    "files": [
+      {
+        "path": "infra/terraform/main.tf",
+        "bytes": 3431,
+        "sha256": "851d99a3b0e1165513487b2d85a1d27181c058e9a7227fc929247a7fd3f74736",
+        "nonblank_noncomment_physical_lines_proxy": 103,
+        "lexical_token_proxy": 395
+      },
+      {
+        "path": "kustomization.yaml",
+        "bytes": 1301,
+        "sha256": "3acb4414e7afd08103e3c620935761f7d575e0318eb2f309303cc074f37fe213",
+        "nonblank_noncomment_physical_lines_proxy": 40,
+        "lexical_token_proxy": 244
+      },
+      {
+        "path": "mlops/cicdct.yaml",
+        "bytes": 1268,
+        "sha256": "6849352086a52cd1d4a61ded022bf534955bfd7165666605d9c80b6509701d38",
+        "nonblank_noncomment_physical_lines_proxy": 17,
+        "lexical_token_proxy": 279
+      },
+      {
+        "path": "mlops/decision-gate.yaml",
+        "bytes": 523,
+        "sha256": "385eb6d51e8b125a76cb78ac0443854711bebee94c01b5b0648d2edfae6b1b58",
+        "nonblank_noncomment_physical_lines_proxy": 14,
+        "lexical_token_proxy": 115
+      },
+      {
+        "path": "mlops/governance.yaml",
+        "bytes": 138,
+        "sha256": "5a691f74f1083d367004437e7bce111af99f26cc24a8ab1c7c26391088296a19",
+        "nonblank_noncomment_physical_lines_proxy": 6,
+        "lexical_token_proxy": 21
+      },
+      {
+        "path": "mlops/lifecycle.yaml",
+        "bytes": 382,
+        "sha256": "3c0aeefbf1d1d31187f415cb41f044a0ad2dcfd85add6f24abffff3bd0a23c67",
+        "nonblank_noncomment_physical_lines_proxy": 4,
+        "lexical_token_proxy": 70
+      },
+      {
+        "path": "mlops/model-registry.yaml",
+        "bytes": 169,
+        "sha256": "c92b22f2ab16cdcf5764d1a49fb5768570fb9eaddbbb47f744ffa4032d8ca182",
+        "nonblank_noncomment_physical_lines_proxy": 7,
+        "lexical_token_proxy": 20
+      },
+      {
+        "path": "mlops/monitoring-policy.yaml",
+        "bytes": 260,
+        "sha256": "37f65ddff6aae78ba26e3b6e94355e9b00696a5baccbbec2d9a45ab39d6e6f6d",
+        "nonblank_noncomment_physical_lines_proxy": 5,
+        "lexical_token_proxy": 57
+      },
+      {
+        "path": "mlops/retraining-policy.yaml",
+        "bytes": 158,
+        "sha256": "185ccb2728cb09e485d3c11e0ebfa633b1c7ccf61b3245c7b6d855380a98377f",
+        "nonblank_noncomment_physical_lines_proxy": 7,
+        "lexical_token_proxy": 22
+      },
+      {
+        "path": "mlops/tracking.yaml",
+        "bytes": 187,
+        "sha256": "cc214042a55373d3e5bb677b2795cdd67f3808f081da5e1c0a1bdf2ca6409cae",
+        "nonblank_noncomment_physical_lines_proxy": 8,
+        "lexical_token_proxy": 31
+      },
+      {
+        "path": "mlops/versioning.yaml",
+        "bytes": 152,
+        "sha256": "80d5e3f6d0ff87f1b88084a4566b576c1751b1b89421b71155143cd9a0f426c7",
+        "nonblank_noncomment_physical_lines_proxy": 7,
+        "lexical_token_proxy": 28
+      },
+      {
+        "path": "runtime/k8s/deployment.yaml",
+        "bytes": 728,
+        "sha256": "14303b7b23637f6d621046d2023ceefad679e7ecb9e52e20803bf09a61c05455",
+        "nonblank_noncomment_physical_lines_proxy": 29,
+        "lexical_token_proxy": 122
+      },
+      {
+        "path": "runtime/k8s/ingress.yaml",
+        "bytes": 577,
+        "sha256": "93fd4076db5b9167ed4fd66d77b3621ed2ea3ece6bb9ddb78bd05150b90641a0",
+        "nonblank_noncomment_physical_lines_proxy": 22,
+        "lexical_token_proxy": 102
+      },
+      {
+        "path": "runtime/k8s/namespace.yaml",
+        "bytes": 64,
+        "sha256": "68117174a7d465f25c07b5de04c39d24ef1d1d66dc70ffe8b5465598149af79b",
+        "nonblank_noncomment_physical_lines_proxy": 4,
+        "lexical_token_proxy": 13
+      },
+      {
+        "path": "runtime/k8s/service.yaml",
+        "bytes": 267,
+        "sha256": "a37a43dfffc369ad1b31f81836836b3901d542580fee5e4a168d3120eaa3e7ef",
+        "nonblank_noncomment_physical_lines_proxy": 13,
+        "lexical_token_proxy": 53
+      }
+    ],
+    "file_count": 15,
+    "line_proxy_total": 286,
+    "token_proxy_total": 1572
+  }
+}

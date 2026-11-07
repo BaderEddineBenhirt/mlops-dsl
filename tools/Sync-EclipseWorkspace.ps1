@@ -50,3 +50,5 @@ Write-Host "Copied $($relativeFiles.Count) source/fixture files to $WorkspacePat
 Write-Host "Previous files backed up under $backupRoot"
 Write-Host "Next: refresh the three Eclipse projects; run MWE2; clean/build; run MlopsDslValidationTest with JUnit 5."
 Write-Host "Regeneration and test execution have NOT been performed by this script."
+Write-Host "The suite now includes journal exports and renderer regressions (23 @Test methods)."
+Write-Host "Copy the JOURNAL OBSERVATIONS path printed by JUnit; export JUnit XML separately from the JUnit view."
