@@ -147,6 +147,22 @@ requirement together rather than hiding later categories.
 
 ## 4. Collect the real replication dependency and draft archive
 
+For the current Windows author workflow, use the helper below. It checks that
+the three recorded evolution trials passed, asks you to select the actual JUnit
+XML through a file picker, collects the real `meta-model` project and attempts
+to locate the running Eclipse installation's bundle inventory. It copies all
+run directories through the existing collector. The output is a local draft.
+
+```powershell
+powershell -NoProfile -STA -File .\tools\Collect-ReplicationEvidence.ps1 -ObservationsFolder "C:\FULL\PATH\journal-observations-..."
+```
+
+Optional `-JunitXml`, `-WorkspacePath` and `-BundlesInfo` arguments provide exact
+paths for other installations or noninteractive collection. This PowerShell
+helper needs execution on the author's Windows desktop; it was not run in the
+agent's Linux environment. See `author-results-20261107.md` for measured outcomes
+and the formatting/scope limitations that must accompany them.
+
 After the actual Eclipse tests, collect outside the Git repository:
 
 ```powershell

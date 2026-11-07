@@ -1,5 +1,5 @@
 task_id	case	requested_change	layers	status	postconditions
-E01	C00	API port 8080 to 9090	kubernetes	tooling_ready	Unified runner freezes fresh before/after output; all six dependent ports and broader postconditions checked; real trial pending
+E01	C00	API port 8080 to 9090	kubernetes	author_reported_pass	port-author-01 valid starting controls and PASS_SELECTED_EVOLUTION; source files DSL=1 baseline=1; exact prepared source match; full native archive pending
 E02	C00 (equivalence review pending)	model registry name v1 to v2	registry_and_policy	author_reported_pass	registry-author-01-retry-02 PASS_SELECTED_EVOLUTION; source files DSL=1 baseline=2; full native archive pending; retries are the same task
 E03	C00 PRIVATE/tls=false starting control	private to public exposure with TLS/domain	kubernetes_and_security	author_reported_pass	exposure-author-01 valid starting controls and PASS_SELECTED_EVOLUTION; source files DSL=1 baseline=3; full native archive pending
 

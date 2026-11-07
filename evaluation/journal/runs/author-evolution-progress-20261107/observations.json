@@ -17,7 +17,30 @@
         "registry-author-01",
         "registry-author-01-retry-01"
       ],
-      "independent_task_count": 1
+      "independent_task_count": 1,
+      "source_hunks": {
+        "dsl": 7,
+        "baseline": 2
+      },
+      "raw_line_changes": {
+        "dsl": {
+          "added": 7,
+          "removed": 6
+        },
+        "baseline": {
+          "added": 2,
+          "removed": 2
+        }
+      },
+      "dsl_generated_files_changed": 3,
+      "remaining_selected_failures": {
+        "dsl": 0,
+        "baseline": 0
+      },
+      "value_references_changed": {
+        "dsl": 6,
+        "baseline": 2
+      }
     },
     {
       "task": "exposure",
@@ -28,10 +51,61 @@
         "dsl": 1,
         "baseline": 3
       },
+      "independent_task_count": 1,
+      "source_hunks": {
+        "dsl": 1,
+        "baseline": 3
+      },
+      "raw_line_changes": {
+        "dsl": {
+          "added": 2,
+          "removed": 2
+        },
+        "baseline": {
+          "added": 49,
+          "removed": 33
+        }
+      },
+      "dsl_generated_files_changed": 4,
+      "remaining_selected_failures": {
+        "dsl": 0,
+        "baseline": 0
+      },
+      "formatting_confound": "Baseline private YAML was reserialized by the harness; physical line counts do not measure required semantic edits"
+    },
+    {
+      "task": "port",
+      "run": "evaluation/journal/runs/port-author-01",
+      "starting_controls_valid": true,
+      "status": "PASS_SELECTED_EVOLUTION",
+      "source_files_changed": {
+        "dsl": 1,
+        "baseline": 1
+      },
+      "source_hunks": {
+        "dsl": 1,
+        "baseline": 1
+      },
+      "raw_line_changes": {
+        "dsl": {
+          "added": 1,
+          "removed": 1
+        },
+        "baseline": {
+          "added": 1,
+          "removed": 1
+        }
+      },
+      "dsl_generated_files_changed": 3,
+      "remaining_selected_failures": {
+        "dsl": 0,
+        "baseline": 0
+      },
+      "source_equality_check": "FC: no differences encountered",
       "independent_task_count": 1
     }
   ],
-  "port": "NOT_RUN",
+  "port": "PASS_SELECTED_EVOLUTION",
   "attached_exposure_snapshots": [
     {
       "path": "exposure-after.pasted.md",
@@ -49,6 +123,13 @@
   "limitations": [
     "These are controlled configuration edits; no human productivity benefit inferred",
     "Retries do not increase the independent task count",
-    "Pasted snapshots are supplementary to the full native source/artifact archives"
-  ]
+    "Pasted snapshots are supplementary to the full native source/artifact archives",
+    "Physical source hunks are not semantic edit locations",
+    "Registry extra hunk/line includes non-value editing; source diff should be retained",
+    "Exposure baseline raw line counts include harness-induced formatting changes",
+    "No authoring-time or general maintainability superiority claim follows from these controlled tasks"
+  ],
+  "case_count": 1,
+  "controlled_task_count": 3,
+  "measurements_recorded_at_utc": "2026-11-07T15:46:10.536079+00:00"
 }
