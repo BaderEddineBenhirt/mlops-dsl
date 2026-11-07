@@ -120,6 +120,22 @@ remaining failed postconditions. Baseline edits are mechanical and disclosed;
 they are not participant timing data. Invalid starting controls block a trial.
 Stale generation must fail the postconditions. Preserve failed trials.
 
+When a failed trial checked stale output, keep the evolved source unchanged and
+regenerate with a fresh runtime Eclipse launched from the rebuilt DSL. Verify
+the runtime project's Location is the source workspace expected by the task;
+refresh it and enable automatic building before saving the model. Then retry:
+
+```powershell
+& .\.venv-evaluation\Scripts\python.exe tools\run_configuration_evolution.py retry --run evaluation\journal\runs\registry-author-01 --generated $generated --out evaluation\journal\runs\registry-author-01-retry-01
+```
+
+The new directory reuses the recorded valid starting models, artifacts and
+contracts, records the previous result's hash, and evaluates only the new output.
+The failed attempt is retained. A retry is another attempt of the same task,
+not another independent experiment, and must not increase the case count.
+Failure summaries now retain parsing errors, domain issues and every failed
+requirement together rather than hiding later categories.
+
 ## 4. Collect the real replication dependency and draft archive
 
 After the actual Eclipse tests, collect outside the Git repository:

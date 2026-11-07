@@ -4,9 +4,10 @@ import difflib
 import json
 import shutil
 from pathlib import Path
+from types import SimpleNamespace
 
 import yaml
-from journal_common import ROOT, files, inventory, save, stamp
+from journal_common import ROOT, digest, files, inventory, save, stamp
 from run_fault_comparison import replace_once, update_yaml
 from run_journal_comparison import inspect, materialize
 
@@ -40,7 +41,13 @@ def contract_for(task, phase):
 
 
 def failed(result):
-    return result["parsing_errors"] or result["domain_oracle"] or [c["id"] for c in result["requirements"] if c["status"] != "PASS"]
+    # Keep every category: a domain error must not hide stale registry/network
+    # requirements, and a parsing error must not hide other observations.
+    return ([{"stage": "parsing", **error} for error in result["parsing_errors"]]
+            + [{"stage": "domain", **issue} for issue in result["domain_oracle"]]
+            + [{"stage": "requirement", "id": c["id"],
+                "expected": c.get("expected"), "actual": c.get("actual")}
+               for c in result["requirements"] if c["status"] != "PASS"])
 
 
 def prepare(args):
@@ -109,6 +116,7 @@ def evaluate(args):
     shutil.copytree(args.generated, args.run / "generated-after", ignore=shutil.ignore_patterns(".terraform", "__pycache__", "*.tfstate*"))
     results = {label: inspect(args.run / (label + "-after"), contract_for(task["task"], "after")) for label in ("generated", "baseline")}
     report = {"recorded_at_utc": stamp(), "task": task["task"], "authoring_time": "NOT_MEASURED", "after": results,
+              "retry_of": task.get("retry_of"), "previous_summary_sha256": task.get("previous_summary_sha256"),
               "source_changes": {"dsl": changes(args.run / "dsl-before", args.run / "dsl-after", args.run / "diffs-dsl"),
                                  "baseline": changes(args.run / "baseline-source-before", args.run / "baseline-source-after", args.run / "diffs-baseline")},
               "generated_changes": changes(args.run / "generated-before", args.run / "generated-after", args.run / "diffs-generated"),
@@ -120,19 +128,60 @@ def evaluate(args):
     return 0 if report["status"] == "PASS_SELECTED_EVOLUTION" else 1
 
 
+def retry(args):
+    """New attempt of the same frozen task; the original result stays intact."""
+    if args.out.exists():
+        raise ValueError("Retry destination exists; choose a fresh directory")
+    previous = json.loads((args.run / "summary.json").read_text())
+    if previous.get("status") == "PASS_SELECTED_EVOLUTION":
+        raise ValueError("This task already passed; a retry is for a failed attempt")
+    task = json.loads((args.run / "task.json").read_text())
+    if not task.get("starting_controls_valid"):
+        raise ValueError("A retry requires valid frozen starting controls")
+    expected = (args.run / "dsl-expected-after/c00.mlops").read_text(encoding="utf-8")
+    actual = Path(task["dsl_source"]).read_text(encoding="utf-8-sig")
+    if actual.strip() != expected.strip():
+        raise ValueError("Live source no longer matches the recorded evolution")
+    prepared = ["baseline-after", "baseline-before", "baseline-source-after", "baseline-source-before",
+                "before-observations.json", "contract-after.json", "contract-before.json",
+                "dsl-before", "dsl-expected-after", "generated-before", "logs-after", "logs-before", "task.json"]
+    for name in prepared:
+        if not (args.run / name).exists():
+            raise ValueError("Incomplete frozen preparation: " + name)
+    args.out.mkdir(parents=True)
+    for name in prepared:
+        source, target = args.run / name, args.out / name
+        if source.is_dir():
+            shutil.copytree(source, target)
+        else:
+            shutil.copy2(source, target)
+    task["retry_of"] = str(args.run.resolve())
+    task["previous_summary_sha256"] = digest(args.run / "summary.json")
+    task["attempt_recorded_at_utc"] = stamp()
+    task["retry_semantics"] = "Another attempt of the same frozen task; not an independent case or participant trial"
+    save(args.out / "task.json", task)
+    result = evaluate(SimpleNamespace(run=args.out, generated=args.generated))
+    print("Original result preserved:", args.run / "summary.json")
+    return result
+
+
 def main():
     p = argparse.ArgumentParser(description=__doc__)
     sub = p.add_subparsers(dest="action", required=True)
-    for action in ("prepare", "evaluate"):
+    for action in ("prepare", "evaluate", "retry"):
         s = sub.add_parser(action)
         s.add_argument("--run", type=Path, required=True)
         s.add_argument("--generated", type=Path, required=True)
+        if action == "retry":
+            s.add_argument("--out", type=Path, required=True)
         if action == "prepare":
             s.add_argument("--dsl", type=Path, required=True)
             s.add_argument("--task", choices=["registry", "exposure"], required=True)
             s.add_argument("--kubectl", default="kubectl")
     args = p.parse_args()
     try:
+        if args.action == "retry":
+            return retry(args)
         return prepare(args) if args.action == "prepare" else evaluate(args)
     except (ValueError, OSError, yaml.YAMLError) as exc:
         p.error(str(exc))

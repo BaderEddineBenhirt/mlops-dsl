@@ -8,6 +8,7 @@ import tempfile
 import unittest
 from pathlib import Path
 from types import SimpleNamespace
+from unittest.mock import patch
 
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "tools"))
@@ -108,6 +109,55 @@ class JournalExecutionTest(unittest.TestCase):
         self.assertNotIn("vision_defects_model_v1", json.dumps(after))
         self.assertIn("vision_defects_model_v2", json.dumps(after))
         self.assertEqual(len(before["checks"]), len(after["checks"]))
+
+    def test_evolution_retains_failures_from_all_stages(self):
+        result = {"parsing_errors": [{"file": "bad.yaml", "error": "invalid YAML"}],
+                  "domain_oracle": [{"rule": "S09", "detail": "Contradictory bounds"}],
+                  "requirements": [{"id": "registry", "status": "FAIL", "expected": ["v2"], "actual": ["v1"]},
+                                   {"id": "region", "status": "PASS", "expected": "westeurope", "actual": "westeurope"}]}
+        observed = evolution.failed(result)
+        self.assertEqual({r["stage"] for r in observed}, {"parsing", "domain", "requirement"})
+        registry = next(r for r in observed if r.get("id") == "registry")
+        self.assertEqual(registry["actual"], ["v1"])
+        self.assertEqual(registry["expected"], ["v2"])
+        self.assertFalse(any(r.get("id") == "region" for r in observed))
+        self.assertEqual(evolution.failed({"parsing_errors": [], "domain_oracle": [], "requirements": []}), [])
+
+    def test_retry_preserves_failed_attempt_and_excludes_its_output(self):
+        with tempfile.TemporaryDirectory() as td:
+            root = Path(td)
+            original, fresh = root / "failed", root / "retry"
+            original.mkdir()
+            live = root / "live.mlops"
+            live.write_text("modelName = v2\n")
+            directories = ["baseline-after", "baseline-before", "baseline-source-after", "baseline-source-before",
+                           "dsl-before", "dsl-expected-after", "generated-before", "logs-after", "logs-before"]
+            for name in directories:
+                (original / name).mkdir()
+            (original / "dsl-expected-after/c00.mlops").write_text(live.read_text())
+            (original / "generated-before/frozen.yaml").write_text("modelName: v1\n")
+            for name in ("before-observations.json", "contract-after.json", "contract-before.json"):
+                (original / name).write_text("{}")
+            (original / "task.json").write_text(json.dumps({"starting_controls_valid": True, "dsl_source": str(live)}))
+            summary = original / "summary.json"
+            summary.write_text('{"status":"FAIL"}')
+            old_hash = common.digest(summary)
+            (original / "generated-after").mkdir()
+            (original / "generated-after/stale.yaml").write_text("stale: true\n")
+            with patch.object(evolution, "evaluate", return_value=0) as evaluate:
+                self.assertEqual(evolution.retry(SimpleNamespace(run=original, out=fresh, generated=root / "live-output")), 0)
+                self.assertEqual(evaluate.call_args.args[0].run, fresh)
+            self.assertEqual(common.digest(summary), old_hash)
+            self.assertFalse((fresh / "summary.json").exists())
+            self.assertFalse((fresh / "generated-after").exists())
+            self.assertEqual((fresh / "generated-before/frozen.yaml").read_text(), "modelName: v1\n")
+            self.assertEqual(json.loads((fresh / "task.json").read_text())["previous_summary_sha256"], old_hash)
+
+    def test_retry_refuses_an_existing_destination(self):
+        with tempfile.TemporaryDirectory() as td:
+            root = Path(td)
+            with self.assertRaisesRegex(ValueError, "destination exists"):
+                evolution.retry(SimpleNamespace(run=root / "old", out=root, generated=root / "output"))
 
     def test_replication_requires_real_external_metamodel(self):
         with tempfile.TemporaryDirectory() as td:
