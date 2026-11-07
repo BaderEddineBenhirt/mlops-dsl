@@ -110,6 +110,28 @@ class JournalExecutionTest(unittest.TestCase):
         self.assertIn("vision_defects_model_v2", json.dumps(after))
         self.assertEqual(len(before["checks"]), len(after["checks"]))
 
+    def test_port_contract_changes_exactly_six_postconditions(self):
+        before = evolution.contract_for("port", "before")
+        after = evolution.contract_for("port", "after")
+        changed = [(a, b) for a, b in zip(before["checks"], after["checks"]) if a != b]
+        self.assertEqual(len(changed), 6)
+        for a, b in changed:
+            self.assertEqual(a["id"], b["id"])
+            self.assertEqual(a["expected"], [8080])
+            self.assertEqual(b["expected"], [9090])
+        self.assertEqual(len(before["checks"]), len(after["checks"]))
+
+    def test_port_source_change_preserves_other_model_declarations(self):
+        source = (ROOT / "mlops-tests/src/validation/c00_valid_azure.mlops").read_text()
+        changed = evolution.change_port(source)
+        delta = [(a, b) for a, b in zip(source.splitlines(), changed.splitlines()) if a != b]
+        self.assertEqual(len(delta), 1)
+        self.assertEqual(delta[0][0].strip(), "port = 8080")
+        self.assertEqual(delta[0][1].strip(), "port = 9090")
+        self.assertEqual(changed.replace("port = 9090", "port = 8080"), source)
+        with self.assertRaisesRegex(ValueError, "exactly one"):
+            evolution.change_port(source + "\nport = 8080\n")
+
     def test_evolution_retains_failures_from_all_stages(self):
         result = {"parsing_errors": [{"file": "bad.yaml", "error": "invalid YAML"}],
                   "domain_oracle": [{"rule": "S09", "detail": "Contradictory bounds"}],

@@ -8,7 +8,7 @@ being implemented is distinct from experiments being completed.
 
 | Work | Implementation | Evidence still needed |
 | --- | --- | --- |
-| Configuration evolution | Existing port runner plus registry/exposure prepare/evaluate runner | Real before/after Eclipse generation for each independent task |
+| Configuration evolution | Unified port/registry/exposure prepare/evaluate runner with fresh snapshots | Full native trial archives and equivalence review; registry/exposure passes author-reported |
 | Comparative fault detection | Source mutations, Kustomize/native logs, domain guard, hash-checked DSL JSON join, matched denominators | Actual 16-case Eclipse JSON; review of seven applicable pairs and five exclusions |
 | Broader comparison | Direct Azure Terraform baseline, runtime Kustomize, nine lifecycle policies, 79 selected checks | Fresh artifacts from fixed renderer; native Terraform validation and practitioner equivalence review |
 | Specification size | Maintained-source inventory and declared line/token proxies | Equal-scope review; descriptive counts do not establish authoring effort savings |
@@ -45,7 +45,7 @@ evaluation/comparison/port-evolution.md.
 | WP1: DSL correctness/diagnostics | PARTIAL | Exported JUnit XML, validator/generator diagnostics, hashes, fresh run logs |
 | WP2: full direct-authoring comparison | PARTIAL | Independently authored Terraform, K8s and lifecycle-policy baseline; reviewer-approved mapping; validator logs |
 | WP3: paired fault-injection | PARTIAL (baseline only) | Real DSL JSON, equivalent pairs, missed/false-alarm cases and stages |
-| WP4: configuration evolution | NOT RUN | Complete port task plus independent registry/exposure tasks; preserved source diffs and postconditions |
+| WP4: configuration evolution | PARTIAL (registry/exposure author-reported) | Port trial, full native trial archives and equivalence review |
 | WP5: specification/maintenance measurements | PARTIAL (descriptive) | Equal-scope review, duplicated authoritative values, real evolution files touched |
 | WP6: real deployment / ML lifecycle if claimed | NOT RUN | Cloud rollout, inference and relevant policy events, sanitized raw logs and teardown |
 | WP7: reproducibility & manuscript integrity | PARTIAL | External metamodel, pinned environment, exported results, reviewer-accessible archive, claims traced to data |

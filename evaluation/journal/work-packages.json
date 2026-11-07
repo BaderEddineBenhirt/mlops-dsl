@@ -46,11 +46,18 @@
     {
       "id": "WP4",
       "title": "Paired configuration evolution",
-      "status": "not_run",
+      "status": "partial",
       "acceptance_criteria": "Real runtime port experiment and independent additional change tasks",
       "reference": "evaluation/journal/evolution-tasks.tsv",
       "completed": false,
-      "evidence_records": []
+      "evidence_records": [
+        {
+          "path": "evaluation/journal/runs/author-evolution-progress-20261107/observations.json",
+          "sha256": "7083eb36b0edb0063d6fb7ed8a3130882c15a996140954e68fa2418552b4abdf",
+          "scope": "Author-reported registry/exposure selected evolution passes; supplementary pasted snapshots. Port, native archives and equivalence review pending.",
+          "recorded_at_utc": "2026-11-07T15:31:42.643106+00:00"
+        }
+      ]
     },
     {
       "id": "WP5",

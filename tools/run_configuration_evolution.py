@@ -1,7 +1,8 @@
-"""Freeze real before/after models and artifacts for registry/exposure evolution."""
+"""Freeze real before/after models and artifacts for port/registry/exposure evolution."""
 import argparse
 import difflib
 import json
+import re
 import shutil
 from pathlib import Path
 from types import SimpleNamespace
@@ -37,7 +38,22 @@ def contract_for(task, phase):
         c = json.loads(json.dumps(c).replace("vision_defects_model_v1", "vision_defects_model_v2"))
     if task == "exposure" and phase == "before":
         c["checks"] = [x for x in c["checks"] if x["id"] != "explicit_tls_host"]
+    if task == "port" and phase == "after":
+        ports = [check for check in c["checks"] if check.get("file", "").startswith("runtime/k8s/")
+                 and check.get("expected") == [8080]]
+        if len(ports) != 6:
+            raise ValueError("Port task requires exactly six original 8080 postconditions")
+        for check in ports:
+            check["expected"] = [9090]
     return c
+
+
+def change_port(source):
+    changed, count = re.subn(r"^([ \t]*port[ \t]*=[ \t]*)8080([ \t]*)$",
+                             r"\g<1>9090\2", source, flags=re.MULTILINE)
+    if count != 1:
+        raise ValueError("Port task requires exactly one ServingSpec.port = 8080 declaration")
+    return changed
 
 
 def failed(result):
@@ -58,10 +74,12 @@ def prepare(args):
         if original.count("vision_defects_model_v1") != 6:
             raise ValueError("Expected C00's six explicit model-name references (including environment and workflow artifacts)")
         expected = original.replace("vision_defects_model_v1", "vision_defects_model_v2")
-    else:
+    elif args.task == "exposure":
         if original.count("exposure = PRIVATE") != 1 or original.count("tls = false") != 1:
             raise ValueError("Exposure task starts with C00 PRIVATE, tls=false; save and generate that starting model first")
         expected = original.replace("exposure = PRIVATE", "exposure = PUBLIC").replace("tls = false", "tls = true")
+    else:
+        expected = change_port(original)
     args.run.mkdir(parents=True)
     for phase, text in (("before", original), ("expected-after", expected)):
         folder = args.run / ("dsl-" + phase)
@@ -83,10 +101,14 @@ def prepare(args):
         for file in ("mlops/model-registry.yaml", "mlops/cicdct.yaml"):
             path = source_after / file
             path.write_text(path.read_text().replace("vision_defects_model_v1", "vision_defects_model_v2"), encoding="utf-8")
-    else:
+    elif args.task == "exposure":
         for file in ("infra/terraform/main.tf", "runtime/k8s/ingress.yaml", "kustomization.yaml"):
             original_path = (ROOT / "evaluation/journal/baseline/c00-azure" / file) if file.endswith(".tf") else runtime / file
             shutil.copy2(original_path, source_after / file)
+    else:
+        # Preserve YAML formatting/comments so edit metrics reflect one value
+        # change. Kustomize propagates the authoritative Service.port.
+        replace_once(source_after / "runtime/k8s/service.yaml", "port: 8080", "port: 9090")
     for phase, source in (("before", source_before), ("after", source_after)):
         materialize(args.run / ("baseline-" + phase), args.kubectl, args.run / ("logs-" + phase), source=source, runtime=source)
         save(args.run / ("contract-" + phase + ".json"), contract_for(args.task, phase))
@@ -176,7 +198,7 @@ def main():
             s.add_argument("--out", type=Path, required=True)
         if action == "prepare":
             s.add_argument("--dsl", type=Path, required=True)
-            s.add_argument("--task", choices=["registry", "exposure"], required=True)
+            s.add_argument("--task", choices=["port", "registry", "exposure"], required=True)
             s.add_argument("--kubectl", default="kubectl")
     args = p.parse_args()
     try:

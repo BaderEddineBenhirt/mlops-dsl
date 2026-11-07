@@ -1,0 +1,54 @@
+{
+  "recorded_at_utc": "2026-11-07T15:31:42.642848+00:00",
+  "provenance": "Author-pasted terminal execution results and attached model snapshots",
+  "scope_equivalence": "NOT_REVIEWED",
+  "raw_native_trial_archives": "Not uploaded; remain in the author Windows run directories",
+  "authoring_time": "NOT_MEASURED",
+  "trials": [
+    {
+      "task": "registry",
+      "successful_attempt": "evaluation/journal/runs/registry-author-01-retry-02",
+      "status": "PASS_SELECTED_EVOLUTION",
+      "source_files_changed": {
+        "dsl": 1,
+        "baseline": 2
+      },
+      "earlier_failed_attempts": [
+        "registry-author-01",
+        "registry-author-01-retry-01"
+      ],
+      "independent_task_count": 1
+    },
+    {
+      "task": "exposure",
+      "run": "evaluation/journal/runs/exposure-author-01",
+      "starting_controls_valid": true,
+      "status": "PASS_SELECTED_EVOLUTION",
+      "source_files_changed": {
+        "dsl": 1,
+        "baseline": 3
+      },
+      "independent_task_count": 1
+    }
+  ],
+  "port": "NOT_RUN",
+  "attached_exposure_snapshots": [
+    {
+      "path": "exposure-after.pasted.md",
+      "sha256": "c30c8d951c7b732482a410cd9abcf1ee61aaa260231ade462be70ebae6497f23",
+      "uploaded_source_sha256": "c30c8d951c7b732482a410cd9abcf1ee61aaa260231ade462be70ebae6497f23",
+      "source_format": "Author-pasted Markdown; not the native .mlops file bytes"
+    },
+    {
+      "path": "exposure-before.pasted.md",
+      "sha256": "1dbfe6149a1e9490bd1004d5e56fe60d2041c5d3efc2cf26685e0069a1f335a3",
+      "uploaded_source_sha256": "1dbfe6149a1e9490bd1004d5e56fe60d2041c5d3efc2cf26685e0069a1f335a3",
+      "source_format": "Author-pasted Markdown; not the native .mlops file bytes"
+    }
+  ],
+  "limitations": [
+    "These are controlled configuration edits; no human productivity benefit inferred",
+    "Retries do not increase the independent task count",
+    "Pasted snapshots are supplementary to the full native source/artifact archives"
+  ]
+}

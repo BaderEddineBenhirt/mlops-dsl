@@ -84,10 +84,19 @@ metric. Neither is a measure of editing time or maintainability.
 
 ## 3. Configuration evolution: three independent changes
 
-E01 remains `tools/run_port_evolution.py` and
-`evaluation/comparison/port-evolution.md`. E02 and E03 use the new runner below.
+The unified `tools/run_configuration_evolution.py` now supports all three tasks.
+The original `tools/run_port_evolution.py` and
+`evaluation/comparison/port-evolution.md` remain historical runtime-pilot tooling.
 Each task starts from its own valid model and **fresh actual generated output**.
 Restore the original model and regenerate between tasks; do not chain them.
+
+For E01, start from original C00 PUBLIC/tls=true, registry v1 and port 8080.
+Use `prepare --task port` with the same `--dsl`, `--generated` and a new `--run`
+shown below. Once starting controls are valid, change only ServingSpec.port to
+9090, save/regenerate and run `evaluate`. Both source representations change one
+authoritative port declaration; Kustomize is allowed to propagate its value.
+All six dependent ports and the other broader postconditions are checked. This
+task freezes the actual current output rather than using the old TLS snapshot.
 
 For E02 (registry name v1 to v2), use the original C00 model:
 
