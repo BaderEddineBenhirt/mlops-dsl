@@ -1,6 +1,7 @@
 {
   "purpose": "Reference setup; not a claim that every version was observed in a new run",
   "windows_author_reference": {
+    "terraform": "1.14.9",
     "python": "3.12.0",
     "java": "21.0.8",
     "eclipse": "4.37",
@@ -14,6 +15,8 @@
     "kustomize": "5.7.1"
   },
   "azure_provider": "3.117.1",
+  "terraform_cli_compatibility": ">= 1.13.0, < 1.15.0",
+  "terraform_pairing": "Use the same exact CLI version on both approaches; preserve actual version logs",
   "python_dependencies": "evaluation/journal/requirements.txt",
   "actual_versions": "Read per-run reports, command logs and the package environment capture",
   "missing_dependency": "Actual meta-model Eclipse project containing model/mlops.genmodel and http://ucd.ac.ma/mlops Ecore package"

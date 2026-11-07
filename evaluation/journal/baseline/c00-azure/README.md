@@ -11,6 +11,12 @@ account/private containers, vault, log workspace, four Kubernetes objects, nine
 MLOps policy documents. Terraform uses provider **3.117.1**, within the generator's
 3.x constraint; changing to provider 4.x would change the comparison.
 
+The Terraform CLI constraint accepts 1.13.x and 1.14.x. Use the **same exact
+installed CLI version** for both sides of each paired run; actual versions are
+recorded in the native command logs. The author's observed CLI is 1.14.9.
+This compatibility range is not an environment lock. Azure provider 3.117.1
+remains pinned independently of the CLI.
+
 Policies describe the same configured values. They do not establish that an
 external engine executes CI, training, registration, drift monitoring or
 retraining. Azure resource-group organization and names differ from generated

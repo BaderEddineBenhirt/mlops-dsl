@@ -53,6 +53,11 @@ No plan/apply or cloud deployment runs. Provider download/start failures are
 BLOCKED rather than configuration detections. Missing executables are recorded.
 The Terraform `.terraform.lock.hcl` pins Azure provider 3.117.1. Python packages
 are pinned in `requirements.txt`; reference/actual environments are distinct.
+The baseline accepts Terraform CLI `>= 1.13.0, < 1.15.0`, including the author's
+observed 1.14.9. Run both approaches with the same exact CLI version and retain
+its version log. Earlier runs blocked by `= 1.13.0` must be preserved; pull the
+fix and run the evaluation wrapper again to create a fresh observation directory.
+Eclipse regeneration is not required for this evaluation-baseline change.
 
 Faults start from a fresh valid baseline control each time, mutate maintained
 Terraform/YAML sources, then rerender with real Kustomize. S04 can be detected
