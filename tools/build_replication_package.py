@@ -35,7 +35,7 @@ def inspect_junit(path):
     cases = [e for e in root.iter() if e.tag.rsplit("}", 1)[-1] == "testcase"]
     own = [e for e in cases if e.get("classname", "").endswith(".MlopsDslValidationTest")]
     source = ROOT / "org.xtext.ucd.mlopsdsl.tests/src/org/xtext/ucd/mlopsdsl/tests/MlopsDslValidationTest.java"
-    expected = set(re.findall(r"@Test\s+public void (\w+)\(", source.read_text()))
+    expected = set(re.findall(r"@Test\s+public void (\w+)\(", source.read_text(encoding="utf-8-sig")))
     observed = {e.get("name", "").split("(", 1)[0] for e in own}
     unsuccessful = [e.get("name") for e in own if any(c.tag.rsplit("}", 1)[-1] in {"failure", "error", "skipped"} for c in e)]
     return {"sha256": digest(path), "expected_test_count": len(expected), "observed_test_count": len(own),
@@ -46,7 +46,7 @@ def inspect_junit(path):
 def inspect_metamodel(path):
     errors = []
     manifest = path / "META-INF/MANIFEST.MF"
-    if not manifest.is_file() or not re.search(r"^Bundle-SymbolicName:\s*meta-model(?:;|\s|$)", manifest.read_text(), re.M):
+    if not manifest.is_file() or not re.search(r"^Bundle-SymbolicName:\s*meta-model(?:;|\s|$)", manifest.read_text(encoding="utf-8-sig"), re.M):
         errors.append("Expected the actual meta-model Eclipse bundle (Bundle-SymbolicName: meta-model)")
     ecores = list(path.rglob("*.ecore"))
     if not any(e.get("nsURI") == "http://ucd.ac.ma/mlops" for p in ecores for e in ET.parse(p).getroot().iter()):
@@ -80,8 +80,11 @@ def main():
             for key in ("metamodel", "junit"):
                 if report[key]["status"] != "PASS":
                     report["issues"].append(key + " preflight failed")
-            observations = json.loads((args.observations / "dsl-observations.json").read_text())
-            with (ROOT / "mlops-tests/src/validation/scenarios.tsv").open() as f:
+            observations = json.loads((args.observations / "dsl-observations.json").read_text(encoding="utf-8-sig"))
+            # The exporter reads classpath resources from the Xtext test project.
+            # mlops-tests mirrors the DSL files but does not contain this manifest.
+            fixtures = ROOT / "org.xtext.ucd.mlopsdsl.tests/src/validation"
+            with (fixtures / "scenarios.tsv").open(encoding="utf-8-sig", newline="") as f:
                 import csv
                 scenarios = list(csv.DictReader(f, delimiter="\t"))
             actual = observations["cases"]
@@ -91,7 +94,7 @@ def main():
             for s in scenarios:
                 o = indexed.get(s["id"], {})
                 expected = "PASS" if s["expected"] == "ACCEPT" else "DETECTED"
-                if o.get("outcome") != expected or o.get("source_sha256") != digest(ROOT / "mlops-tests/src/validation" / s["file"]):
+                if o.get("outcome") != expected or o.get("source_sha256") != digest(fixtures / s["file"]):
                     report["issues"].append("Failed/mismatched real DSL observation: " + s["id"])
             if not (args.observations / "generated-c00/runtime/k8s/ingress.yaml").is_file():
                 report["issues"].append("Real generated C00 export missing")

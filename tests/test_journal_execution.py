@@ -6,6 +6,9 @@ import re
 import sys
 import tempfile
 import unittest
+import csv
+import shutil
+import zipfile
 from pathlib import Path
 from types import SimpleNamespace
 from unittest.mock import patch
@@ -195,6 +198,64 @@ class JournalExecutionTest(unittest.TestCase):
             self.assertEqual(result["status"], "FAIL")
             self.assertEqual(result["expected_test_count"], 23)
             self.assertEqual(len(result["missing_tests"]), 22)
+
+    def test_replication_builds_archive_from_actual_manifest_layout(self):
+        # Synthetic collector inputs only: this test does not execute the DSL
+        # or create experimental evidence. It exercises the complete ZIP path.
+        with tempfile.TemporaryDirectory() as td:
+            root = Path(td)
+            repository = root / "repository"
+            for name in [*replication.PROJECTS, "tools", "evaluation", "tests"]:
+                (repository / name).mkdir(parents=True)
+            relative = Path("org.xtext.ucd.mlopsdsl.tests/src/validation")
+            fixtures = repository / relative
+            shutil.copytree(ROOT / relative, fixtures)
+            mirror = repository / "mlops-tests/src/validation"
+            mirror.mkdir(parents=True)
+            for model in fixtures.glob("*.mlops"):
+                shutil.copy2(model, mirror / model.name)
+            self.assertFalse((mirror / "scenarios.tsv").exists())
+            java_path = Path("org.xtext.ucd.mlopsdsl.tests/src/org/xtext/ucd/mlopsdsl/tests/MlopsDslValidationTest.java")
+            (repository / java_path).parent.mkdir(parents=True, exist_ok=True)
+            shutil.copy2(ROOT / java_path, repository / java_path)
+            names = re.findall(r"@Test\s+public void (\w+)\(", (ROOT / java_path).read_text(encoding="utf-8"))
+            junit = root / "synthetic-unit-junit.xml"
+            junit.write_text('<testsuite>' + ''.join(
+                '<testcase classname="org.xtext.ucd.mlopsdsl.tests.MlopsDslValidationTest" name="' + n + '"/>'
+                for n in names) + '</testsuite>', encoding="utf-8")
+            metamodel = root / "synthetic-meta-model"
+            (metamodel / "META-INF").mkdir(parents=True)
+            (metamodel / "META-INF/MANIFEST.MF").write_text("Bundle-SymbolicName: meta-model\n")
+            (metamodel / "model").mkdir()
+            (metamodel / "model/mlops.ecore").write_text('<EPackage nsURI="http://ucd.ac.ma/mlops"/>')
+            (metamodel / "model/mlops.genmodel").write_text('<GenModel/>')
+            observations = root / "synthetic-observations"
+            (observations / "generated-c00/runtime/k8s").mkdir(parents=True)
+            (observations / "generated-c00/runtime/k8s/ingress.yaml").write_text("kind: Ingress\n")
+            with (fixtures / "scenarios.tsv").open(encoding="utf-8") as f:
+                scenarios = list(csv.DictReader(f, delimiter="\t"))
+            cases = [{"case_id": s["id"], "outcome": "PASS" if s["expected"] == "ACCEPT" else "DETECTED",
+                      "source_sha256": common.digest(fixtures / s["file"])} for s in scenarios]
+            observation_path = observations / "dsl-observations.json"
+            observation_path.write_text(json.dumps({"cases": cases}), encoding="utf-8")
+            argv = ["build_replication_package.py", "--metamodel", str(metamodel), "--junit", str(junit),
+                    "--observations", str(observations), "--out", str(root / "draft")]
+            with patch.object(replication, "ROOT", repository), patch.object(sys, "argv", argv), \
+                    patch.object(replication, "command", return_value=({"status": "BLOCKED", "reason": "Mocked in unit test"}, "")):
+                self.assertEqual(replication.main(), 0)
+            archive = root / "draft/mlops-dsl-replication-draft.zip"
+            with zipfile.ZipFile(archive) as z:
+                self.assertIn(relative.as_posix() + "/scenarios.tsv", z.namelist())
+                self.assertIn("meta-model/model/mlops.genmodel", z.namelist())
+                self.assertEqual(z.read("evidence/junit.xml"), junit.read_bytes())
+                self.assertEqual(z.read("evidence/eclipse-observations/dsl-observations.json"), observation_path.read_bytes())
+            # A valid manifest path must not weaken fixture-hash checking.
+            cases[0]["source_sha256"] = "invalid"
+            observation_path.write_text(json.dumps({"cases": cases}), encoding="utf-8")
+            argv[-1] = str(root / "rejected-draft")
+            with patch.object(replication, "ROOT", repository), patch.object(sys, "argv", argv):
+                self.assertEqual(replication.main(), 2)
+            self.assertFalse((root / "rejected-draft/mlops-dsl-replication-draft.zip").exists())
 
     def test_replication_skips_state_credentials_and_build_products(self):
         root = Path("/example")
