@@ -198,3 +198,12 @@ does not establish that the Eclipse suite passes. Multi-cloud generalization,
 real cloud deployment, executed ML lifecycle and human effort savings require
 additional evidence if claimed in the paper. See `scope-mapping.tsv` and
 `equivalence-review.md` for independent review.
+
+## Audit of the first collected draft
+
+The uploaded native archive passed manifest verification and independent static
+replay. See `replication-audit-20261107.md` for the exact ZIP hash, Java-version
+distinction, output-count correction, scope review and the remaining split-sum
+policy distinction. New collections include the reviewer quickstart as root
+`README.md`. The runtime launch configuration uses a relative workspace path.
+Archived runs remain unchanged.

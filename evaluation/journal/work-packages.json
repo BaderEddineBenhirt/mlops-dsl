@@ -12,9 +12,15 @@
       "evidence_records": [
         {
           "path": "evaluation/journal/author-results-20261107.md",
-          "sha256": "8da7695ce44fe8dde638b0896bf212d18235490161a482fabd65933f9974f544",
-          "scope": "Synthesis of author-pasted XML/JSON and terminal results; includes equal-scope and harness-formatting limitations. Original native files await collection.",
+          "sha256": "539052e509773d9929c2b8dee982a4c04ade304addf39c263c5de3d8eeddd03a",
+          "scope": "Interpretation checked against the native uploaded archive, including output-lock and formatting confounds; unequal full-scope size totals do not support superiority.",
           "recorded_at_utc": "2026-11-07T15:46:10.536580+00:00"
+        },
+        {
+          "path": "evaluation/journal/replication-audit-20261107.json",
+          "sha256": "3be663e81d24c8ef3ff03396044ea0061581369a2eac8ec3a5eb99bfce3d9006",
+          "scope": "Original uploaded archive verified: all listed hashes, 23 JUnit cases, native logs and static replay of frozen configurations. Full equivalence/public reviewer access and independent clean Eclipse build remain open.",
+          "recorded_at_utc": "2026-11-07T16:15:34.087405+00:00"
         }
       ]
     },
@@ -34,9 +40,15 @@
         },
         {
           "path": "evaluation/journal/author-results-20261107.md",
-          "sha256": "8da7695ce44fe8dde638b0896bf212d18235490161a482fabd65933f9974f544",
-          "scope": "Synthesis of author-pasted XML/JSON and terminal results; includes equal-scope and harness-formatting limitations. Original native files await collection.",
+          "sha256": "539052e509773d9929c2b8dee982a4c04ade304addf39c263c5de3d8eeddd03a",
+          "scope": "Interpretation checked against the native uploaded archive, including output-lock and formatting confounds; unequal full-scope size totals do not support superiority.",
           "recorded_at_utc": "2026-11-07T15:46:10.536596+00:00"
+        },
+        {
+          "path": "evaluation/journal/replication-audit-20261107.json",
+          "sha256": "3be663e81d24c8ef3ff03396044ea0061581369a2eac8ec3a5eb99bfce3d9006",
+          "scope": "Original uploaded archive verified: all listed hashes, 23 JUnit cases, native logs and static replay of frozen configurations. Full equivalence/public reviewer access and independent clean Eclipse build remain open.",
+          "recorded_at_utc": "2026-11-07T16:15:34.087654+00:00"
         }
       ]
     },
@@ -56,9 +68,15 @@
         },
         {
           "path": "evaluation/journal/author-results-20261107.md",
-          "sha256": "8da7695ce44fe8dde638b0896bf212d18235490161a482fabd65933f9974f544",
-          "scope": "Synthesis of author-pasted XML/JSON and terminal results; includes equal-scope and harness-formatting limitations. Original native files await collection.",
+          "sha256": "539052e509773d9929c2b8dee982a4c04ade304addf39c263c5de3d8eeddd03a",
+          "scope": "Interpretation checked against the native uploaded archive, including output-lock and formatting confounds; unequal full-scope size totals do not support superiority.",
           "recorded_at_utc": "2026-11-07T15:46:10.536606+00:00"
+        },
+        {
+          "path": "evaluation/journal/replication-audit-20261107.json",
+          "sha256": "3be663e81d24c8ef3ff03396044ea0061581369a2eac8ec3a5eb99bfce3d9006",
+          "scope": "Original uploaded archive verified: all listed hashes, 23 JUnit cases, native logs and static replay of frozen configurations. Full equivalence/public reviewer access and independent clean Eclipse build remain open.",
+          "recorded_at_utc": "2026-11-07T16:15:34.087701+00:00"
         }
       ]
     },
@@ -72,15 +90,21 @@
       "evidence_records": [
         {
           "path": "evaluation/journal/runs/author-evolution-progress-20261107/observations.json",
-          "sha256": "905178aceebeed30f57705afd7ffbb530ef47f0e4f93a11b43df98bc3f4026d4",
-          "scope": "Author-reported passes and source-edit metrics for three controlled C00 tasks, including preserved registry retries; native archives and equivalence review pending.",
+          "sha256": "8506c14a739eb08a59bd9d431c2cd6998f6991fedaaad09ed9f9a8e5ae29a815",
+          "scope": "Native archives for all three C00 tasks verified and replayed from the uploaded ZIP; complete functional equivalence remains unestablished.",
           "recorded_at_utc": "2026-11-07T15:46:10.536616+00:00"
         },
         {
           "path": "evaluation/journal/author-results-20261107.md",
-          "sha256": "8da7695ce44fe8dde638b0896bf212d18235490161a482fabd65933f9974f544",
-          "scope": "Synthesis of author-pasted XML/JSON and terminal results; includes equal-scope and harness-formatting limitations. Original native files await collection.",
+          "sha256": "539052e509773d9929c2b8dee982a4c04ade304addf39c263c5de3d8eeddd03a",
+          "scope": "Interpretation checked against the native uploaded archive, including output-lock and formatting confounds; unequal full-scope size totals do not support superiority.",
           "recorded_at_utc": "2026-11-07T15:46:10.536625+00:00"
+        },
+        {
+          "path": "evaluation/journal/replication-audit-20261107.json",
+          "sha256": "3be663e81d24c8ef3ff03396044ea0061581369a2eac8ec3a5eb99bfce3d9006",
+          "scope": "Original uploaded archive verified: all listed hashes, 23 JUnit cases, native logs and static replay of frozen configurations. Full equivalence/public reviewer access and independent clean Eclipse build remain open.",
+          "recorded_at_utc": "2026-11-07T16:15:34.087741+00:00"
         }
       ]
     },
@@ -100,9 +124,15 @@
         },
         {
           "path": "evaluation/journal/author-results-20261107.md",
-          "sha256": "8da7695ce44fe8dde638b0896bf212d18235490161a482fabd65933f9974f544",
-          "scope": "Synthesis of author-pasted XML/JSON and terminal results; includes equal-scope and harness-formatting limitations. Original native files await collection.",
+          "sha256": "539052e509773d9929c2b8dee982a4c04ade304addf39c263c5de3d8eeddd03a",
+          "scope": "Interpretation checked against the native uploaded archive, including output-lock and formatting confounds; unequal full-scope size totals do not support superiority.",
           "recorded_at_utc": "2026-11-07T15:46:10.536633+00:00"
+        },
+        {
+          "path": "evaluation/journal/replication-audit-20261107.json",
+          "sha256": "3be663e81d24c8ef3ff03396044ea0061581369a2eac8ec3a5eb99bfce3d9006",
+          "scope": "Original uploaded archive verified: all listed hashes, 23 JUnit cases, native logs and static replay of frozen configurations. Full equivalence/public reviewer access and independent clean Eclipse build remain open.",
+          "recorded_at_utc": "2026-11-07T16:15:34.087880+00:00"
         }
       ]
     },
@@ -122,7 +152,14 @@
       "acceptance_criteria": "Complete meta-model, pinned toolchain, raw logs and immutable accessible release",
       "reference": "evaluation/journal/replication-release.md",
       "completed": false,
-      "evidence_records": []
+      "evidence_records": [
+        {
+          "path": "evaluation/journal/replication-audit-20261107.json",
+          "sha256": "3be663e81d24c8ef3ff03396044ea0061581369a2eac8ec3a5eb99bfce3d9006",
+          "scope": "Original uploaded archive verified: all listed hashes, 23 JUnit cases, native logs and static replay of frozen configurations. Full equivalence/public reviewer access and independent clean Eclipse build remain open.",
+          "recorded_at_utc": "2026-11-07T16:15:34.087895+00:00"
+        }
+      ]
     }
   ]
 }

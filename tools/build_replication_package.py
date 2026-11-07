@@ -110,6 +110,11 @@ def main():
             report["issues"].append("Missing source directory: " + name)
             continue
         copy_sources(ROOT / name, stage / name)
+    quickstart = ROOT / "evaluation/journal/REPLICATION-README.md"
+    if quickstart.is_file():
+        shutil.copy2(quickstart, stage / "README.md")
+    else:
+        report["issues"].append("Missing reviewer quickstart: " + str(quickstart))
     copy_sources(args.metamodel, stage / "meta-model")
     copy_sources(args.observations, stage / "evidence/eclipse-observations")
     (stage / "evidence").mkdir(parents=True, exist_ok=True)

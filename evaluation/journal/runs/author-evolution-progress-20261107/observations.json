@@ -2,7 +2,7 @@
   "recorded_at_utc": "2026-11-07T15:31:42.642848+00:00",
   "provenance": "Author-pasted terminal execution results and attached model snapshots",
   "scope_equivalence": "NOT_REVIEWED",
-  "raw_native_trial_archives": "Not uploaded; remain in the author Windows run directories",
+  "raw_native_trial_archives": "Verified in the uploaded draft archive; original input SHA-256 recorded in replication-audit-20261107.json",
   "authoring_time": "NOT_MEASURED",
   "trials": [
     {
@@ -131,5 +131,23 @@
   ],
   "case_count": 1,
   "controlled_task_count": 3,
-  "measurements_recorded_at_utc": "2026-11-07T15:46:10.536079+00:00"
+  "measurements_recorded_at_utc": "2026-11-07T15:46:10.536079+00:00",
+  "verified_archive_sha256": "8ffaced045525762300f8f579c662a1f94a3ddfcf8555573e7a58c76bf8952b5",
+  "audit_reference": "evaluation/journal/replication-audit-20261107.json",
+  "output_change_classification": {
+    "registry": {
+      "raw_changed": 3,
+      "generated_configuration_files": 2,
+      "auxiliary_dependency_lock_removals": 1
+    },
+    "exposure": {
+      "raw_changed": 4,
+      "generated_configuration_files": 3,
+      "documentation_files": 1
+    },
+    "port": {
+      "raw_changed": 3,
+      "generated_configuration_files": 3
+    }
+  }
 }

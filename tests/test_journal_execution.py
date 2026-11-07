@@ -207,6 +207,9 @@ class JournalExecutionTest(unittest.TestCase):
             repository = root / "repository"
             for name in [*replication.PROJECTS, "tools", "evaluation", "tests"]:
                 (repository / name).mkdir(parents=True)
+            quickstart = Path("evaluation/journal/REPLICATION-README.md")
+            (repository / quickstart).parent.mkdir(parents=True, exist_ok=True)
+            shutil.copy2(ROOT / quickstart, repository / quickstart)
             relative = Path("org.xtext.ucd.mlopsdsl.tests/src/validation")
             fixtures = repository / relative
             shutil.copytree(ROOT / relative, fixtures)
@@ -247,6 +250,7 @@ class JournalExecutionTest(unittest.TestCase):
             with zipfile.ZipFile(archive) as z:
                 self.assertIn(relative.as_posix() + "/scenarios.tsv", z.namelist())
                 self.assertIn("meta-model/model/mlops.genmodel", z.namelist())
+                self.assertEqual(z.read("README.md"), (ROOT / quickstart).read_bytes())
                 self.assertEqual(z.read("evidence/junit.xml"), junit.read_bytes())
                 self.assertEqual(z.read("evidence/eclipse-observations/dsl-observations.json"), observation_path.read_bytes())
             # A valid manifest path must not weaken fixture-hash checking.

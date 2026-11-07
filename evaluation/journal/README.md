@@ -8,11 +8,14 @@ being implemented is distinct from experiments being completed.
 
 | Work | Implementation | Evidence still needed |
 | --- | --- | --- |
-| Configuration evolution | Unified port/registry/exposure prepare/evaluate runner with fresh snapshots | Full native trial archives and equivalence review; all three task passes author-reported |
+| Configuration evolution | Unified port/registry/exposure prepare/evaluate runner with fresh snapshots | Full-equivalence review; native trial archives verified; all three native task archives audited |
 | Comparative fault detection | Source mutations, Kustomize/native logs, domain guard, hash-checked DSL JSON join, matched denominators | Actual 16-case Eclipse JSON; review of seven applicable pairs and five exclusions |
 | Broader comparison | Direct Azure Terraform baseline, runtime Kustomize, nine lifecycle policies, 79 selected checks | Fresh artifacts from fixed renderer; native Terraform validation and practitioner equivalence review |
 | Specification size | Maintained-source inventory and declared line/token proxies | Equal-scope review; descriptive counts do not establish authoring effort savings |
 | Replication package | Actual metamodel/JUnit preflight, source/observations collector, dependency locks, environment logs and draft ZIP | Actual dependency and XML, full Eclipse bundle inventory, public immutable archive with download verified |
+
+The uploaded full author draft was audited; see `replication-audit-20261107.md`
+and `author-results-20261107.md` for verified evidence and interpretation.
 
 Agent-executed observations are under `runs/agent-20261107/`. They include
 negative findings in the historical generated snapshot and provider startup
@@ -45,7 +48,7 @@ evaluation/comparison/port-evolution.md.
 | WP1: DSL correctness/diagnostics | PARTIAL | Exported JUnit XML, validator/generator diagnostics, hashes, fresh run logs |
 | WP2: full direct-authoring comparison | PARTIAL | Independently authored Terraform, K8s and lifecycle-policy baseline; reviewer-approved mapping; validator logs |
 | WP3: paired fault-injection | PARTIAL (baseline only) | Real DSL JSON, equivalent pairs, missed/false-alarm cases and stages |
-| WP4: configuration evolution | PARTIAL (three task passes author-reported) | Full native trial archives and equivalence review |
+| WP4: configuration evolution | PARTIAL (three task archives audited) | Full-equivalence review; native trial archives verified |
 | WP5: specification/maintenance measurements | PARTIAL (descriptive) | Equal-scope review, duplicated authoritative values, real evolution files touched |
 | WP6: real deployment / ML lifecycle if claimed | NOT RUN | Cloud rollout, inference and relevant policy events, sanitized raw logs and teardown |
 | WP7: reproducibility & manuscript integrity | PARTIAL | External metamodel, pinned environment, exported results, reviewer-accessible archive, claims traced to data |
