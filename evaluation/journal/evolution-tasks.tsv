@@ -1,4 +1,5 @@
 task_id	case	requested_change	layers	status	postconditions
 E01	C00	API port 8080 to 9090	kubernetes	tooling_ready	All six dependent ports and original postconditions verified; both before/after source diffs
-E02	TBD reviewed valid case	model registry name migration	registry_and_policy	proposed	Registry and all corresponding policy references updated
-E03	TBD reviewed valid case	private to public exposure with TLS/domain	kubernetes_and_security	proposed	Ingress host/TLS and secret/controller preconditions hold
+E02	C00 (equivalence review pending)	model registry name v1 to v2	registry_and_policy	tooling_ready	Six DSL references edited; selected emitted registry/stage references updated; source/output diffs and residual failures archived; real trial NOT_RUN
+E03	C00 PRIVATE/tls=false starting control	private to public exposure with TLS/domain	kubernetes_and_security	tooling_ready	PUBLIC/tls=true model and selected TLS/host postconditions; source/output diffs; certificate/controller prerequisites; real trial NOT_RUN
+

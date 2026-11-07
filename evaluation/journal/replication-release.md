@@ -2,6 +2,11 @@
 
 These are open checkboxes, not completed evidence.
 
+Use `tools/build_replication_package.py` and the commands in [execution.md](execution.md)
+to collect the actual metamodel, JUnit XML, raw observations and environment.
+The collector creates a draft archive only after input preflight; it does not
+publish a release or verify unauthenticated reviewer access.
+
 - [ ] Stable tagged SHA, time of execution, source/input hashes and license.
 - [ ] External Ecore meta-model and .genmodel provided with redistribution
       rights; OCL registration independently reproducible.
@@ -21,3 +26,4 @@ These are open checkboxes, not completed evidence.
       A private GitHub repository alone is not enough.
 
 Automation unit tests cannot stand in for scientific experiment executions.
+
