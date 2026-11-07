@@ -4,6 +4,12 @@ import static org.junit.jupiter.api.Assertions.*;
 
 import java.io.InputStream;
 import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.security.MessageDigest;
+import java.time.Instant;
+import java.util.ArrayList;
+import java.util.HexFormat;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -108,6 +114,100 @@ public class MlopsDslValidationTest {
         String ingress = generatedText(generate("C01"), "runtime/k8s/ingress.yaml");
         assertFalse(ingress.contains("  tls:"));
         assertFalse(ingress.contains("secretName:"));
+    }
+
+    @Test
+    public void omittedCriterionBoundsStayAbsent() throws Exception {
+        String policy = generatedText(generate("C00"), "mlops/decision-gate.yaml");
+        String performance = policy.substring(policy.indexOf("name: \"performance\""),
+            policy.indexOf("name: \"robustness\""));
+        assertTrue(performance.contains("minValue: 0.9"));
+        assertFalse(performance.contains("maxValue:"), "An omitted upper bound must not become zero");
+    }
+
+    @Test
+    public void azureNetworkAndDesiredCountsPreserveTheModel() throws Exception {
+        InMemoryFileSystemAccess output = generate("C00");
+        String network = generatedText(output, "modules/network/main.tf");
+        assertTrue(network.contains("[\"10.50.0.0/16\"]"));
+        assertTrue(network.contains("[\"10.50.1.0/24\", \"10.50.2.0/24\"][count.index]"));
+        assertTrue(network.contains("azurerm_subnet.private[*].id"));
+        String compute = generatedText(output, "modules/compute/main.tf");
+        assertTrue(compute.contains("node_count          = 2"));
+        assertTrue(compute.contains("node_count            = 1"));
+    }
+
+    /** Records real editor and generator observations, including failed assertions. */
+    @Test
+    public void exportJournalObservations() throws Exception {
+        Path destination = Path.of(System.getProperty("mlops.evaluation.output",
+            "target/journal-observations-" + System.currentTimeMillis())).toAbsolutePath();
+        Files.createDirectories(destination.getParent());
+        Files.createDirectory(destination); // Existing observations cannot be overwritten.
+        List<String> records = new ArrayList<>();
+        List<String> failures = new ArrayList<>();
+        for (String row : read("validation/scenarios.tsv").lines().skip(1).collect(Collectors.toList())) {
+            if (row.isBlank()) continue;
+            String[] fields = row.split("\t", -1);
+            String id = fields[0];
+            EObject root = parse(id, resourceSets.get());
+            List<Issue> issues = errors(root);
+            boolean valid = "ACCEPT".equals(fields[2]);
+            boolean intended = issues.stream().anyMatch(i -> i.getMessage().contains(fields[4]));
+            String outcome = valid ? (issues.isEmpty() ? "PASS" : "FALSE_ALARM")
+                : (intended ? "DETECTED" : issues.isEmpty() ? "MISSED" : "BLOCKED");
+            String diagnostics = issues.stream().map(i -> "{\"code\":" + json(i.getCode())
+                + ",\"message\":" + json(i.getMessage()) + "}").collect(Collectors.joining(","));
+            InMemoryFileSystemAccess output = fileSystems.get();
+            GeneratorContext context = new GeneratorContext();
+            context.setCancelIndicator(CancelIndicator.NullImpl);
+            String generation = "ACCEPT";
+            String generationMessage = "";
+            try {
+                new MlopsGenerator().doGenerate(root.eResource(), output, context);
+            } catch (IllegalStateException ex) {
+                generation = "REJECT";
+                generationMessage = ex.getMessage();
+            }
+            if ((valid ? !"PASS".equals(outcome) : !"DETECTED".equals(outcome)) || valid != "ACCEPT".equals(generation)
+                    || (!valid && !output.getTextFiles().isEmpty())) failures.add(id);
+            if ("C00".equals(id) && "ACCEPT".equals(generation)) {
+                for (java.util.Map.Entry<String, CharSequence> entry : output.getTextFiles().entrySet()) {
+                    String marker = "generated/validation-c00/";
+                    String key = entry.getKey().replace('\\', '/');
+                    int index = key.indexOf(marker);
+                    if (index < 0) continue;
+                    Path file = destination.resolve("generated-c00").resolve(key.substring(index + marker.length())).normalize();
+                    assertTrue(file.startsWith(destination.resolve("generated-c00")));
+                    Files.createDirectories(file.getParent());
+                    Files.writeString(file, entry.getValue(), StandardCharsets.UTF_8);
+                }
+            }
+            String sourceHash = HexFormat.of().formatHex(MessageDigest.getInstance("SHA-256")
+                .digest(read("validation/" + fields[1]).getBytes(StandardCharsets.UTF_8)));
+            records.add("{\"case_id\":" + json(id) + ",\"outcome\":" + json(outcome)
+                + ",\"source_sha256\":" + json(sourceHash) + ",\"category\":" + json(fields[3])
+                + ",\"detection_stage\":" + json(issues.isEmpty() ? "none" : "linking".equals(fields[3]) ? "linking" : "xtext_validation")
+                + ",\"generator\":" + json(generation) + ",\"generator_message\":" + json(generationMessage)
+                + ",\"diagnostics\":[" + diagnostics + "]}");
+        }
+        Files.writeString(destination.resolve("dsl-observations.json"), "{\"recorded_at_utc\":" + json(Instant.now().toString())
+            + ",\"java\":" + json(System.getProperty("java.version")) + ",\"cases\":["
+            + String.join(",", records) + "]}\n", StandardCharsets.UTF_8);
+        System.out.println("JOURNAL OBSERVATIONS: " + destination);
+        assertTrue(failures.isEmpty(), "Unexpected editor/generator results: " + failures);
+        assertTrue(Files.isDirectory(destination.resolve("generated-c00")), "C00 artifact export missing");
+    }
+
+    private String json(String value) {
+        if (value == null) return "null";
+        StringBuilder result = new StringBuilder("\"");
+        for (char c : value.toCharArray()) {
+            if (c == '"' || c == '\\') result.append('\\').append(c);
+            else if (c < 32) result.append(String.format("\\u%04x", (int) c));
+            else result.append(c);
+        }
+        return result.append('"').toString();
     }
 
     private InMemoryFileSystemAccess generate(String id) throws Exception {

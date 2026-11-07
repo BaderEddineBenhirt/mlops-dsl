@@ -1,0 +1,16 @@
+feature	dsl_declaration	baseline_source	shared_check	status
+API ports/probes/replicas	ServingSpec	evaluation/comparison/baseline/c00-runtime	C00 runtime contract	REVIEW_PENDING
+Public TLS and host	InfraPlan.network	evaluation/comparison/baseline/c00-runtime	C00 runtime contract and S03/S06	REVIEW_PENDING
+Azure region/network/subnets	InfraPlan.region/network	baseline/c00-azure/infra/terraform/main.tf	region/vnet_cidr/subnet_cidr_literals	REVIEW_PENDING
+AKS pools and counts	InfraPlan.runtime.nodePools	baseline/c00-azure/infra/terraform/main.tf	resource presence and S07	REVIEW_PENDING
+Storage/vault/log workspace	InfraPlan storage/secrets/observability	baseline/c00-azure/infra/terraform/main.tf	resource presence only	LIMITED_MAPPING
+Decision thresholds/criteria	DecisionPolicy	baseline/c00-azure/mlops/decision-gate.yaml	policy equality and S08/S09	REVIEW_PENDING
+Registry and stage artifacts	ModelRegistrySpec/CiCdCtSpec	baseline/c00-azure/mlops/model-registry.yaml and cicdct.yaml	policy equality	REVIEW_PENDING
+Tracking/versioning	ExperimentTrackingSpec/VersioningSpec	baseline/c00-azure/mlops/tracking.yaml and versioning.yaml	policy equality	REVIEW_PENDING
+Monitoring/retraining	MonitoringSpec/RetrainingPolicy	baseline/c00-azure/mlops/monitoring-policy.yaml and retraining-policy.yaml	policy equality	REVIEW_PENDING
+Governance/lifecycle	GovernanceSpec/ProjectSpec	baseline/c00-azure/mlops/governance.yaml and lifecycle.yaml	policy equality	REVIEW_PENDING
+Dataset split ratios	DataAsset.splits	none	DSL only S01/S12	NOT_APPLICABLE
+Training GPU allocation	OperationalPlan.compute/resources	none	DSL only S02	NOT_APPLICABLE
+Workflow identities/edges	MlWorkflow	none	DSL linking only S10	NOT_APPLICABLE
+Serving command/resources/env	OperationalPlan.entryCmd/ServingSpec	none	DSL only S11; target omissions	NOT_APPLICABLE
+Training/deployment/lifecycle execution	Multiple policies	none	No execution/deployment checks	NOT_CLAIMED

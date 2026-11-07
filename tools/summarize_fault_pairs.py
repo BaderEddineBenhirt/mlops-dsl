@@ -67,8 +67,22 @@ def summarize(rows):
         and pair.get("baseline", {}).get("outcome") in FAULTS | CONTROLS
         for pair in by_case.values()
     )
+    paired_faults = [pair for pair in by_case.values() if set(pair) == {"dsl", "baseline"}
+                     and all(r["case_kind"] == "fault" and r["rule_category"] == "semantic"
+                             and r["outcome"] in FAULTS for r in pair.values())]
+    paired_controls = [pair for pair in by_case.values() if set(pair) == {"dsl", "baseline"}
+                       and all(r["case_kind"] == "control" and r["outcome"] in CONTROLS for r in pair.values())]
+    matched = {}
+    for approach in ("dsl", "baseline"):
+        detected = sum(p[approach]["outcome"] == "DETECTED" for p in paired_faults)
+        alarms = sum(p[approach]["outcome"] == "FALSE_ALARM" for p in paired_controls)
+        matched[approach] = {"detected": detected, "missed": len(paired_faults) - detected,
+            "semantic_recall_denominator": len(paired_faults),
+            "semantic_recall": detected / len(paired_faults) if paired_faults else None,
+            "false_alarms": alarms, "valid_controls": len(paired_controls),
+            "false_alarm_rate": alarms / len(paired_controls) if paired_controls else None}
     return {"case_count": len(by_case), "executed_paired_cases": comparable,
-            "approaches": totals, "errors": errors,
+            "approaches": totals, "matched_semantic_and_control_comparison": matched, "errors": errors,
             "note": "Not-run, blocked and inapplicable rows excluded; no unobserved results inferred."}
 
 
@@ -100,3 +114,4 @@ def main():
 
 if __name__ == "__main__":
     raise SystemExit(main())
+

@@ -857,8 +857,12 @@ public class MlopsGenerator implements IGenerator2 {
             for (DecisionCriterion c : policy.getCriteria()) {
                 line(sb, "    - name: " + quote(nz(c.getName())));
                 line(sb, "      weight: " + safeFloat(c.getWeight()));
-                line(sb, "      minValue: " + safeFloat(c.getMinValue()));
-                line(sb, "      maxValue: " + safeFloat(c.getMaxValue()));
+                if (c.getMinValue() != null) {
+                    line(sb, "      minValue: " + safeFloat(c.getMinValue()));
+                }
+                if (c.getMaxValue() != null) {
+                    line(sb, "      maxValue: " + safeFloat(c.getMaxValue()));
+                }
                 line(sb, "      required: " + Boolean.TRUE.equals(c.getRequired()));
             }
         }
@@ -1627,21 +1631,28 @@ public class MlopsGenerator implements IGenerator2 {
             line(sb, "  name                = \"vnet-${var.project_name}-${var.environment}\"");
             line(sb, "  location            = azurerm_resource_group.main.location");
             line(sb, "  resource_group_name = azurerm_resource_group.main.name");
-            line(sb, "  address_space       = [\"10.20.0.0/16\"]");
+            line(sb, "  address_space       = [" + quote(infra.getNetwork() == null
+                || isBlank(infra.getNetwork().getCidr()) ? "10.20.0.0/16" : infra.getNetwork().getCidr()) + "]");
             line(sb, "  tags                = var.tags");
             line(sb, "}");
             line(sb, "");
 
             line(sb, "resource \"azurerm_subnet\" \"private\" {");
-            line(sb, "  name                 = \"snet-${var.project_name}-${var.environment}\"");
+            List<String> subnets = infra.getNetwork() == null ? new ArrayList<String>()
+                : new ArrayList<String>(infra.getNetwork().getSubnets());
+            if (subnets.isEmpty()) {
+                subnets.add("10.20.1.0/24");
+            }
+            line(sb, "  count                = " + subnets.size());
+            line(sb, "  name                 = \"snet-${var.project_name}-${var.environment}-${count.index}\"");
             line(sb, "  resource_group_name  = azurerm_resource_group.main.name");
             line(sb, "  virtual_network_name = azurerm_virtual_network.main.name");
-            line(sb, "  address_prefixes     = [\"10.20.1.0/24\"]");
+            line(sb, "  address_prefixes     = [" + yamlStringList(subnets) + "[count.index]]");
             line(sb, "}");
             line(sb, "");
 
             output(sb, "network_id", "azurerm_virtual_network.main.id");
-            output(sb, "private_subnets", "[azurerm_subnet.private.id]");
+            output(sb, "private_subnets", "azurerm_subnet.private[*].id");
 
         } else if (infra.getProvider() == CloudProvider.AWS) {
             line(sb, "resource \"aws_vpc\" \"main\" {");
@@ -1936,6 +1947,7 @@ public class MlopsGenerator implements IGenerator2 {
             line(sb, "    vm_size             = \"" + nz(system.getMachineType()) + "\"");
             line(sb, "    vnet_subnet_id      = length(var.private_subnets) > 0 ? var.private_subnets[0] : null");
             line(sb, "    enable_auto_scaling = true");
+            line(sb, "    node_count          = " + safeInt(system.getDesiredNodes(), 1));
             line(sb, "    min_count           = " + safeInt(system.getMinNodes(), 1));
             line(sb, "    max_count           = " + safeInt(system.getMaxNodes(), 1));
             line(sb, "  }");
@@ -1962,6 +1974,7 @@ public class MlopsGenerator implements IGenerator2 {
                 line(sb, "  kubernetes_cluster_id = azurerm_kubernetes_cluster.main.id");
                 line(sb, "  vm_size               = \"" + nz(pool.getMachineType()) + "\"");
                 line(sb, "  enable_auto_scaling   = true");
+                line(sb, "  node_count            = " + safeInt(pool.getDesiredNodes(), 1));
                 line(sb, "  min_count             = " + safeInt(pool.getMinNodes(), 1));
                 line(sb, "  max_count             = " + safeInt(pool.getMaxNodes(), 1));
                 line(sb, "  vnet_subnet_id        = length(var.private_subnets) > 0 ? var.private_subnets[0] : null");

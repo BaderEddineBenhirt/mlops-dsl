@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "as_of": "2026-10-18",
+  "as_of": "2026-11-07",
   "work_packages": [
     {
       "id": "WP1",
@@ -18,16 +18,30 @@
       "acceptance_criteria": "Reviewed full baseline, scope and downstream validation",
       "reference": "evaluation/journal/equivalence-review.md",
       "completed": false,
-      "evidence_records": []
+      "evidence_records": [
+        {
+          "path": "evaluation/journal/runs/agent-20261107/broader/report.json",
+          "sha256": "18912e84a23fc7aee7e9df8991e4e9b9414b7c13aa074d28209a69dd57bae358",
+          "scope": "79 selected checks; historical generated defects observed; native provider validation blocked; equivalence pending",
+          "recorded_at_utc": "2026-11-07T13:57:10.218519+00:00"
+        }
+      ]
     },
     {
       "id": "WP3",
       "title": "Paired seeded error detection",
-      "status": "not_run",
+      "status": "partial",
       "acceptance_criteria": "Executed fault pairs including missed/false-alarm cases and logs",
       "reference": "evaluation/journal/fault-pairs.tsv",
       "completed": false,
-      "evidence_records": []
+      "evidence_records": [
+        {
+          "path": "evaluation/journal/runs/agent-20261107/faults/report.json",
+          "sha256": "3f56337fa807676564a82f8b4c5c4a5bfd06e4d51a093d9f5bae54d8ede7b888",
+          "scope": "Baseline side executed only; actual Eclipse JSON missing, zero executed pairs",
+          "recorded_at_utc": "2026-11-07T13:57:10.218542+00:00"
+        }
+      ]
     },
     {
       "id": "WP4",
@@ -41,11 +55,18 @@
     {
       "id": "WP5",
       "title": "Source specification size and duplication",
-      "status": "not_run",
+      "status": "partial",
       "acceptance_criteria": "Equivalent-scope measured metrics plus manual duplication assessment",
       "reference": "tools/measure_authoring_sources.py",
       "completed": false,
-      "evidence_records": []
+      "evidence_records": [
+        {
+          "path": "evaluation/journal/runs/agent-20261107/source-size.json",
+          "sha256": "2d6a2d5c1add936766a82f784f67ea58a72d379bbc61ebbd087b1d9ff57a25cb",
+          "scope": "Descriptive maintained-source counts only; unequal scope, no superiority ratio",
+          "recorded_at_utc": "2026-11-07T13:57:10.218557+00:00"
+        }
+      ]
     },
     {
       "id": "WP6",

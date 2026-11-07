@@ -1,0 +1,182 @@
+{
+  "case_id": "C03",
+  "outcome": "PASS",
+  "detection_stage": "none",
+  "parsing_errors": [],
+  "issues": [],
+  "inventory": [
+    {
+      "path": "README.md",
+      "sha256": "4fdd1389f72f87147a107b9e4f1b97972fbbdf8afcd8c2297a37c49b0a2288b3",
+      "bytes": 1959
+    },
+    {
+      "path": "infra/terraform/.terraform.lock.hcl",
+      "sha256": "a67a33e5e7876dc2267d478d87eeec12cfe739a00335019ca27e1047116caa9e",
+      "bytes": 1187
+    },
+    {
+      "path": "infra/terraform/main.tf",
+      "sha256": "851d99a3b0e1165513487b2d85a1d27181c058e9a7227fc929247a7fd3f74736",
+      "bytes": 3431
+    },
+    {
+      "path": "kustomization.yaml",
+      "sha256": "3acb4414e7afd08103e3c620935761f7d575e0318eb2f309303cc074f37fe213",
+      "bytes": 1301
+    },
+    {
+      "path": "mlops/cicdct.yaml",
+      "sha256": "6849352086a52cd1d4a61ded022bf534955bfd7165666605d9c80b6509701d38",
+      "bytes": 1268
+    },
+    {
+      "path": "mlops/decision-gate.yaml",
+      "sha256": "385eb6d51e8b125a76cb78ac0443854711bebee94c01b5b0648d2edfae6b1b58",
+      "bytes": 523
+    },
+    {
+      "path": "mlops/governance.yaml",
+      "sha256": "5a691f74f1083d367004437e7bce111af99f26cc24a8ab1c7c26391088296a19",
+      "bytes": 138
+    },
+    {
+      "path": "mlops/lifecycle.yaml",
+      "sha256": "3c0aeefbf1d1d31187f415cb41f044a0ad2dcfd85add6f24abffff3bd0a23c67",
+      "bytes": 382
+    },
+    {
+      "path": "mlops/model-registry.yaml",
+      "sha256": "c92b22f2ab16cdcf5764d1a49fb5768570fb9eaddbbb47f744ffa4032d8ca182",
+      "bytes": 169
+    },
+    {
+      "path": "mlops/monitoring-policy.yaml",
+      "sha256": "37f65ddff6aae78ba26e3b6e94355e9b00696a5baccbbec2d9a45ab39d6e6f6d",
+      "bytes": 260
+    },
+    {
+      "path": "mlops/retraining-policy.yaml",
+      "sha256": "185ccb2728cb09e485d3c11e0ebfa633b1c7ccf61b3245c7b6d855380a98377f",
+      "bytes": 158
+    },
+    {
+      "path": "mlops/tracking.yaml",
+      "sha256": "cc214042a55373d3e5bb677b2795cdd67f3808f081da5e1c0a1bdf2ca6409cae",
+      "bytes": 187
+    },
+    {
+      "path": "mlops/versioning.yaml",
+      "sha256": "80d5e3f6d0ff87f1b88084a4566b576c1751b1b89421b71155143cd9a0f426c7",
+      "bytes": 152
+    },
+    {
+      "path": "runtime/k8s/deployment.yaml",
+      "sha256": "d558acf84ff86291ed5549de59cbecdc5ef1bb7174df46d5308a43545d17f0b5",
+      "bytes": 632
+    },
+    {
+      "path": "runtime/k8s/ingress.yaml",
+      "sha256": "5d8ea6cf503343f84b2d0fc6b6ebc2103e24c21b8500aeb042e227b59fb86a90",
+      "bytes": 471
+    },
+    {
+      "path": "runtime/k8s/namespace.yaml",
+      "sha256": "68117174a7d465f25c07b5de04c39d24ef1d1d66dc70ffe8b5465598149af79b",
+      "bytes": 64
+    },
+    {
+      "path": "runtime/k8s/service.yaml",
+      "sha256": "ebcd5c99345fdd070d8d341cd3e9a8745332d2610b8fceaff5fe7c77d6881930",
+      "bytes": 228
+    }
+  ],
+  "source_inventory": [
+    {
+      "path": "README.md",
+      "sha256": "4fdd1389f72f87147a107b9e4f1b97972fbbdf8afcd8c2297a37c49b0a2288b3",
+      "bytes": 1959
+    },
+    {
+      "path": "infra/terraform/.terraform.lock.hcl",
+      "sha256": "a67a33e5e7876dc2267d478d87eeec12cfe739a00335019ca27e1047116caa9e",
+      "bytes": 1187
+    },
+    {
+      "path": "infra/terraform/main.tf",
+      "sha256": "851d99a3b0e1165513487b2d85a1d27181c058e9a7227fc929247a7fd3f74736",
+      "bytes": 3431
+    },
+    {
+      "path": "kustomization.yaml",
+      "sha256": "3acb4414e7afd08103e3c620935761f7d575e0318eb2f309303cc074f37fe213",
+      "bytes": 1301
+    },
+    {
+      "path": "mlops/cicdct.yaml",
+      "sha256": "6849352086a52cd1d4a61ded022bf534955bfd7165666605d9c80b6509701d38",
+      "bytes": 1268
+    },
+    {
+      "path": "mlops/decision-gate.yaml",
+      "sha256": "385eb6d51e8b125a76cb78ac0443854711bebee94c01b5b0648d2edfae6b1b58",
+      "bytes": 523
+    },
+    {
+      "path": "mlops/governance.yaml",
+      "sha256": "5a691f74f1083d367004437e7bce111af99f26cc24a8ab1c7c26391088296a19",
+      "bytes": 138
+    },
+    {
+      "path": "mlops/lifecycle.yaml",
+      "sha256": "3c0aeefbf1d1d31187f415cb41f044a0ad2dcfd85add6f24abffff3bd0a23c67",
+      "bytes": 382
+    },
+    {
+      "path": "mlops/model-registry.yaml",
+      "sha256": "c92b22f2ab16cdcf5764d1a49fb5768570fb9eaddbbb47f744ffa4032d8ca182",
+      "bytes": 169
+    },
+    {
+      "path": "mlops/monitoring-policy.yaml",
+      "sha256": "37f65ddff6aae78ba26e3b6e94355e9b00696a5baccbbec2d9a45ab39d6e6f6d",
+      "bytes": 260
+    },
+    {
+      "path": "mlops/retraining-policy.yaml",
+      "sha256": "185ccb2728cb09e485d3c11e0ebfa633b1c7ccf61b3245c7b6d855380a98377f",
+      "bytes": 158
+    },
+    {
+      "path": "mlops/tracking.yaml",
+      "sha256": "cc214042a55373d3e5bb677b2795cdd67f3808f081da5e1c0a1bdf2ca6409cae",
+      "bytes": 187
+    },
+    {
+      "path": "mlops/versioning.yaml",
+      "sha256": "80d5e3f6d0ff87f1b88084a4566b576c1751b1b89421b71155143cd9a0f426c7",
+      "bytes": 152
+    },
+    {
+      "path": "runtime/k8s/deployment.yaml",
+      "sha256": "14303b7b23637f6d621046d2023ceefad679e7ecb9e52e20803bf09a61c05455",
+      "bytes": 728
+    },
+    {
+      "path": "runtime/k8s/ingress.yaml",
+      "sha256": "93fd4076db5b9167ed4fd66d77b3621ed2ea3ece6bb9ddb78bd05150b90641a0",
+      "bytes": 577
+    },
+    {
+      "path": "runtime/k8s/namespace.yaml",
+      "sha256": "68117174a7d465f25c07b5de04c39d24ef1d1d66dc70ffe8b5465598149af79b",
+      "bytes": 64
+    },
+    {
+      "path": "runtime/k8s/service.yaml",
+      "sha256": "9f08d315e514ac6adaedeb680e8d1e72b497f4694bd70fd052ed47f0aca2e6c8",
+      "bytes": 225
+    }
+  ],
+  "fixture_sha256": "72a49bd942c9e59deeb0d3d1dcfe2989614d2a8bc0ef29e9d9ce1a13b9eb4f3d"
+}

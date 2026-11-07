@@ -1,0 +1,31 @@
+--- control/mlops/decision-gate.yaml
++++ S08/mlops/decision-gate.yaml
+@@ -7,8 +7,23 @@
+   maxDrift: 0.15
+   minTraceabilityScore: 0.95
+   criteria:
+-    - {name: performance, weight: 0.35, minValue: 0.9, required: true}
+-    - {name: robustness, weight: 0.20, minValue: 0.85, required: true}
+-    - {name: drift_stability, weight: 0.15, maxValue: 0.15, required: true}
+-    - {name: latency, weight: 0.10, maxValue: 200.0, required: true}
+-    - {name: traceability, weight: 0.20, minValue: 0.95, required: true}
++  - name: performance
++    weight: 0.25
++    minValue: 0.9
++    required: true
++  - name: robustness
++    weight: 0.2
++    minValue: 0.85
++    required: true
++  - name: drift_stability
++    weight: 0.15
++    maxValue: 0.15
++    required: true
++  - name: latency
++    weight: 0.1
++    maxValue: 200.0
++    required: true
++  - name: traceability
++    weight: 0.2
++    minValue: 0.95
++    required: true

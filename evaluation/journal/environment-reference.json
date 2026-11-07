@@ -1,0 +1,20 @@
+{
+  "purpose": "Reference setup; not a claim that every version was observed in a new run",
+  "windows_author_reference": {
+    "python": "3.12.0",
+    "java": "21.0.8",
+    "eclipse": "4.37",
+    "xtext": "2.40.0",
+    "kubectl": "1.35.4",
+    "kustomize": "5.7.1"
+  },
+  "agent_offline_reference": {
+    "terraform": "1.13.0",
+    "kubectl": "1.35.0",
+    "kustomize": "5.7.1"
+  },
+  "azure_provider": "3.117.1",
+  "python_dependencies": "evaluation/journal/requirements.txt",
+  "actual_versions": "Read per-run reports, command logs and the package environment capture",
+  "missing_dependency": "Actual meta-model Eclipse project containing model/mlops.genmodel and http://ucd.ac.ma/mlops Ecore package"
+}
