@@ -1,0 +1,15 @@
+case_id	category	rule	expected_message	old	new
+GC00	control				
+GC01	control			exposure = PUBLIC||tls = true	exposure = PRIVATE||tls = false
+GC02	boundary			port = 9091	port = 1
+GC03	boundary			port = 9091	port = 65535
+GF01	fault	S03	Public network exposure requires TLS.	tls = true	tls = false
+GF02	fault	S04	API serving requires a port between 1 and 65535.	  port = 9091\n	
+GF03	fault	S05	InfraPlan.region is required for cloud providers.	region = "europe-west4"	region = ""
+GF04	fault	S06	Public network exposure requires a domain.	domain = "fraud.example.org"	domain = ""
+GF05	fault	S07	Node pool counts must satisfy minNodes <= desiredNodes <= maxNodes.	desiredNodes = 3	desiredNodes = 1
+GF06	fault	S08	Decision criterion weights must sum to 1.0	weight = 0.60	weight = 0.50
+GF07	fault	S09	Decision criterion minValue cannot exceed maxValue.	minValue = 0.85	minValue = 1.10
+GE01	evolution			fraud_classifier_v1	fraud_classifier_v2
+GE02	evolution			port = 9091	port = 9092
+GE03	evolution			replicas = 3	replicas = 5
