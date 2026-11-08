@@ -1,0 +1,2 @@
+# Preserve the exact bytes used by recorded GCP evidence hashes on every OS.
+/evaluation/journal/gcp/runs/** -text
