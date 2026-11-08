@@ -61,7 +61,7 @@ try {
     if ($LASTEXITCODE -ne 0) {
         throw "Replication collection did not pass preflight. Inspect the messages and $destination\preflight.json"
     }
-    Write-Host "Draft package collected under: $destination"
+    Write-Host "Replication package collected under: $destination"
     Write-Host "Full author-run evidence is included from evaluation/journal/runs."
     Write-Host "The archive is not published; reviewer access and equivalence review remain open."
 } finally { Pop-Location }
