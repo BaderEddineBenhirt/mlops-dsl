@@ -1457,7 +1457,7 @@ public class MlopsGenerator implements IGenerator2 {
         } else if (provider == CloudProvider.AWS) {
             line(sb, "    aws = { source = \"hashicorp/aws\", version = \"~> 5.0\" }");
         } else if (provider == CloudProvider.GCP) {
-            line(sb, "    google = { source = \"hashicorp/google\", version = \"~> 5.0\" }");
+            line(sb, "    google = { source = \"hashicorp/google\", version = \"= 5.45.2\" }");
         } else {
             line(sb, "    local = { source = \"hashicorp/local\", version = \"~> 2.4\" }");
         }
@@ -1545,6 +1545,7 @@ public class MlopsGenerator implements IGenerator2 {
         line(sb, "  project_name = var.project_name");
         line(sb, "  environment = var.environment");
         line(sb, "  region = var.region");
+        line(sb, "  account_id = var.account_id");
         line(sb, "  cluster_name = var.cluster_name");
         line(sb, "  namespace = var.namespace");
         line(sb, "  domain = var.domain");
@@ -1597,6 +1598,7 @@ public class MlopsGenerator implements IGenerator2 {
         variable(sb, "project_name", "string", null, "Project name.");
         variable(sb, "environment", "string", null, "Environment.");
         variable(sb, "region", "string", null, "Region.");
+        variable(sb, "account_id", "string", null, "Cloud account or project id.");
         variable(sb, "cluster_name", "string", null, "Cluster name.");
         variable(sb, "namespace", "string", null, "Namespace.");
         variable(sb, "domain", "string", "\"\"", "Domain.");
@@ -1679,15 +1681,21 @@ public class MlopsGenerator implements IGenerator2 {
             line(sb, "");
 
             line(sb, "resource \"google_compute_subnetwork\" \"private\" {");
-            line(sb, "  name          = \"snet-${var.project_name}-${var.environment}\"");
-            line(sb, "  ip_cidr_range = \"10.20.1.0/24\"");
+            List<String> subnets = infra.getNetwork() == null ? new ArrayList<String>()
+                : new ArrayList<String>(infra.getNetwork().getSubnets());
+            if (subnets.isEmpty()) {
+                subnets.add("10.20.1.0/24");
+            }
+            line(sb, "  count         = " + subnets.size());
+            line(sb, "  name          = \"snet-${var.project_name}-${var.environment}-${count.index}\"");
+            line(sb, "  ip_cidr_range = " + yamlStringList(subnets) + "[count.index]");
             line(sb, "  region        = var.region");
             line(sb, "  network       = google_compute_network.main.id");
             line(sb, "}");
             line(sb, "");
 
             output(sb, "network_id", "google_compute_network.main.id");
-            output(sb, "private_subnets", "[google_compute_subnetwork.private.id]");
+            output(sb, "private_subnets", "google_compute_subnetwork.private[*].id");
 
         } else {
             line(sb, "locals {");
@@ -1991,6 +1999,39 @@ public class MlopsGenerator implements IGenerator2 {
             }
 
             output(sb, "cluster_name", "azurerm_kubernetes_cluster.main.name");
+        } else if (infra.getProvider() == CloudProvider.GCP
+                && infra.getOrchestrator() == Orchestrator.KUBERNETES) {
+            line(sb, "resource \"google_container_cluster\" \"main\" {");
+            line(sb, "  name                     = var.cluster_name");
+            line(sb, "  location                 = var.region");
+            line(sb, "  network                  = var.network_id");
+            line(sb, "  subnetwork               = length(var.private_subnets) > 0 ? var.private_subnets[0] : null");
+            line(sb, "  remove_default_node_pool = true");
+            line(sb, "  initial_node_count       = 1");
+            line(sb, "  ip_allocation_policy {}");
+            line(sb, "}");
+            line(sb, "");
+            for (NodePoolSpec pool : infra.getRuntime().getNodePools()) {
+                line(sb, "resource \"google_container_node_pool\" \"" + sanitize(pool.getName()) + "\" {");
+                line(sb, "  name               = " + quote(sanitize(pool.getName())));
+                line(sb, "  location           = var.region");
+                line(sb, "  cluster            = google_container_cluster.main.name");
+                // GKE autoscaling owns subsequent size changes. The model's
+                // desired count specifies initial nodes per selected zone.
+                line(sb, "  initial_node_count = " + safeInt(pool.getDesiredNodes(), 1));
+                line(sb, "  autoscaling {");
+                line(sb, "    min_node_count = " + safeInt(pool.getMinNodes(), 1));
+                line(sb, "    max_node_count = " + safeInt(pool.getMaxNodes(), 1));
+                line(sb, "  }");
+                line(sb, "  node_config {");
+                line(sb, "    machine_type = " + quote(nz(pool.getMachineType())));
+                line(sb, "    spot         = " + Boolean.TRUE.equals(pool.getSpot()));
+                line(sb, "    oauth_scopes = [\"https://www.googleapis.com/auth/cloud-platform\"]");
+                line(sb, "  }");
+                line(sb, "}");
+                line(sb, "");
+            }
+            output(sb, "cluster_name", "google_container_cluster.main.name");
         } else {
             line(sb, "locals {");
             line(sb, "  cluster_name = var.cluster_name");

@@ -20,7 +20,8 @@ $relativeFiles = @(
     "org.xtext.ucd.mlopsdsl\src\org\xtext\ucd\mlopsdsl\scoping\MlopsDslScopeProvider.java",
     "org.xtext.ucd.mlopsdsl.tests\META-INF\MANIFEST.MF",
     "org.xtext.ucd.mlopsdsl.tests\src\org\xtext\ucd\mlopsdsl\tests\MlopsDslParsingTest.xtend",
-    "org.xtext.ucd.mlopsdsl.tests\src\org\xtext\ucd\mlopsdsl\tests\MlopsDslValidationTest.java"
+    "org.xtext.ucd.mlopsdsl.tests\src\org\xtext\ucd\mlopsdsl\tests\MlopsDslValidationTest.java",
+    "org.xtext.ucd.mlopsdsl.tests\src\org\xtext\ucd\mlopsdsl\tests\MlopsDslGcpEvaluationTest.java"
 )
 
 foreach ($folder in @("mlops-tests\src\validation", "org.xtext.ucd.mlopsdsl.tests\src\validation")) {
@@ -52,3 +53,4 @@ Write-Host "Next: refresh the three Eclipse projects; run MWE2; clean/build; run
 Write-Host "Regeneration and test execution have NOT been performed by this script."
 Write-Host "The suite now includes journal exports and renderer regressions (23 @Test methods)."
 Write-Host "Copy the JOURNAL OBSERVATIONS path printed by JUnit; export JUnit XML separately from the JUnit view."
+Write-Host "For the separate GCP study: run MlopsDslGcpEvaluationTest with JUnit 5 and copy its GCP OBSERVATIONS path."

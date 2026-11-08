@@ -12,8 +12,12 @@ import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.xtext.EcoreUtil2;
 import org.eclipse.xtext.naming.IQualifiedNameProvider;
+import org.eclipse.xtext.naming.QualifiedName;
+import org.eclipse.xtext.resource.EObjectDescription;
+import org.eclipse.xtext.resource.IEObjectDescription;
 import org.eclipse.xtext.scoping.IScope;
 import org.eclipse.xtext.scoping.Scopes;
+import org.eclipse.xtext.scoping.impl.SimpleScope;
 
 import com.google.inject.Inject;
 
@@ -94,9 +98,27 @@ public class MlopsDslScopeProvider extends AbstractMlopsDslScopeProvider {
                 }
             }
         }
-        IScope fallback = Scopes.scopeFor(external, qnp, IScope.NULLSCOPE);
-        return Scopes.scopeFor(
-            EcoreUtil2.getAllContentsOfType(current, type), qnp, fallback);
+        IScope fallback = declaredNames(external, Scopes.scopeFor(external, qnp, IScope.NULLSCOPE));
+        List<T> local = EcoreUtil2.getAllContentsOfType(current, type);
+        return declaredNames(local, Scopes.scopeFor(local, qnp, fallback));
+    }
+
+    /**
+     * Grammar declarations use name=ID. References must resolve that identifier
+     * independently of location, framework, metric, rationale or clusterName.
+     * Keep the existing value-derived aliases for older models such as C00's
+     * monitoring reference, while local declared names take precedence.
+     */
+    private IScope declaredNames(List<? extends EObject> objects, IScope parent) {
+        List<IEObjectDescription> names = new ArrayList<>();
+        for (EObject object : objects) {
+            org.eclipse.emf.ecore.EStructuralFeature feature = object.eClass().getEStructuralFeature("name");
+            Object name = feature == null ? null : object.eGet(feature, false);
+            if (name instanceof String && !((String) name).isBlank()) {
+                names.add(EObjectDescription.create(QualifiedName.create((String) name), object));
+            }
+        }
+        return new SimpleScope(parent, names);
     }
 }
 
