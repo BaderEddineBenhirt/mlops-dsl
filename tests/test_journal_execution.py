@@ -246,7 +246,7 @@ class JournalExecutionTest(unittest.TestCase):
             with patch.object(replication, "ROOT", repository), patch.object(sys, "argv", argv), \
                     patch.object(replication, "command", return_value=({"status": "BLOCKED", "reason": "Mocked in unit test"}, "")):
                 self.assertEqual(replication.main(), 0)
-            archive = root / "draft/mlops-dsl-replication-draft.zip"
+            archive = root / "draft/mlops-dsl-replication.zip"
             with zipfile.ZipFile(archive) as z:
                 self.assertIn(relative.as_posix() + "/scenarios.tsv", z.namelist())
                 self.assertIn("meta-model/model/mlops.genmodel", z.namelist())
@@ -259,7 +259,7 @@ class JournalExecutionTest(unittest.TestCase):
             argv[-1] = str(root / "rejected-draft")
             with patch.object(replication, "ROOT", repository), patch.object(sys, "argv", argv):
                 self.assertEqual(replication.main(), 2)
-            self.assertFalse((root / "rejected-draft/mlops-dsl-replication-draft.zip").exists())
+            self.assertFalse((root / "rejected-draft/mlops-dsl-replication.zip").exists())
 
     def test_replication_skips_state_credentials_and_build_products(self):
         root = Path("/example")
