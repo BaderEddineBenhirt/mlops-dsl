@@ -145,13 +145,13 @@ not another independent experiment, and must not increase the case count.
 Failure summaries now retain parsing errors, domain issues and every failed
 requirement together rather than hiding later categories.
 
-## 4. Collect the real replication dependency and draft archive
+## 4. Collect the real replication dependency and archive
 
 For the current Windows author workflow, use the helper below. It checks that
 the three recorded evolution trials passed, asks you to select the actual JUnit
 XML through a file picker, collects the real `meta-model` project and attempts
 to locate the running Eclipse installation's bundle inventory. It copies all
-run directories through the existing collector. The output is a local draft.
+run directories through the existing collector. The output is `mlops-dsl-replication.zip` in a new timestamped directory.
 
 ```powershell
 powershell -NoProfile -STA -File .\tools\Collect-ReplicationEvidence.ps1 -ObservationsFolder "C:\FULL\PATH\journal-observations-..."
@@ -183,7 +183,7 @@ products are excluded. Generate the EMF model Java sources from the included
 GenModel before MWE2 when restoring a clean workspace.
 
 Missing dependency/XML/observations produce `preflight.json` and **no ZIP**.
-A collected ZIP remains **DRAFT_NOT_PUBLISHED**, with reviewer access unverified.
+A collected ZIP remains **UNPUBLISHED**, with reviewer access unverified.
 Upload an immutable versioned archive through an approved public release or
 repository and verify its download without signing in before calling the
 replication package reviewer-accessible. A private GitHub branch is insufficient.
