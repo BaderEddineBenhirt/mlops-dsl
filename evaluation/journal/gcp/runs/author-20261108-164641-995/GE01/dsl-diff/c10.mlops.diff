@@ -1,0 +1,29 @@
+--- before/c10.mlops
++++ after/c10.mlops
+@@ -27,7 +27,7 @@
+ }
+ RegistrySpec fraud_registry {
+   kind = "mlflow"
+-  registerAs = "fraud_classifier_v1"
++  registerAs = "fraud_classifier_v2"
+   stage = STAGING
+ }
+ ServingSpec fraud_api {
+@@ -65,7 +65,7 @@
+ }
+ ModelRegistrySpec fraud_model_registry {
+   backend = MLFLOW_REGISTRY
+-  modelName = "fraud_classifier_v1"
++  modelName = "fraud_classifier_v2"
+   enableStaging = true
+   enableProduction = true
+   rollbackEnabled = true
+@@ -123,7 +123,7 @@
+     },
+     PipelineStage {
+       kind = REGISTER_MODEL name = "register" required = true
+-      tool = "mlflow" outputArtifact = "registry/fraud_classifier_v1"
++      tool = "mlflow" outputArtifact = "registry/fraud_classifier_v2"
+     },
+     PipelineStage {
+       kind = DEPLOY name = "deploy" required = false

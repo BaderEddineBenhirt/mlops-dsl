@@ -1,0 +1,6 @@
+governance:
+  traceabilityRequired: true
+  explainDecision: true
+  auditTrail: true
+  riskReport: false
+  complianceFramework: study-policy

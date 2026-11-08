@@ -1,0 +1,16 @@
+project: "validation_c00"
+target: AZURE
+ci: true
+cd: true
+ct: true
+stages:
+  - data-validation
+  - data-versioning
+  - training
+  - experiment-tracking
+  - evaluation
+  - model-registry
+  - decision-gate
+  - deployment
+  - monitoring
+  - retraining-check

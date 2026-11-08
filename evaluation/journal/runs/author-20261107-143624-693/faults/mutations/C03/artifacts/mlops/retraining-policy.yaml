@@ -1,0 +1,7 @@
+retraining:
+  strategy: HYBRID
+  driftThreshold: 0.15
+  performanceDropThreshold: 0.08
+  schedule: weekly
+  autoTrigger: true
+  retrainingQueue: gpu-training

@@ -1,0 +1,14 @@
+{
+  "clientVersion": {
+    "major": "1",
+    "minor": "35",
+    "gitVersion": "v1.35.4",
+    "gitCommit": "7b8c6cf0edd376b3d7c2f255142977c7f93db258",
+    "gitTreeState": "clean",
+    "buildDate": "2026-04-15T18:04:08Z",
+    "goVersion": "go1.25.9",
+    "compiler": "gc",
+    "platform": "windows/amd64"
+  },
+  "kustomizeVersion": "v5.7.1"
+}

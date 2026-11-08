@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?><testrun name="MlopsDslGcpEvaluationTest" project="org.xtext.ucd.mlopsdsl.tests" tests="2" started="2" failures="0" errors="0" ignored="0">
+  <testsuite name="org.xtext.ucd.mlopsdsl.tests.MlopsDslGcpEvaluationTest" time="1.459" displayname="MlopsDslGcpEvaluationTest" uniqueid="[engine:junit-jupiter]/[class:org.xtext.ucd.mlopsdsl.tests.MlopsDslGcpEvaluationTest]">
+    <testcase name="gcpCaseExportsActualObservations" classname="org.xtext.ucd.mlopsdsl.tests.MlopsDslGcpEvaluationTest" time="1.446" displayname="gcpCaseExportsActualObservations()" uniqueid="[engine:junit-jupiter]/[class:org.xtext.ucd.mlopsdsl.tests.MlopsDslGcpEvaluationTest]/[method:gcpCaseExportsActualObservations()]"/>
+    <testcase name="gcpComputeAndNetworkPreserveIntent" classname="org.xtext.ucd.mlopsdsl.tests.MlopsDslGcpEvaluationTest" time="0.013" displayname="gcpComputeAndNetworkPreserveIntent()" uniqueid="[engine:junit-jupiter]/[class:org.xtext.ucd.mlopsdsl.tests.MlopsDslGcpEvaluationTest]/[method:gcpComputeAndNetworkPreserveIntent()]"/>
+  </testsuite>
+</testrun>

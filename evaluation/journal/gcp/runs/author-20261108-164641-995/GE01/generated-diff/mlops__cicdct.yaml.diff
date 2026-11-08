@@ -1,0 +1,11 @@
+--- before/mlops/cicdct.yaml
++++ after/mlops/cicdct.yaml
+@@ -14,7 +14,7 @@
+       name: "register"
+       required: true
+       tool: "mlflow"
+-      outputArtifact: "registry/fraud_classifier_v1"
++      outputArtifact: "registry/fraud_classifier_v2"
+     - kind: DEPLOY
+       name: "deploy"
+       required: false

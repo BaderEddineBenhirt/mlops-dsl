@@ -1,0 +1,6 @@
+project: fraud_gcp
+tools:
+  tracking: MLFLOW
+  versioning: DVC
+  registry: MLFLOW_REGISTRY
+  cicdct: GITHUB

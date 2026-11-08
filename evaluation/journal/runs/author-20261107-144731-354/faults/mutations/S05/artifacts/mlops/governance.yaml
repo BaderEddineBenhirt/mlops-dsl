@@ -1,0 +1,6 @@
+governance:
+  traceabilityRequired: true
+  explainDecision: true
+  auditTrail: true
+  riskReport: true
+  complianceFramework: NIST-AI-RMF

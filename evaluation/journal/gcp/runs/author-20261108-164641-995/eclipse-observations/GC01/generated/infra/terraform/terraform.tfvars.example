@@ -1,0 +1,16 @@
+project_name = "fraud-gcp"
+environment = "dev"
+region = "europe-west4"
+account_id = "mlops-gcp-study"
+cluster_name = "fraud-gcp-study"
+namespace = "fraud-serving"
+domain = "fraud.example.org"
+public_exposure = false
+tls_enabled = false
+pii_data = false
+gdpr_restricted = false
+max_monthly_budget = 500
+data_source = "PARQUET"
+data_modality = "TABULAR"
+data_location = "transactions/v1"
+tags = { owner = "mlops-team" }

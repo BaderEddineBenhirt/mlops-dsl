@@ -1,0 +1,8 @@
+tracking:
+  backend: MLFLOW
+  experimentName: tabular_fraud_gcp
+  trackingUri: https://mlflow.example.org
+  logParams: true
+  logMetrics: true
+  logArtifacts: false
+  logModel: true

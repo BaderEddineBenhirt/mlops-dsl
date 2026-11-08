@@ -1,0 +1,8 @@
+{
+  "terraform_version": "1.14.9",
+  "platform": "windows_amd64",
+  "provider_selections": {
+    "registry.terraform.io/hashicorp/google": "5.45.2"
+  },
+  "terraform_outdated": true
+}

@@ -1,0 +1,18 @@
+decisionGate:
+  autoPromote: false
+  minAccuracy: 0.9
+  minF1: 0.85
+  maxLatencyMs: 100.0
+  maxCost: 20.0
+  maxDrift: 0.1
+  minTraceabilityScore: 0.95
+  criteria:
+  - name: performance
+    weight: 0.6
+    minValue: 0.85
+    maxValue: 1.0
+    required: true
+  - name: latency
+    weight: 0.4
+    maxValue: 100.0
+    required: true

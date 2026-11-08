@@ -1,0 +1,7 @@
+modelRegistry:
+  backend: AZURE_ML
+  modelName: vision_defects_model_v1
+  enableStaging: true
+  enableProduction: true
+  rollbackEnabled: true
+  approvalMode: automatic

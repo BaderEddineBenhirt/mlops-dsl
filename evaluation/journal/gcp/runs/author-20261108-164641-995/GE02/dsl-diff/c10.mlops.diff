@@ -1,0 +1,11 @@
+--- before/c10.mlops
++++ after/c10.mlops
+@@ -32,7 +32,7 @@
+ }
+ ServingSpec fraud_api {
+   kind = API
+-  port = 9091
++  port = 9092
+   healthPath = "/healthz"
+   readinessPath = "/readyz"
+   replicas = 3

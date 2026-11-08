@@ -1,0 +1,8 @@
+{
+  "terraform_version": "1.14.9",
+  "platform": "windows_amd64",
+  "provider_selections": {
+    "registry.terraform.io/hashicorp/azurerm": "3.117.1"
+  },
+  "terraform_outdated": true
+}

@@ -1,0 +1,7 @@
+retraining:
+  strategy: SCHEDULED
+  driftThreshold: 0.1
+  performanceDropThreshold: 0.07
+  schedule: daily
+  autoTrigger: false
+  retrainingQueue: cpu-training

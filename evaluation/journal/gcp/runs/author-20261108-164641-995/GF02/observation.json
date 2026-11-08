@@ -1,0 +1,22 @@
+{
+  "category": "fault",
+  "rule": "S04",
+  "dsl": {
+    "case_id": "GF02",
+    "category": "fault",
+    "source_sha256": "b69cc06a70b35a9406ab866b8600b8098b433adf94ff2e24276605959b8cac1e",
+    "outcome": "DETECTED",
+    "generator": "REJECT",
+    "generator_message": "Invalid MLOps model:\n - ServingSpec.port must be between 1 and 65535.",
+    "diagnostics": [
+      {
+        "code": "invalidConfiguration",
+        "message": "API serving requires a port between 1 and 65535."
+      }
+    ],
+    "generated_manifest": []
+  },
+  "baseline_guard": "DETECTED",
+  "native_fault_outcome": "DETECTED",
+  "build_error": "error: fieldPath `spec.ports.0.port` is missing for replacement source Service.[noVer].[noGrp]/fraud-gcp-serving.[noNs]\n"
+}

@@ -1,0 +1,11 @@
+monitoring:
+  alertChannel: "https://alerts.example.org/fraud"
+  perfMetrics: ["p95_latency_ms", "error_rate"]
+  dataDrift:
+    - name: "amount_distribution"
+      warn: 0.1
+      fail: 0.2
+  modelDrift:
+    - name: "f1_drop"
+      warn: 0.03
+      fail: 0.07
