@@ -1,4 +1,4 @@
-"""Collect actual metamodel, exported JUnit, raw observations and source into a draft ZIP."""
+"""Collect actual metamodel, exported JUnit, raw observations and source into a replication ZIP."""
 import argparse
 import json
 import re
@@ -69,7 +69,7 @@ def main():
         p.error("Choose a fresh destination outside this repository to avoid recursive collection")
     args.out.mkdir(parents=True)
     report = {"recorded_at_utc": stamp(), "status": "BLOCKED", "reviewer_access": "NOT_VERIFIED",
-              "release_status": "DRAFT_NOT_PUBLISHED", "issues": []}
+              "release_status": "UNPUBLISHED", "issues": []}
     for name, path in (("metamodel", args.metamodel), ("junit", args.junit), ("observations", args.observations)):
         if not path.exists():
             report["issues"].append("Missing " + name + ": " + str(path))
@@ -135,7 +135,7 @@ def main():
                        "kubectl": ["kubectl", "version", "--client", "-o", "json"], "terraform": ["terraform", "version", "-json"]}.items():
         environment[name], _ = command(argv, stage / "evidence/environment", name, ROOT)
     report["environment_capture"] = environment
-    report["status"] = "DRAFT_COLLECTED" if not report["issues"] else "BLOCKED"
+    report["status"] = "COLLECTED" if not report["issues"] else "BLOCKED"
     report["outstanding"] = ["Practitioner equivalence review", "Windows Eclipse/Xtext version confirmation",
         "All study tasks and Terraform checks completed or explicitly limited in manuscript", "Unauthenticated reviewer download verified after publication"]
     save(stage / "evidence/manifest.json", {"files": inventory(stage)})
@@ -143,12 +143,12 @@ def main():
     if report["issues"]:
         print("Collection blocked:", report["issues"])
         return 2
-    archive = args.out / "mlops-dsl-replication-draft.zip"
+    archive = args.out / "mlops-dsl-replication.zip"
     with zipfile.ZipFile(archive, "w", compression=zipfile.ZIP_DEFLATED) as z:
         for path in files(stage):
             z.write(path, path.relative_to(stage).as_posix())
-    save(args.out / "archive.json", {"file": archive.name, "sha256": digest(archive), "status": "DRAFT_NOT_PUBLISHED", "reviewer_access": "NOT_VERIFIED"})
-    print("Draft archive:", archive, "; reviewer access remains unverified")
+    save(args.out / "archive.json", {"file": archive.name, "sha256": digest(archive), "status": "UNPUBLISHED", "reviewer_access": "NOT_VERIFIED"})
+    print("Replication archive:", archive, "; reviewer access remains unverified")
     return 0
 
 
