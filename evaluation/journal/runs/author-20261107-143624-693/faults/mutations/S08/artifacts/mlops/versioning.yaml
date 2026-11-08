@@ -1,0 +1,7 @@
+versioning:
+  backend: DVC
+  versionData: true
+  versionCode: true
+  versionModels: true
+  versionParams: true
+  remoteUri: azure://vision-datasets/dvc

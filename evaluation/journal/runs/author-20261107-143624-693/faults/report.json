@@ -1,0 +1,203 @@
+{
+  "recorded_at_utc": "2026-11-07T14:36:41.644801+00:00",
+  "runner_sha256": "728771cdca9a51a86a0a299bb863a2cd0983964e2a540a790b76d9f48c8e1ff5",
+  "summary": {
+    "case_count": 16,
+    "executed_paired_cases": 11,
+    "approaches": {
+      "dsl": {
+        "semantic_faults": {
+          "BLOCKED": 0,
+          "DETECTED": 11,
+          "MISSED": 0,
+          "NOT_APPLICABLE": 0,
+          "NOT_RUN": 0
+        },
+        "linking_faults": {
+          "BLOCKED": 0,
+          "DETECTED": 1,
+          "MISSED": 0,
+          "NOT_APPLICABLE": 0,
+          "NOT_RUN": 0
+        },
+        "valid_controls": {
+          "BLOCKED": 0,
+          "FALSE_ALARM": 0,
+          "NOT_APPLICABLE": 0,
+          "NOT_RUN": 0,
+          "PASS": 4
+        },
+        "semantic_recall": 1.0,
+        "semantic_recall_denominator": 11,
+        "false_alarm_rate": 0.0,
+        "false_alarm_denominator": 4
+      },
+      "baseline": {
+        "semantic_faults": {
+          "BLOCKED": 0,
+          "DETECTED": 7,
+          "MISSED": 0,
+          "NOT_APPLICABLE": 4,
+          "NOT_RUN": 0
+        },
+        "linking_faults": {
+          "BLOCKED": 0,
+          "DETECTED": 0,
+          "MISSED": 0,
+          "NOT_APPLICABLE": 1,
+          "NOT_RUN": 0
+        },
+        "valid_controls": {
+          "BLOCKED": 0,
+          "FALSE_ALARM": 0,
+          "NOT_APPLICABLE": 0,
+          "NOT_RUN": 0,
+          "PASS": 4
+        },
+        "semantic_recall": 1.0,
+        "semantic_recall_denominator": 7,
+        "false_alarm_rate": 0.0,
+        "false_alarm_denominator": 4
+      }
+    },
+    "matched_semantic_and_control_comparison": {
+      "dsl": {
+        "detected": 7,
+        "missed": 0,
+        "semantic_recall_denominator": 7,
+        "semantic_recall": 1.0,
+        "false_alarms": 0,
+        "valid_controls": 4,
+        "false_alarm_rate": 0.0
+      },
+      "baseline": {
+        "detected": 7,
+        "missed": 0,
+        "semantic_recall_denominator": 7,
+        "semantic_recall": 1.0,
+        "false_alarms": 0,
+        "valid_controls": 4,
+        "false_alarm_rate": 0.0
+      }
+    },
+    "errors": [],
+    "note": "Not-run, blocked and inapplicable rows excluded; no unobserved results inferred."
+  },
+  "native_validation": {
+    "S03": {
+      "stage": "kustomize_build_and_YAML_HCL_parser",
+      "outcome": "MISSED",
+      "limitation": "No Kubernetes API schema validation or native lifecycle-policy validator executed"
+    },
+    "S04": {
+      "stage": "kustomize_build",
+      "outcome": "DETECTED",
+      "evidence": "mutations/S04/native-logs/kustomize.stderr.txt"
+    },
+    "S05": {
+      "stage": "terraform_validate",
+      "status": "BLOCKED",
+      "commands": [
+        {
+          "argv": [
+            "terraform",
+            "version",
+            "-json"
+          ],
+          "exit_code": 0,
+          "status": "PASS",
+          "stdout": "C:\\Users\\bader\\projects\\mlops-dsl\\evaluation\\journal\\runs\\author-20261107-143624-693\\faults\\mutations\\S05\\native-logs\\terraform\\version.stdout.txt",
+          "stderr": "C:\\Users\\bader\\projects\\mlops-dsl\\evaluation\\journal\\runs\\author-20261107-143624-693\\faults\\mutations\\S05\\native-logs\\terraform\\version.stderr.txt"
+        },
+        {
+          "argv": [
+            "terraform",
+            "init",
+            "-backend=false",
+            "-input=false",
+            "-no-color"
+          ],
+          "exit_code": 1,
+          "status": "FAIL",
+          "stdout": "C:\\Users\\bader\\projects\\mlops-dsl\\evaluation\\journal\\runs\\author-20261107-143624-693\\faults\\mutations\\S05\\native-logs\\terraform\\init.stdout.txt",
+          "stderr": "C:\\Users\\bader\\projects\\mlops-dsl\\evaluation\\journal\\runs\\author-20261107-143624-693\\faults\\mutations\\S05\\native-logs\\terraform\\init.stderr.txt"
+        }
+      ]
+    },
+    "S06": {
+      "stage": "kustomize_build_and_YAML_HCL_parser",
+      "outcome": "MISSED",
+      "limitation": "No Kubernetes API schema validation or native lifecycle-policy validator executed"
+    },
+    "S07": {
+      "stage": "terraform_validate",
+      "status": "BLOCKED",
+      "commands": [
+        {
+          "argv": [
+            "terraform",
+            "version",
+            "-json"
+          ],
+          "exit_code": 0,
+          "status": "PASS",
+          "stdout": "C:\\Users\\bader\\projects\\mlops-dsl\\evaluation\\journal\\runs\\author-20261107-143624-693\\faults\\mutations\\S07\\native-logs\\terraform\\version.stdout.txt",
+          "stderr": "C:\\Users\\bader\\projects\\mlops-dsl\\evaluation\\journal\\runs\\author-20261107-143624-693\\faults\\mutations\\S07\\native-logs\\terraform\\version.stderr.txt"
+        },
+        {
+          "argv": [
+            "terraform",
+            "init",
+            "-backend=false",
+            "-input=false",
+            "-no-color"
+          ],
+          "exit_code": 1,
+          "status": "FAIL",
+          "stdout": "C:\\Users\\bader\\projects\\mlops-dsl\\evaluation\\journal\\runs\\author-20261107-143624-693\\faults\\mutations\\S07\\native-logs\\terraform\\init.stdout.txt",
+          "stderr": "C:\\Users\\bader\\projects\\mlops-dsl\\evaluation\\journal\\runs\\author-20261107-143624-693\\faults\\mutations\\S07\\native-logs\\terraform\\init.stderr.txt"
+        }
+      ]
+    },
+    "S08": {
+      "stage": "kustomize_build_and_YAML_HCL_parser",
+      "outcome": "MISSED",
+      "limitation": "No Kubernetes API schema validation or native lifecycle-policy validator executed"
+    },
+    "S09": {
+      "stage": "kustomize_build_and_YAML_HCL_parser",
+      "outcome": "MISSED",
+      "limitation": "No Kubernetes API schema validation or native lifecycle-policy validator executed"
+    },
+    "C00": {
+      "stage": "kustomize_build_and_YAML_HCL_parser",
+      "outcome": "PASS",
+      "limitation": "No Kubernetes API schema validation or native lifecycle-policy validator executed"
+    },
+    "C01": {
+      "stage": "kustomize_build_and_YAML_HCL_parser",
+      "outcome": "PASS",
+      "limitation": "No Kubernetes API schema validation or native lifecycle-policy validator executed"
+    },
+    "C02": {
+      "stage": "kustomize_build_and_YAML_HCL_parser",
+      "outcome": "PASS",
+      "limitation": "No Kubernetes API schema validation or native lifecycle-policy validator executed"
+    },
+    "C03": {
+      "stage": "kustomize_build_and_YAML_HCL_parser",
+      "outcome": "PASS",
+      "limitation": "No Kubernetes API schema validation or native lifecycle-policy validator executed"
+    }
+  },
+  "baseline_guard_provenance": "Study-specific Python domain guard, not native validators",
+  "dsl_observations": "IMPORTED_HASH_CHECKED",
+  "paired_equivalence": "NOT_REVIEWED",
+  "inapplicable": {
+    "S01": "Dataset split ratios are not emitted in the selected target configurations",
+    "S02": "Operational training GPU allocation is not represented by the selected serving-infrastructure baseline",
+    "S10": "Resolved model-task identities/edges are not emitted in the lifecycle-policy baseline",
+    "S11": "The generated Deployment does not preserve OperationalPlan.entryCmd",
+    "S12": "Dataset split ratios are not emitted in the selected target configurations"
+  }
+}

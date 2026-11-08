@@ -1,0 +1,21 @@
+name: MLOps CI-CD-CT Pipeline
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+jobs:
+  mlops:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: hashicorp/setup-terraform@v3
+      - name: validate
+        run: |
+          echo 'Running validate stage generated from MLOps DSL'
+      - name: register
+        run: |
+          echo 'Running register stage generated from MLOps DSL'
+      - name: deploy
+        run: |
+          echo 'Deploying runtime layer if application image is available'
+          kubectl apply -f runtime/k8s/ || true

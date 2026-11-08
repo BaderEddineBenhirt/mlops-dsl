@@ -1,0 +1,22 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: fraud-gcp-serving
+  namespace: fraud-serving
+spec:
+  ingressClassName: nginx
+  rules:
+  - host: fraud.example.org
+    http:
+      paths:
+      - backend:
+          service:
+            name: fraud-gcp-serving
+            port:
+              number: 9092
+        path: /
+        pathType: Prefix
+  tls:
+  - hosts:
+    - fraud.example.org
+    secretName: fraud-gcp-serving-tls

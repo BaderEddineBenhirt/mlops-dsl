@@ -1,0 +1,7 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: fraud-serving
+  labels:
+    app.kubernetes.io/managed-by: mlopsdsl
+    compliance-level: standard

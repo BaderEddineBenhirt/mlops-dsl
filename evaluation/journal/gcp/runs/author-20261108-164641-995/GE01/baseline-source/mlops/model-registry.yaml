@@ -1,0 +1,7 @@
+modelRegistry:
+  backend: MLFLOW_REGISTRY
+  modelName: fraud_classifier_v2
+  enableStaging: true
+  enableProduction: true
+  rollbackEnabled: true
+  approvalMode: manual

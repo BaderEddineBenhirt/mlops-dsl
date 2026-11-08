@@ -1,0 +1,231 @@
+// Synthetic configuration case. No customer data, cloud credentials or live service.
+DataAsset transactions {
+  source = PARQUET
+  modality = TABULAR
+  location = "transactions/v1"
+  format = "parquet"
+  version = "1"
+  privacy = "synthetic"
+  splits = [
+    SplitSpec { name = "train" ratio = 0.70 },
+    SplitSpec { name = "valid" ratio = 0.15 },
+    SplitSpec { name = "test" ratio = 0.15 }
+  ]
+}
+FeatureSet transaction_features { name = "transaction_features" }
+TrainingSpec fraud_training {
+  framework = "scikit-learn"
+  algorithm = "hist_gradient_boosting"
+  hyperparams = [Param { key = "max_iter" value = "100" }]
+  image = "python:3.12-slim"
+  command = ["python", "train.py"]
+  resources = [Resource { key = "CPU" amount = 2 }]
+}
+EvaluationSpec fraud_evaluation {
+  metrics = ["accuracy", "f1", "latency_ms"]
+  thresholds = [Threshold { key = "f1" value = 0.85 op = GE }]
+}
+RegistrySpec fraud_registry {
+  kind = "mlflow"
+  registerAs = "fraud_classifier_v1"
+  stage = STAGING
+}
+ServingSpec fraud_api {
+  kind = API
+  healthPath = "/healthz"
+  readinessPath = "/readyz"
+  replicas = 3
+  autoscaling = false
+  timeoutSeconds = 10
+  routes = ["/score", "/healthz", "/readyz"]
+}
+MonitoringSpec fraud_monitoring {
+  perfMetrics = ["p95_latency_ms", "error_rate"]
+  dataDrift = [DriftMetric { name = "amount_distribution" warn = 0.10 fail = 0.20 }]
+  modelDrift = [DriftMetric { name = "f1_drop" warn = 0.03 fail = 0.07 }]
+  alertChannel = "https://alerts.example.org/fraud"
+}
+ExperimentTrackingSpec fraud_tracking {
+  backend = MLFLOW
+  experimentName = "tabular_fraud_gcp"
+  trackingUri = "https://mlflow.example.org"
+  logParams = true
+  logMetrics = true
+  logArtifacts = false
+  logModel = true
+}
+VersioningSpec fraud_versioning {
+  backend = DVC
+  versionData = true
+  versionCode = true
+  versionModels = true
+  versionParams = true
+  remoteUri = "gs://mlops-gcp-study-versioning/dvc"
+}
+ModelRegistrySpec fraud_model_registry {
+  backend = MLFLOW_REGISTRY
+  modelName = "fraud_classifier_v1"
+  enableStaging = true
+  enableProduction = true
+  rollbackEnabled = true
+  approvalMode = "manual"
+}
+DecisionPolicy fraud_gate {
+  autoPromote = false
+  minAccuracy = 0.90
+  minF1 = 0.85
+  maxLatencyMs = 100.0
+  maxCost = 20.0
+  maxDrift = 0.10
+  minTraceabilityScore = 0.95
+  criteria = [
+    DecisionCriterion {
+      name = "performance"
+      weight = 0.60
+      minValue = 0.85
+      maxValue = 1.0
+      required = true
+    },
+    DecisionCriterion {
+      name = "latency"
+      weight = 0.40
+      maxValue = 100.0
+      required = true
+    }
+  ]
+}
+RetrainingPolicy fraud_retraining {
+  strategy = SCHEDULED
+  driftThreshold = 0.10
+  performanceDropThreshold = 0.07
+  schedule = "daily"
+  autoTrigger = false
+  retrainingQueue = "cpu-training"
+}
+GovernanceSpec fraud_governance {
+  traceabilityRequired = true
+  explainDecision = true
+  auditTrail = true
+  riskReport = false
+  complianceFramework = "study-policy"
+}
+CiCdCtSpec fraud_ci {
+  target = GITHUB
+  pipelineFile = "mlops.yml"
+  enableCI = true
+  enableCD = false
+  enableCT = false
+  stages = [
+    PipelineStage {
+      kind = VALIDATE_DATA name = "validate" required = true
+      tool = "python" outputArtifact = "reports/data.json"
+    },
+    PipelineStage {
+      kind = REGISTER_MODEL name = "register" required = true
+      tool = "mlflow" outputArtifact = "registry/fraud_classifier_v1"
+    },
+    PipelineStage {
+      kind = DEPLOY name = "deploy" required = false
+      tool = "kubectl" outputArtifact = "runtime/k8s"
+    }
+  ]
+}
+OperationalPlan fraud_cpu {
+  rationale = "CPU tabular fraud-scoring configuration study"
+  compute = CPU_SMALL
+  packaging = CONTAINER
+  trainMode = SCRIPT
+  servingMode = API
+  entryCmd = "python serve.py"
+  resources = [Resource { key = "CPU" amount = 2 }]
+  ciTarget = GITHUB
+  baseImage = "europe-west4-docker.pkg.dev/mlops-gcp-study/serving/fraud-api:1.0.0"
+  retries = 1
+  cache = false
+  queue = "cpu-training"
+}
+InfraPlan fraud_gke {
+  provider = GCP
+  accountId = "mlops-gcp-study"
+  region = "europe-west4"
+  orchestrator = KUBERNETES
+  clusterName = "fraud-gcp-study"
+  namespace = "fraud-serving"
+  environment = EnvironmentSpec { name = "dev" }
+  backend = TerraformBackendSpec { kind = "local" key = "fraud-study.tfstate" }
+  runtime = RuntimeSpec {
+    nodePools = [
+      NodePoolSpec {
+        name = "cpu"
+        machineType = "e2-standard-2"
+        minNodes = 2
+        desiredNodes = 3
+        maxNodes = 5
+        gpu = false
+        spot = false
+      }
+    ]
+  }
+  network = NetworkSpec {
+    exposure = PUBLIC
+    domain = "fraud.example.org"
+    tls = true
+    ingressClass = "nginx"
+    cidr = "10.72.0.0/16"
+    subnets = ["10.72.1.0/24", "10.72.2.0/24"]
+  }
+  storage = [
+    StorageTarget { kind = OBJECT_STORE purpose = "datasets" name = "fraud-datasets" },
+    StorageTarget { kind = OBJECT_STORE purpose = "artifacts" name = "fraud-artifacts" }
+  ]
+  secrets = SecretBackendSpec { kind = GCP_SECRET_MANAGER pathPrefix = "fraud/" }
+  observability = ObservabilitySpec {
+    stack = STACKDRIVER
+    logsEnabled = true
+    metricsEnabled = true
+    tracesEnabled = false
+  }
+  spotAllowed = false
+  maxMonthlyBudget = 500
+  piiData = false
+  gdprRestricted = false
+}
+ProjectSpec {
+  name = "fraud_gcp"
+  data = transactions
+  features = transaction_features
+  train = fraud_training
+  eval = fraud_evaluation
+  registry = fraud_registry
+  serving = fraud_api
+  monitoring = fraud_monitoring
+  tracking = fraud_tracking
+  versioning = fraud_versioning
+  modelRegistry = fraud_model_registry
+  decisionPolicy = fraud_gate
+  retrainingPolicy = fraud_retraining
+  governance = fraud_governance
+  cicdct = fraud_ci
+}
+MetaModelSpec {
+  version = "0.3.0"
+  schemaVersion = "2026.05"
+  createdBy = "configuration-study"
+  createdAt = "2026-11-08"
+  project = fraud_gcp
+  plan = fraud_cpu
+  infra = fraud_gke
+  workflow = MlWorkflow {
+    tasks = [
+      MlTask { taskId = g_prepare type = PREPARE },
+      MlTask { taskId = g_train type = TRAIN },
+      MlTask { taskId = g_evaluate type = EVAL },
+      MlTask { taskId = g_deploy type = DEPLOY }
+    ]
+    edges = [
+      Edge { from = g_prepare to = g_train },
+      Edge { from = g_train to = g_evaluate },
+      Edge { from = g_evaluate to = g_deploy }
+    ]
+  }
+}

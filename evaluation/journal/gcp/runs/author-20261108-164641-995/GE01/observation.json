@@ -1,0 +1,3742 @@
+{
+  "category": "evolution",
+  "rule": "",
+  "dsl": {
+    "case_id": "GE01",
+    "category": "evolution",
+    "source_sha256": "9166fa62290cf74c8b7c645e532d85f7fda894f2fbf6e7874ca30aac16d8bc67",
+    "outcome": "PASS",
+    "generator": "ACCEPT",
+    "generator_message": "",
+    "diagnostics": [],
+    "generated_manifest": [
+      {
+        "path": ".github/workflows/mlops.yml",
+        "sha256": "ad9f8ae4ff27452b404ebba35f0a2aaa1a7f0c32b9fdc13c52d39775d7e3aab5"
+      },
+      {
+        "path": "README.md",
+        "sha256": "561e52e94226cd1c0485ea155ab331a6e17a90c7c01cbfe19b15f97b8e3ba20f"
+      },
+      {
+        "path": "ai-decision-engine/README.md",
+        "sha256": "b60cb72f00a47b7ed4e16b7967223bcae7c150baaf9726f440011f03876b5d5f"
+      },
+      {
+        "path": "ai-decision-engine/decision_engine/__init__.py",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "path": "ai-decision-engine/decision_engine/decision_gate.py",
+        "sha256": "bea0415feca4a0771f6c5437bdb688489da84a4af7e7b128ef04bc781c64324d"
+      },
+      {
+        "path": "ai-decision-engine/decision_engine/drift_detector.py",
+        "sha256": "b1bd4cf8f0b3d074481f9ed04cfa7f8305f5cab871cf1582b9ce29b3826397ef"
+      },
+      {
+        "path": "ai-decision-engine/decision_engine/metrics_loader.py",
+        "sha256": "f16dab585e4791234d856f7eedc9339b52eb8963312f76e875a91c4f35626bbd"
+      },
+      {
+        "path": "ai-decision-engine/decision_engine/policy_loader.py",
+        "sha256": "5ad756b460dde2685777ea04564bce924e6da1b8cb4df058e9accac19b910dbe"
+      },
+      {
+        "path": "ai-decision-engine/decision_engine/retraining_advisor.py",
+        "sha256": "a9459a2e24381674a7375de2dee2884426a9facb66bc416643a052ad11f5ea3c"
+      },
+      {
+        "path": "ai-decision-engine/decision_engine/scorer.py",
+        "sha256": "8fd0370199411689ec9b0dea0b55296f207683df7c2fbb262f791ee49a017d86"
+      },
+      {
+        "path": "ai-decision-engine/experiments/evaluate_candidates.py",
+        "sha256": "e495a715b718fda6c97ec5b1cd9cb1c5c62ccf5953f7b6e5c8c1d81c5b561058"
+      },
+      {
+        "path": "ai-decision-engine/experiments/simulate_drift.py",
+        "sha256": "388c7d87491e47082d54af873fddf4f5835dcb9a88a5d252162bf01e2d35d4c3"
+      },
+      {
+        "path": "ai-decision-engine/experiments/train_candidates.py",
+        "sha256": "64dcb377f10c636ebb3d8e59191490e5e51da94b99f845ec4504e864e08fea47"
+      },
+      {
+        "path": "ai-decision-engine/outputs/.gitkeep",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "path": "ai-decision-engine/requirements.txt",
+        "sha256": "019208b39ba7d7f9bf74bfde75239cdda4ac17398059fc5545eeaa1ec8e868ac"
+      },
+      {
+        "path": "ai-decision-engine/run_decision_gate.py",
+        "sha256": "326021e241b19baa3c35dfd63800efe2eb0643b108510ec056e71ae9af6736eb"
+      },
+      {
+        "path": "infra/terraform/main.tf",
+        "sha256": "0db36744e94acbcd22c3228d833e0d2e3e9c6a9cfd6df93051e82e137002c151"
+      },
+      {
+        "path": "infra/terraform/modules/compute/main.tf",
+        "sha256": "fa10549d761121fb4f5f2b142f235f8b165010aac3660673ca927929cdb20e4d"
+      },
+      {
+        "path": "infra/terraform/modules/network/main.tf",
+        "sha256": "22066fabb7225e880772ada6d1444c11c20139e4f39cd04ce8b7e6769135dabe"
+      },
+      {
+        "path": "infra/terraform/modules/observability/main.tf",
+        "sha256": "7598b24e6a460da3835b032262934e6b7327e3b3e548cdb18e6dff2e63792dca"
+      },
+      {
+        "path": "infra/terraform/modules/secrets/main.tf",
+        "sha256": "4bf810ee089b42f158131b80230946e43ebe90e8904094a02dcc8b8b0ed218a4"
+      },
+      {
+        "path": "infra/terraform/modules/storage/main.tf",
+        "sha256": "a455096f5c292f79a0a79587095f56bad9b25bd61bdfa2883e8b1c6be14e2c05"
+      },
+      {
+        "path": "infra/terraform/outputs.tf",
+        "sha256": "904e34bc51eb11f178011d5b6a7e1a9a41c4231931f9b43e083e0ae1eb8007f9"
+      },
+      {
+        "path": "infra/terraform/terraform.tfvars.example",
+        "sha256": "21bce132feb2d619adda02c0d2cbe795feab42993819ccbe5b111cd920bed5b0"
+      },
+      {
+        "path": "infra/terraform/variables.tf",
+        "sha256": "846b36995b94eb6f47738c4ef022ff585544036a1e1bb474b55bc9fedc1b8fa9"
+      },
+      {
+        "path": "infra/terraform/versions.tf",
+        "sha256": "0b67a821e642bfeb5a9498bd7418890af7db4d4173c2470ac5b7e98f7159820a"
+      },
+      {
+        "path": "mlops/cicdct.yaml",
+        "sha256": "7b6835740d82121acd9db3d4e89f62bc1ae8708aa3686262d761ff0917ea26a2"
+      },
+      {
+        "path": "mlops/decision-gate.yaml",
+        "sha256": "1d2fa71e0a1887e478c4db0faea46e0562b0b36e240bdccee6beaecfc387927d"
+      },
+      {
+        "path": "mlops/governance.yaml",
+        "sha256": "413c66152b7118b23fd82ef94b786a59ed4d03d243e3971a72b491c56e68b215"
+      },
+      {
+        "path": "mlops/lifecycle.yaml",
+        "sha256": "ebf62b0120cb589a68d4b9b3fe3da3208e9fda7f33cd92681574e5a71a9655ce"
+      },
+      {
+        "path": "mlops/model-registry.yaml",
+        "sha256": "63d2ef9a51a37c8abba54c560809533bd7dae62d974164502a5dd949638f993e"
+      },
+      {
+        "path": "mlops/monitoring-policy.yaml",
+        "sha256": "5751626bd2c12bf903b2a894f84116f8787c5225766d199dd757b05ce80fad3e"
+      },
+      {
+        "path": "mlops/retraining-policy.yaml",
+        "sha256": "92e5968e39905e020c1f3b2656cd6b539098745d1442abcf282ed169d8b6d43a"
+      },
+      {
+        "path": "mlops/tracking.yaml",
+        "sha256": "966345729e4e01cc4917bf38d88ddcec57150a4d1925558d109fa5e610a05917"
+      },
+      {
+        "path": "mlops/versioning.yaml",
+        "sha256": "54e4c53efb4eb7cd7e3c05e311a1be67c3ce6e732a99213173ffa50f05475460"
+      },
+      {
+        "path": "model-manifest.yaml",
+        "sha256": "2b39f7cba0e8655158393860261c70af6c1c7989460bc49d92711b2081b5062f"
+      },
+      {
+        "path": "pipelines/pipeline-model.yaml",
+        "sha256": "09a69152d0f5d2cf9e7f246f781678c51233a038297f345c82a650e05d94feaf"
+      },
+      {
+        "path": "runtime/k8s/deployment.yaml",
+        "sha256": "c929e5b543d3753e59610316a78045853b080591db4c8647c323e1839827f3d4"
+      },
+      {
+        "path": "runtime/k8s/ingress.yaml",
+        "sha256": "b2f7a0356d79db8ea560e8932ffb56cc9843765e7f46e12e984c84977785eee5"
+      },
+      {
+        "path": "runtime/k8s/namespace.yaml",
+        "sha256": "bf3a4008a5024e92e121374f15a2662fbdbbe7a85b06b543fc13f64dc3c81ed4"
+      },
+      {
+        "path": "runtime/k8s/service.yaml",
+        "sha256": "a29c970f00b8978ac8cf54c170193b6f46bc85e9c39d295b731da02ee99d5df2"
+      }
+    ]
+  },
+  "baseline": {
+    "parsing_errors": [],
+    "requirements": [
+      {
+        "id": "namespace",
+        "kind": "yaml",
+        "file": "runtime/k8s/namespace.yaml",
+        "path": [
+          "metadata",
+          "name"
+        ],
+        "expected": [
+          "fraud-serving"
+        ],
+        "actual": [
+          "fraud-serving"
+        ],
+        "status": "PASS"
+      },
+      {
+        "id": "deployment-name",
+        "kind": "yaml",
+        "file": "runtime/k8s/deployment.yaml",
+        "path": [
+          "metadata",
+          "name"
+        ],
+        "expected": [
+          "fraud-gcp-serving"
+        ],
+        "actual": [
+          "fraud-gcp-serving"
+        ],
+        "status": "PASS"
+      },
+      {
+        "id": "deployment-namespace",
+        "kind": "yaml",
+        "file": "runtime/k8s/deployment.yaml",
+        "path": [
+          "metadata",
+          "namespace"
+        ],
+        "expected": [
+          "fraud-serving"
+        ],
+        "actual": [
+          "fraud-serving"
+        ],
+        "status": "PASS"
+      },
+      {
+        "id": "service-name",
+        "kind": "yaml",
+        "file": "runtime/k8s/service.yaml",
+        "path": [
+          "metadata",
+          "name"
+        ],
+        "expected": [
+          "fraud-gcp-serving"
+        ],
+        "actual": [
+          "fraud-gcp-serving"
+        ],
+        "status": "PASS"
+      },
+      {
+        "id": "service-namespace",
+        "kind": "yaml",
+        "file": "runtime/k8s/service.yaml",
+        "path": [
+          "metadata",
+          "namespace"
+        ],
+        "expected": [
+          "fraud-serving"
+        ],
+        "actual": [
+          "fraud-serving"
+        ],
+        "status": "PASS"
+      },
+      {
+        "id": "ingress-name",
+        "kind": "yaml",
+        "file": "runtime/k8s/ingress.yaml",
+        "path": [
+          "metadata",
+          "name"
+        ],
+        "expected": [
+          "fraud-gcp-serving"
+        ],
+        "actual": [
+          "fraud-gcp-serving"
+        ],
+        "status": "PASS"
+      },
+      {
+        "id": "ingress-namespace",
+        "kind": "yaml",
+        "file": "runtime/k8s/ingress.yaml",
+        "path": [
+          "metadata",
+          "namespace"
+        ],
+        "expected": [
+          "fraud-serving"
+        ],
+        "actual": [
+          "fraud-serving"
+        ],
+        "status": "PASS"
+      },
+      {
+        "id": "replicas",
+        "kind": "yaml",
+        "file": "runtime/k8s/deployment.yaml",
+        "path": [
+          "spec",
+          "replicas"
+        ],
+        "expected": [
+          3
+        ],
+        "actual": [
+          3
+        ],
+        "status": "PASS"
+      },
+      {
+        "id": "image",
+        "kind": "yaml",
+        "file": "runtime/k8s/deployment.yaml",
+        "path": [
+          "spec",
+          "template",
+          "spec",
+          "containers",
+          "*",
+          "image"
+        ],
+        "expected": [
+          "europe-west4-docker.pkg.dev/mlops-gcp-study/serving/fraud-api:1.0.0"
+        ],
+        "actual": [
+          "europe-west4-docker.pkg.dev/mlops-gcp-study/serving/fraud-api:1.0.0"
+        ],
+        "status": "PASS"
+      },
+      {
+        "id": "container-port",
+        "kind": "yaml",
+        "file": "runtime/k8s/deployment.yaml",
+        "path": [
+          "spec",
+          "template",
+          "spec",
+          "containers",
+          "*",
+          "ports",
+          "*",
+          "containerPort"
+        ],
+        "expected": [
+          9091
+        ],
+        "actual": [
+          9091
+        ],
+        "status": "PASS"
+      },
+      {
+        "id": "readiness-port",
+        "kind": "yaml",
+        "file": "runtime/k8s/deployment.yaml",
+        "path": [
+          "spec",
+          "template",
+          "spec",
+          "containers",
+          "*",
+          "readinessProbe",
+          "httpGet",
+          "port"
+        ],
+        "expected": [
+          9091
+        ],
+        "actual": [
+          9091
+        ],
+        "status": "PASS"
+      },
+      {
+        "id": "liveness-port",
+        "kind": "yaml",
+        "file": "runtime/k8s/deployment.yaml",
+        "path": [
+          "spec",
+          "template",
+          "spec",
+          "containers",
+          "*",
+          "livenessProbe",
+          "httpGet",
+          "port"
+        ],
+        "expected": [
+          9091
+        ],
+        "actual": [
+          9091
+        ],
+        "status": "PASS"
+      },
+      {
+        "id": "service-port",
+        "kind": "yaml",
+        "file": "runtime/k8s/service.yaml",
+        "path": [
+          "spec",
+          "ports",
+          "*",
+          "port"
+        ],
+        "expected": [
+          9091
+        ],
+        "actual": [
+          9091
+        ],
+        "status": "PASS"
+      },
+      {
+        "id": "target-port",
+        "kind": "yaml",
+        "file": "runtime/k8s/service.yaml",
+        "path": [
+          "spec",
+          "ports",
+          "*",
+          "targetPort"
+        ],
+        "expected": [
+          9091
+        ],
+        "actual": [
+          9091
+        ],
+        "status": "PASS"
+      },
+      {
+        "id": "ingress-port",
+        "kind": "yaml",
+        "file": "runtime/k8s/ingress.yaml",
+        "path": [
+          "spec",
+          "rules",
+          "*",
+          "http",
+          "paths",
+          "*",
+          "backend",
+          "service",
+          "port",
+          "number"
+        ],
+        "expected": [
+          9091
+        ],
+        "actual": [
+          9091
+        ],
+        "status": "PASS"
+      },
+      {
+        "id": "readiness-path",
+        "kind": "yaml",
+        "file": "runtime/k8s/deployment.yaml",
+        "path": [
+          "spec",
+          "template",
+          "spec",
+          "containers",
+          "*",
+          "readinessProbe",
+          "httpGet",
+          "path"
+        ],
+        "expected": [
+          "/readyz"
+        ],
+        "actual": [
+          "/readyz"
+        ],
+        "status": "PASS"
+      },
+      {
+        "id": "liveness-path",
+        "kind": "yaml",
+        "file": "runtime/k8s/deployment.yaml",
+        "path": [
+          "spec",
+          "template",
+          "spec",
+          "containers",
+          "*",
+          "livenessProbe",
+          "httpGet",
+          "path"
+        ],
+        "expected": [
+          "/healthz"
+        ],
+        "actual": [
+          "/healthz"
+        ],
+        "status": "PASS"
+      },
+      {
+        "id": "ingress-class",
+        "kind": "yaml",
+        "file": "runtime/k8s/ingress.yaml",
+        "path": [
+          "spec",
+          "ingressClassName"
+        ],
+        "expected": [
+          "nginx"
+        ],
+        "actual": [
+          "nginx"
+        ],
+        "status": "PASS"
+      },
+      {
+        "id": "host",
+        "kind": "yaml",
+        "file": "runtime/k8s/ingress.yaml",
+        "path": [
+          "spec",
+          "rules",
+          "*",
+          "host"
+        ],
+        "expected": [
+          "fraud.example.org"
+        ],
+        "actual": [
+          "fraud.example.org"
+        ],
+        "status": "PASS"
+      },
+      {
+        "id": "tls-host",
+        "kind": "yaml",
+        "file": "runtime/k8s/ingress.yaml",
+        "path": [
+          "spec",
+          "tls",
+          "*",
+          "hosts",
+          "*"
+        ],
+        "expected": [
+          "fraud.example.org"
+        ],
+        "actual": [
+          "fraud.example.org"
+        ],
+        "status": "PASS"
+      },
+      {
+        "id": "tls-secret",
+        "kind": "yaml",
+        "file": "runtime/k8s/ingress.yaml",
+        "path": [
+          "spec",
+          "tls",
+          "*",
+          "secretName"
+        ],
+        "expected": [
+          "fraud-gcp-serving-tls"
+        ],
+        "actual": [
+          "fraud-gcp-serving-tls"
+        ],
+        "status": "PASS"
+      },
+      {
+        "id": "lifecycle:project",
+        "kind": "yaml",
+        "file": "mlops/lifecycle.yaml",
+        "path": [
+          "project"
+        ],
+        "expected": [
+          "fraud_gcp"
+        ],
+        "actual": [
+          "fraud_gcp"
+        ],
+        "status": "PASS"
+      },
+      {
+        "id": "lifecycle:tools.tracking",
+        "kind": "yaml",
+        "file": "mlops/lifecycle.yaml",
+        "path": [
+          "tools",
+          "tracking"
+        ],
+        "expected": [
+          "MLFLOW"
+        ],
+        "actual": [
+          "MLFLOW"
+        ],
+        "status": "PASS"
+      },
+      {
+        "id": "lifecycle:tools.versioning",
+        "kind": "yaml",
+        "file": "mlops/lifecycle.yaml",
+        "path": [
+          "tools",
+          "versioning"
+        ],
+        "expected": [
+          "DVC"
+        ],
+        "actual": [
+          "DVC"
+        ],
+        "status": "PASS"
+      },
+      {
+        "id": "lifecycle:tools.registry",
+        "kind": "yaml",
+        "file": "mlops/lifecycle.yaml",
+        "path": [
+          "tools",
+          "registry"
+        ],
+        "expected": [
+          "MLFLOW_REGISTRY"
+        ],
+        "actual": [
+          "MLFLOW_REGISTRY"
+        ],
+        "status": "PASS"
+      },
+      {
+        "id": "lifecycle:tools.cicdct",
+        "kind": "yaml",
+        "file": "mlops/lifecycle.yaml",
+        "path": [
+          "tools",
+          "cicdct"
+        ],
+        "expected": [
+          "GITHUB"
+        ],
+        "actual": [
+          "GITHUB"
+        ],
+        "status": "PASS"
+      },
+      {
+        "id": "tracking:tracking.backend",
+        "kind": "yaml",
+        "file": "mlops/tracking.yaml",
+        "path": [
+          "tracking",
+          "backend"
+        ],
+        "expected": [
+          "MLFLOW"
+        ],
+        "actual": [
+          "MLFLOW"
+        ],
+        "status": "PASS"
+      },
+      {
+        "id": "tracking:tracking.experimentName",
+        "kind": "yaml",
+        "file": "mlops/tracking.yaml",
+        "path": [
+          "tracking",
+          "experimentName"
+        ],
+        "expected": [
+          "tabular_fraud_gcp"
+        ],
+        "actual": [
+          "tabular_fraud_gcp"
+        ],
+        "status": "PASS"
+      },
+      {
+        "id": "tracking:tracking.trackingUri",
+        "kind": "yaml",
+        "file": "mlops/tracking.yaml",
+        "path": [
+          "tracking",
+          "trackingUri"
+        ],
+        "expected": [
+          "https://mlflow.example.org"
+        ],
+        "actual": [
+          "https://mlflow.example.org"
+        ],
+        "status": "PASS"
+      },
+      {
+        "id": "tracking:tracking.logParams",
+        "kind": "yaml",
+        "file": "mlops/tracking.yaml",
+        "path": [
+          "tracking",
+          "logParams"
+        ],
+        "expected": [
+          true
+        ],
+        "actual": [
+          true
+        ],
+        "status": "PASS"
+      },
+      {
+        "id": "tracking:tracking.logMetrics",
+        "kind": "yaml",
+        "file": "mlops/tracking.yaml",
+        "path": [
+          "tracking",
+          "logMetrics"
+        ],
+        "expected": [
+          true
+        ],
+        "actual": [
+          true
+        ],
+        "status": "PASS"
+      },
+      {
+        "id": "tracking:tracking.logArtifacts",
+        "kind": "yaml",
+        "file": "mlops/tracking.yaml",
+        "path": [
+          "tracking",
+          "logArtifacts"
+        ],
+        "expected": [
+          false
+        ],
+        "actual": [
+          false
+        ],
+        "status": "PASS"
+      },
+      {
+        "id": "tracking:tracking.logModel",
+        "kind": "yaml",
+        "file": "mlops/tracking.yaml",
+        "path": [
+          "tracking",
+          "logModel"
+        ],
+        "expected": [
+          true
+        ],
+        "actual": [
+          true
+        ],
+        "status": "PASS"
+      },
+      {
+        "id": "versioning:versioning.backend",
+        "kind": "yaml",
+        "file": "mlops/versioning.yaml",
+        "path": [
+          "versioning",
+          "backend"
+        ],
+        "expected": [
+          "DVC"
+        ],
+        "actual": [
+          "DVC"
+        ],
+        "status": "PASS"
+      },
+      {
+        "id": "versioning:versioning.versionData",
+        "kind": "yaml",
+        "file": "mlops/versioning.yaml",
+        "path": [
+          "versioning",
+          "versionData"
+        ],
+        "expected": [
+          true
+        ],
+        "actual": [
+          true
+        ],
+        "status": "PASS"
+      },
+      {
+        "id": "versioning:versioning.versionCode",
+        "kind": "yaml",
+        "file": "mlops/versioning.yaml",
+        "path": [
+          "versioning",
+          "versionCode"
+        ],
+        "expected": [
+          true
+        ],
+        "actual": [
+          true
+        ],
+        "status": "PASS"
+      },
+      {
+        "id": "versioning:versioning.versionModels",
+        "kind": "yaml",
+        "file": "mlops/versioning.yaml",
+        "path": [
+          "versioning",
+          "versionModels"
+        ],
+        "expected": [
+          true
+        ],
+        "actual": [
+          true
+        ],
+        "status": "PASS"
+      },
+      {
+        "id": "versioning:versioning.versionParams",
+        "kind": "yaml",
+        "file": "mlops/versioning.yaml",
+        "path": [
+          "versioning",
+          "versionParams"
+        ],
+        "expected": [
+          true
+        ],
+        "actual": [
+          true
+        ],
+        "status": "PASS"
+      },
+      {
+        "id": "versioning:versioning.remoteUri",
+        "kind": "yaml",
+        "file": "mlops/versioning.yaml",
+        "path": [
+          "versioning",
+          "remoteUri"
+        ],
+        "expected": [
+          "gs://mlops-gcp-study-versioning/dvc"
+        ],
+        "actual": [
+          "gs://mlops-gcp-study-versioning/dvc"
+        ],
+        "status": "PASS"
+      },
+      {
+        "id": "model-registry:modelRegistry.backend",
+        "kind": "yaml",
+        "file": "mlops/model-registry.yaml",
+        "path": [
+          "modelRegistry",
+          "backend"
+        ],
+        "expected": [
+          "MLFLOW_REGISTRY"
+        ],
+        "actual": [
+          "MLFLOW_REGISTRY"
+        ],
+        "status": "PASS"
+      },
+      {
+        "id": "model-registry:modelRegistry.modelName",
+        "kind": "yaml",
+        "file": "mlops/model-registry.yaml",
+        "path": [
+          "modelRegistry",
+          "modelName"
+        ],
+        "expected": [
+          "fraud_classifier_v2"
+        ],
+        "actual": [
+          "fraud_classifier_v2"
+        ],
+        "status": "PASS"
+      },
+      {
+        "id": "model-registry:modelRegistry.enableStaging",
+        "kind": "yaml",
+        "file": "mlops/model-registry.yaml",
+        "path": [
+          "modelRegistry",
+          "enableStaging"
+        ],
+        "expected": [
+          true
+        ],
+        "actual": [
+          true
+        ],
+        "status": "PASS"
+      },
+      {
+        "id": "model-registry:modelRegistry.enableProduction",
+        "kind": "yaml",
+        "file": "mlops/model-registry.yaml",
+        "path": [
+          "modelRegistry",
+          "enableProduction"
+        ],
+        "expected": [
+          true
+        ],
+        "actual": [
+          true
+        ],
+        "status": "PASS"
+      },
+      {
+        "id": "model-registry:modelRegistry.rollbackEnabled",
+        "kind": "yaml",
+        "file": "mlops/model-registry.yaml",
+        "path": [
+          "modelRegistry",
+          "rollbackEnabled"
+        ],
+        "expected": [
+          true
+        ],
+        "actual": [
+          true
+        ],
+        "status": "PASS"
+      },
+      {
+        "id": "model-registry:modelRegistry.approvalMode",
+        "kind": "yaml",
+        "file": "mlops/model-registry.yaml",
+        "path": [
+          "modelRegistry",
+          "approvalMode"
+        ],
+        "expected": [
+          "manual"
+        ],
+        "actual": [
+          "manual"
+        ],
+        "status": "PASS"
+      },
+      {
+        "id": "decision-gate:decisionGate.autoPromote",
+        "kind": "yaml",
+        "file": "mlops/decision-gate.yaml",
+        "path": [
+          "decisionGate",
+          "autoPromote"
+        ],
+        "expected": [
+          false
+        ],
+        "actual": [
+          false
+        ],
+        "status": "PASS"
+      },
+      {
+        "id": "decision-gate:decisionGate.minAccuracy",
+        "kind": "yaml",
+        "file": "mlops/decision-gate.yaml",
+        "path": [
+          "decisionGate",
+          "minAccuracy"
+        ],
+        "expected": [
+          0.9
+        ],
+        "actual": [
+          0.9
+        ],
+        "status": "PASS"
+      },
+      {
+        "id": "decision-gate:decisionGate.minF1",
+        "kind": "yaml",
+        "file": "mlops/decision-gate.yaml",
+        "path": [
+          "decisionGate",
+          "minF1"
+        ],
+        "expected": [
+          0.85
+        ],
+        "actual": [
+          0.85
+        ],
+        "status": "PASS"
+      },
+      {
+        "id": "decision-gate:decisionGate.maxLatencyMs",
+        "kind": "yaml",
+        "file": "mlops/decision-gate.yaml",
+        "path": [
+          "decisionGate",
+          "maxLatencyMs"
+        ],
+        "expected": [
+          100.0
+        ],
+        "actual": [
+          100.0
+        ],
+        "status": "PASS"
+      },
+      {
+        "id": "decision-gate:decisionGate.maxCost",
+        "kind": "yaml",
+        "file": "mlops/decision-gate.yaml",
+        "path": [
+          "decisionGate",
+          "maxCost"
+        ],
+        "expected": [
+          20.0
+        ],
+        "actual": [
+          20.0
+        ],
+        "status": "PASS"
+      },
+      {
+        "id": "decision-gate:decisionGate.maxDrift",
+        "kind": "yaml",
+        "file": "mlops/decision-gate.yaml",
+        "path": [
+          "decisionGate",
+          "maxDrift"
+        ],
+        "expected": [
+          0.1
+        ],
+        "actual": [
+          0.1
+        ],
+        "status": "PASS"
+      },
+      {
+        "id": "decision-gate:decisionGate.minTraceabilityScore",
+        "kind": "yaml",
+        "file": "mlops/decision-gate.yaml",
+        "path": [
+          "decisionGate",
+          "minTraceabilityScore"
+        ],
+        "expected": [
+          0.95
+        ],
+        "actual": [
+          0.95
+        ],
+        "status": "PASS"
+      },
+      {
+        "id": "decision-gate:decisionGate.criteria",
+        "kind": "yaml",
+        "file": "mlops/decision-gate.yaml",
+        "path": [
+          "decisionGate",
+          "criteria"
+        ],
+        "expected": [
+          [
+            {
+              "name": "performance",
+              "weight": 0.6,
+              "minValue": 0.85,
+              "maxValue": 1.0,
+              "required": true
+            },
+            {
+              "name": "latency",
+              "weight": 0.4,
+              "maxValue": 100.0,
+              "required": true
+            }
+          ]
+        ],
+        "actual": [
+          [
+            {
+              "name": "performance",
+              "weight": 0.6,
+              "minValue": 0.85,
+              "maxValue": 1.0,
+              "required": true
+            },
+            {
+              "name": "latency",
+              "weight": 0.4,
+              "maxValue": 100.0,
+              "required": true
+            }
+          ]
+        ],
+        "status": "PASS"
+      },
+      {
+        "id": "retraining-policy:retraining.strategy",
+        "kind": "yaml",
+        "file": "mlops/retraining-policy.yaml",
+        "path": [
+          "retraining",
+          "strategy"
+        ],
+        "expected": [
+          "SCHEDULED"
+        ],
+        "actual": [
+          "SCHEDULED"
+        ],
+        "status": "PASS"
+      },
+      {
+        "id": "retraining-policy:retraining.schedule",
+        "kind": "yaml",
+        "file": "mlops/retraining-policy.yaml",
+        "path": [
+          "retraining",
+          "schedule"
+        ],
+        "expected": [
+          "daily"
+        ],
+        "actual": [
+          "daily"
+        ],
+        "status": "PASS"
+      },
+      {
+        "id": "retraining-policy:retraining.autoTrigger",
+        "kind": "yaml",
+        "file": "mlops/retraining-policy.yaml",
+        "path": [
+          "retraining",
+          "autoTrigger"
+        ],
+        "expected": [
+          false
+        ],
+        "actual": [
+          false
+        ],
+        "status": "PASS"
+      },
+      {
+        "id": "retraining-policy:retraining.retrainingQueue",
+        "kind": "yaml",
+        "file": "mlops/retraining-policy.yaml",
+        "path": [
+          "retraining",
+          "retrainingQueue"
+        ],
+        "expected": [
+          "cpu-training"
+        ],
+        "actual": [
+          "cpu-training"
+        ],
+        "status": "PASS"
+      },
+      {
+        "id": "retraining-policy:retraining.driftThreshold",
+        "kind": "yaml",
+        "file": "mlops/retraining-policy.yaml",
+        "path": [
+          "retraining",
+          "driftThreshold"
+        ],
+        "expected": [
+          0.1
+        ],
+        "actual": [
+          0.1
+        ],
+        "status": "PASS"
+      },
+      {
+        "id": "retraining-policy:retraining.performanceDropThreshold",
+        "kind": "yaml",
+        "file": "mlops/retraining-policy.yaml",
+        "path": [
+          "retraining",
+          "performanceDropThreshold"
+        ],
+        "expected": [
+          0.07
+        ],
+        "actual": [
+          0.07
+        ],
+        "status": "PASS"
+      },
+      {
+        "id": "monitoring-policy:monitoring.alertChannel",
+        "kind": "yaml",
+        "file": "mlops/monitoring-policy.yaml",
+        "path": [
+          "monitoring",
+          "alertChannel"
+        ],
+        "expected": [
+          "https://alerts.example.org/fraud"
+        ],
+        "actual": [
+          "https://alerts.example.org/fraud"
+        ],
+        "status": "PASS"
+      },
+      {
+        "id": "monitoring-policy:monitoring.perfMetrics",
+        "kind": "yaml",
+        "file": "mlops/monitoring-policy.yaml",
+        "path": [
+          "monitoring",
+          "perfMetrics"
+        ],
+        "expected": [
+          [
+            "p95_latency_ms",
+            "error_rate"
+          ]
+        ],
+        "actual": [
+          [
+            "p95_latency_ms",
+            "error_rate"
+          ]
+        ],
+        "status": "PASS"
+      },
+      {
+        "id": "monitoring-policy:monitoring.dataDrift",
+        "kind": "yaml",
+        "file": "mlops/monitoring-policy.yaml",
+        "path": [
+          "monitoring",
+          "dataDrift"
+        ],
+        "expected": [
+          [
+            {
+              "name": "amount_distribution",
+              "warn": 0.1,
+              "fail": 0.2
+            }
+          ]
+        ],
+        "actual": [
+          [
+            {
+              "name": "amount_distribution",
+              "warn": 0.1,
+              "fail": 0.2
+            }
+          ]
+        ],
+        "status": "PASS"
+      },
+      {
+        "id": "monitoring-policy:monitoring.modelDrift",
+        "kind": "yaml",
+        "file": "mlops/monitoring-policy.yaml",
+        "path": [
+          "monitoring",
+          "modelDrift"
+        ],
+        "expected": [
+          [
+            {
+              "name": "f1_drop",
+              "warn": 0.03,
+              "fail": 0.07
+            }
+          ]
+        ],
+        "actual": [
+          [
+            {
+              "name": "f1_drop",
+              "warn": 0.03,
+              "fail": 0.07
+            }
+          ]
+        ],
+        "status": "PASS"
+      },
+      {
+        "id": "governance:governance.traceabilityRequired",
+        "kind": "yaml",
+        "file": "mlops/governance.yaml",
+        "path": [
+          "governance",
+          "traceabilityRequired"
+        ],
+        "expected": [
+          true
+        ],
+        "actual": [
+          true
+        ],
+        "status": "PASS"
+      },
+      {
+        "id": "governance:governance.explainDecision",
+        "kind": "yaml",
+        "file": "mlops/governance.yaml",
+        "path": [
+          "governance",
+          "explainDecision"
+        ],
+        "expected": [
+          true
+        ],
+        "actual": [
+          true
+        ],
+        "status": "PASS"
+      },
+      {
+        "id": "governance:governance.auditTrail",
+        "kind": "yaml",
+        "file": "mlops/governance.yaml",
+        "path": [
+          "governance",
+          "auditTrail"
+        ],
+        "expected": [
+          true
+        ],
+        "actual": [
+          true
+        ],
+        "status": "PASS"
+      },
+      {
+        "id": "governance:governance.riskReport",
+        "kind": "yaml",
+        "file": "mlops/governance.yaml",
+        "path": [
+          "governance",
+          "riskReport"
+        ],
+        "expected": [
+          false
+        ],
+        "actual": [
+          false
+        ],
+        "status": "PASS"
+      },
+      {
+        "id": "governance:governance.complianceFramework",
+        "kind": "yaml",
+        "file": "mlops/governance.yaml",
+        "path": [
+          "governance",
+          "complianceFramework"
+        ],
+        "expected": [
+          "study-policy"
+        ],
+        "actual": [
+          "study-policy"
+        ],
+        "status": "PASS"
+      },
+      {
+        "id": "cicdct:cicdct.target",
+        "kind": "yaml",
+        "file": "mlops/cicdct.yaml",
+        "path": [
+          "cicdct",
+          "target"
+        ],
+        "expected": [
+          "GITHUB"
+        ],
+        "actual": [
+          "GITHUB"
+        ],
+        "status": "PASS"
+      },
+      {
+        "id": "cicdct:cicdct.pipelineFile",
+        "kind": "yaml",
+        "file": "mlops/cicdct.yaml",
+        "path": [
+          "cicdct",
+          "pipelineFile"
+        ],
+        "expected": [
+          "mlops.yml"
+        ],
+        "actual": [
+          "mlops.yml"
+        ],
+        "status": "PASS"
+      },
+      {
+        "id": "cicdct:cicdct.enableCI",
+        "kind": "yaml",
+        "file": "mlops/cicdct.yaml",
+        "path": [
+          "cicdct",
+          "enableCI"
+        ],
+        "expected": [
+          true
+        ],
+        "actual": [
+          true
+        ],
+        "status": "PASS"
+      },
+      {
+        "id": "cicdct:cicdct.enableCD",
+        "kind": "yaml",
+        "file": "mlops/cicdct.yaml",
+        "path": [
+          "cicdct",
+          "enableCD"
+        ],
+        "expected": [
+          false
+        ],
+        "actual": [
+          false
+        ],
+        "status": "PASS"
+      },
+      {
+        "id": "cicdct:cicdct.enableCT",
+        "kind": "yaml",
+        "file": "mlops/cicdct.yaml",
+        "path": [
+          "cicdct",
+          "enableCT"
+        ],
+        "expected": [
+          false
+        ],
+        "actual": [
+          false
+        ],
+        "status": "PASS"
+      },
+      {
+        "id": "cicdct:cicdct.stages",
+        "kind": "yaml",
+        "file": "mlops/cicdct.yaml",
+        "path": [
+          "cicdct",
+          "stages"
+        ],
+        "expected": [
+          [
+            {
+              "kind": "VALIDATE_DATA",
+              "name": "validate",
+              "required": true,
+              "tool": "python",
+              "outputArtifact": "reports/data.json"
+            },
+            {
+              "kind": "REGISTER_MODEL",
+              "name": "register",
+              "required": true,
+              "tool": "mlflow",
+              "outputArtifact": "registry/fraud_classifier_v2"
+            },
+            {
+              "kind": "DEPLOY",
+              "name": "deploy",
+              "required": false,
+              "tool": "kubectl",
+              "outputArtifact": "runtime/k8s"
+            }
+          ]
+        ],
+        "actual": [
+          [
+            {
+              "kind": "VALIDATE_DATA",
+              "name": "validate",
+              "required": true,
+              "tool": "python",
+              "outputArtifact": "reports/data.json"
+            },
+            {
+              "kind": "REGISTER_MODEL",
+              "name": "register",
+              "required": true,
+              "tool": "mlflow",
+              "outputArtifact": "registry/fraud_classifier_v2"
+            },
+            {
+              "kind": "DEPLOY",
+              "name": "deploy",
+              "required": false,
+              "tool": "kubectl",
+              "outputArtifact": "runtime/k8s"
+            }
+          ]
+        ],
+        "status": "PASS"
+      },
+      {
+        "id": "default:region",
+        "kind": "default",
+        "name": "region",
+        "expected": "europe-west4",
+        "actual": "europe-west4",
+        "status": "PASS"
+      },
+      {
+        "id": "default:account_id",
+        "kind": "default",
+        "name": "account_id",
+        "expected": "mlops-gcp-study",
+        "actual": "mlops-gcp-study",
+        "status": "PASS"
+      },
+      {
+        "id": "default:cluster_name",
+        "kind": "default",
+        "name": "cluster_name",
+        "expected": "fraud-gcp-study",
+        "actual": "fraud-gcp-study",
+        "status": "PASS"
+      },
+      {
+        "id": "default:public_exposure",
+        "kind": "default",
+        "name": "public_exposure",
+        "expected": true,
+        "actual": true,
+        "status": "PASS"
+      },
+      {
+        "id": "default:tls_enabled",
+        "kind": "default",
+        "name": "tls_enabled",
+        "expected": true,
+        "actual": true,
+        "status": "PASS"
+      },
+      {
+        "id": "resource:google_compute_network",
+        "kind": "resource",
+        "resource": "google_compute_network",
+        "expected": 1,
+        "actual": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "resource:google_compute_subnetwork",
+        "kind": "resource",
+        "resource": "google_compute_subnetwork",
+        "expected": 1,
+        "actual": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "resource:google_container_cluster",
+        "kind": "resource",
+        "resource": "google_container_cluster",
+        "expected": 1,
+        "actual": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "resource:google_container_node_pool",
+        "kind": "resource",
+        "resource": "google_container_node_pool",
+        "expected": 1,
+        "actual": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "resource:google_storage_bucket",
+        "kind": "resource",
+        "resource": "google_storage_bucket",
+        "expected": 2,
+        "actual": 2,
+        "status": "PASS"
+      },
+      {
+        "id": "resource:google_secret_manager_secret",
+        "kind": "resource",
+        "resource": "google_secret_manager_secret",
+        "expected": 1,
+        "actual": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "resource:google_logging_project_sink",
+        "kind": "resource",
+        "resource": "google_logging_project_sink",
+        "expected": 1,
+        "actual": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "google_compute_subnetwork:count",
+        "kind": "hcl",
+        "resource": "google_compute_subnetwork",
+        "path": [
+          "count"
+        ],
+        "expected": [
+          2
+        ],
+        "actual": [
+          2
+        ],
+        "status": "PASS"
+      },
+      {
+        "id": "google_container_cluster:name",
+        "kind": "hcl",
+        "resource": "google_container_cluster",
+        "path": [
+          "name"
+        ],
+        "expected": [
+          "${var.cluster_name}"
+        ],
+        "actual": [
+          "${var.cluster_name}"
+        ],
+        "status": "PASS"
+      },
+      {
+        "id": "google_container_cluster:location",
+        "kind": "hcl",
+        "resource": "google_container_cluster",
+        "path": [
+          "location"
+        ],
+        "expected": [
+          "${var.region}"
+        ],
+        "actual": [
+          "${var.region}"
+        ],
+        "status": "PASS"
+      },
+      {
+        "id": "google_container_cluster:remove_default_node_pool",
+        "kind": "hcl",
+        "resource": "google_container_cluster",
+        "path": [
+          "remove_default_node_pool"
+        ],
+        "expected": [
+          true
+        ],
+        "actual": [
+          true
+        ],
+        "status": "PASS"
+      },
+      {
+        "id": "google_container_node_pool:initial_node_count",
+        "kind": "hcl",
+        "resource": "google_container_node_pool",
+        "path": [
+          "initial_node_count"
+        ],
+        "expected": [
+          3
+        ],
+        "actual": [
+          3
+        ],
+        "status": "PASS"
+      },
+      {
+        "id": "google_container_node_pool:autoscaling.*.min_node_count",
+        "kind": "hcl",
+        "resource": "google_container_node_pool",
+        "path": [
+          "autoscaling",
+          "*",
+          "min_node_count"
+        ],
+        "expected": [
+          2
+        ],
+        "actual": [
+          2
+        ],
+        "status": "PASS"
+      },
+      {
+        "id": "google_container_node_pool:autoscaling.*.max_node_count",
+        "kind": "hcl",
+        "resource": "google_container_node_pool",
+        "path": [
+          "autoscaling",
+          "*",
+          "max_node_count"
+        ],
+        "expected": [
+          5
+        ],
+        "actual": [
+          5
+        ],
+        "status": "PASS"
+      },
+      {
+        "id": "google_container_node_pool:node_config.*.machine_type",
+        "kind": "hcl",
+        "resource": "google_container_node_pool",
+        "path": [
+          "node_config",
+          "*",
+          "machine_type"
+        ],
+        "expected": [
+          "e2-standard-2"
+        ],
+        "actual": [
+          "e2-standard-2"
+        ],
+        "status": "PASS"
+      },
+      {
+        "id": "google_container_node_pool:node_config.*.spot",
+        "kind": "hcl",
+        "resource": "google_container_node_pool",
+        "path": [
+          "node_config",
+          "*",
+          "spot"
+        ],
+        "expected": [
+          false
+        ],
+        "actual": [
+          false
+        ],
+        "status": "PASS"
+      },
+      {
+        "id": "subnet-prefixes",
+        "kind": "subnets",
+        "expected": [
+          "10.72.1.0/24",
+          "10.72.2.0/24"
+        ],
+        "actual": [
+          "10.72.1.0/24",
+          "10.72.2.0/24"
+        ],
+        "status": "PASS"
+      }
+    ],
+    "domain_oracle": [],
+    "inventory": [
+      {
+        "path": "infra/terraform/.terraform.lock.hcl",
+        "sha256": "b80ce415a99652f88a3be797cbe0d2289e9162995bb18d4974db4cdbd9885d30",
+        "bytes": 1206
+      },
+      {
+        "path": "infra/terraform/main.tf",
+        "sha256": "6904b64a9563f72831d925ca40b32d10c9a71aaba0d5221ecd32a2ce525cc048",
+        "bytes": 2505
+      },
+      {
+        "path": "kustomization.yaml",
+        "sha256": "14c20bdcaa932df271a3a840042bb9eb62ff7397615c30e7256a8c79598556a8",
+        "bytes": 1063
+      },
+      {
+        "path": "mlops/cicdct.yaml",
+        "sha256": "5bfe7af87dbc50024aa2f50cb76a17868fdf57e42e0ea9917ce5a87a4f891eff",
+        "bytes": 486
+      },
+      {
+        "path": "mlops/decision-gate.yaml",
+        "sha256": "f6b15b1902bbcf25effe8971c1db680f25589fd30970065db7f089f567f238ea",
+        "bytes": 348
+      },
+      {
+        "path": "mlops/governance.yaml",
+        "sha256": "788bb3b5435320b8282bb15ee724f63fc53b7e03c3e6dee9d1d08582e0b142ad",
+        "bytes": 146
+      },
+      {
+        "path": "mlops/lifecycle.yaml",
+        "sha256": "45ec905feee26fed1820170b8881015e215f5dd5ca77753010ec0cda82f5a045",
+        "bytes": 114
+      },
+      {
+        "path": "mlops/model-registry.yaml",
+        "sha256": "884f2d42d80842fa0e4405e0c0bba8050e9cec4c673d349c0c7880a701b7a29a",
+        "bytes": 176
+      },
+      {
+        "path": "mlops/monitoring-policy.yaml",
+        "sha256": "9ab1cd4c6a3112d55dae3eb450ab75fa16cc7e1fee15018dc0f2908875c6137f",
+        "bytes": 256
+      },
+      {
+        "path": "mlops/retraining-policy.yaml",
+        "sha256": "e409197fe5ef7bbfa99c20b8133ac3a6a33fd901a11fcb7da0174725775c095f",
+        "bytes": 167
+      },
+      {
+        "path": "mlops/tracking.yaml",
+        "sha256": "ad91a55a6714d5970fd29c4e46c84a8694ca4a3cb6cfec1190cb1bdffcfc2319",
+        "bytes": 190
+      },
+      {
+        "path": "mlops/versioning.yaml",
+        "sha256": "44cd51c9c390882ac707fc315ad05783bd40623cd1b9c62cb2a285c8cf339333",
+        "bytes": 167
+      },
+      {
+        "path": "runtime/k8s/deployment.yaml",
+        "sha256": "70ca5479eba44bfa0bc0537ac3c232925cc924b1e4fe96015e67deac8f98fba1",
+        "bytes": 639
+      },
+      {
+        "path": "runtime/k8s/ingress.yaml",
+        "sha256": "e35737a7c581c3c7d720f4fc721738a3b07e143cf0f63126bf2acc6ede2b46e2",
+        "bytes": 462
+      },
+      {
+        "path": "runtime/k8s/namespace.yaml",
+        "sha256": "d780f73cbd74bd35f7aa63b39d00a62f3e7b9af11f99fbf1ee421b9319dcc357",
+        "bytes": 67
+      },
+      {
+        "path": "runtime/k8s/service.yaml",
+        "sha256": "bcf2d8bcf985426a610d13bb02b80dfd473447c2009e4f254fc12b5ac1cad719",
+        "bytes": 193
+      }
+    ]
+  },
+  "baseline_guard": "PASS",
+  "baseline_terraform": {
+    "status": "PASS",
+    "commands": [
+      {
+        "argv": [
+          "terraform",
+          "version",
+          "-json"
+        ],
+        "exit_code": 0,
+        "status": "PASS",
+        "stdout": "C:\\Users\\bader\\projects\\mlops-dsl\\evaluation\\journal\\gcp\\runs\\author-20261108-164641-995\\GE01\\logs\\terraform\\version.stdout.txt",
+        "stderr": "C:\\Users\\bader\\projects\\mlops-dsl\\evaluation\\journal\\gcp\\runs\\author-20261108-164641-995\\GE01\\logs\\terraform\\version.stderr.txt"
+      },
+      {
+        "argv": [
+          "terraform",
+          "init",
+          "-backend=false",
+          "-input=false",
+          "-no-color"
+        ],
+        "exit_code": 0,
+        "status": "PASS",
+        "stdout": "C:\\Users\\bader\\projects\\mlops-dsl\\evaluation\\journal\\gcp\\runs\\author-20261108-164641-995\\GE01\\logs\\terraform\\init.stdout.txt",
+        "stderr": "C:\\Users\\bader\\projects\\mlops-dsl\\evaluation\\journal\\gcp\\runs\\author-20261108-164641-995\\GE01\\logs\\terraform\\init.stderr.txt"
+      },
+      {
+        "argv": [
+          "terraform",
+          "validate",
+          "-json"
+        ],
+        "exit_code": 0,
+        "status": "PASS",
+        "stdout": "C:\\Users\\bader\\projects\\mlops-dsl\\evaluation\\journal\\gcp\\runs\\author-20261108-164641-995\\GE01\\logs\\terraform\\validate.stdout.txt",
+        "stderr": "C:\\Users\\bader\\projects\\mlops-dsl\\evaluation\\journal\\gcp\\runs\\author-20261108-164641-995\\GE01\\logs\\terraform\\validate.stderr.txt"
+      }
+    ]
+  },
+  "generated": {
+    "parsing_errors": [],
+    "requirements": [
+      {
+        "id": "namespace",
+        "kind": "yaml",
+        "file": "runtime/k8s/namespace.yaml",
+        "path": [
+          "metadata",
+          "name"
+        ],
+        "expected": [
+          "fraud-serving"
+        ],
+        "actual": [
+          "fraud-serving"
+        ],
+        "status": "PASS"
+      },
+      {
+        "id": "deployment-name",
+        "kind": "yaml",
+        "file": "runtime/k8s/deployment.yaml",
+        "path": [
+          "metadata",
+          "name"
+        ],
+        "expected": [
+          "fraud-gcp-serving"
+        ],
+        "actual": [
+          "fraud-gcp-serving"
+        ],
+        "status": "PASS"
+      },
+      {
+        "id": "deployment-namespace",
+        "kind": "yaml",
+        "file": "runtime/k8s/deployment.yaml",
+        "path": [
+          "metadata",
+          "namespace"
+        ],
+        "expected": [
+          "fraud-serving"
+        ],
+        "actual": [
+          "fraud-serving"
+        ],
+        "status": "PASS"
+      },
+      {
+        "id": "service-name",
+        "kind": "yaml",
+        "file": "runtime/k8s/service.yaml",
+        "path": [
+          "metadata",
+          "name"
+        ],
+        "expected": [
+          "fraud-gcp-serving"
+        ],
+        "actual": [
+          "fraud-gcp-serving"
+        ],
+        "status": "PASS"
+      },
+      {
+        "id": "service-namespace",
+        "kind": "yaml",
+        "file": "runtime/k8s/service.yaml",
+        "path": [
+          "metadata",
+          "namespace"
+        ],
+        "expected": [
+          "fraud-serving"
+        ],
+        "actual": [
+          "fraud-serving"
+        ],
+        "status": "PASS"
+      },
+      {
+        "id": "ingress-name",
+        "kind": "yaml",
+        "file": "runtime/k8s/ingress.yaml",
+        "path": [
+          "metadata",
+          "name"
+        ],
+        "expected": [
+          "fraud-gcp-serving"
+        ],
+        "actual": [
+          "fraud-gcp-serving"
+        ],
+        "status": "PASS"
+      },
+      {
+        "id": "ingress-namespace",
+        "kind": "yaml",
+        "file": "runtime/k8s/ingress.yaml",
+        "path": [
+          "metadata",
+          "namespace"
+        ],
+        "expected": [
+          "fraud-serving"
+        ],
+        "actual": [
+          "fraud-serving"
+        ],
+        "status": "PASS"
+      },
+      {
+        "id": "replicas",
+        "kind": "yaml",
+        "file": "runtime/k8s/deployment.yaml",
+        "path": [
+          "spec",
+          "replicas"
+        ],
+        "expected": [
+          3
+        ],
+        "actual": [
+          3
+        ],
+        "status": "PASS"
+      },
+      {
+        "id": "image",
+        "kind": "yaml",
+        "file": "runtime/k8s/deployment.yaml",
+        "path": [
+          "spec",
+          "template",
+          "spec",
+          "containers",
+          "*",
+          "image"
+        ],
+        "expected": [
+          "europe-west4-docker.pkg.dev/mlops-gcp-study/serving/fraud-api:1.0.0"
+        ],
+        "actual": [
+          "europe-west4-docker.pkg.dev/mlops-gcp-study/serving/fraud-api:1.0.0"
+        ],
+        "status": "PASS"
+      },
+      {
+        "id": "container-port",
+        "kind": "yaml",
+        "file": "runtime/k8s/deployment.yaml",
+        "path": [
+          "spec",
+          "template",
+          "spec",
+          "containers",
+          "*",
+          "ports",
+          "*",
+          "containerPort"
+        ],
+        "expected": [
+          9091
+        ],
+        "actual": [
+          9091
+        ],
+        "status": "PASS"
+      },
+      {
+        "id": "readiness-port",
+        "kind": "yaml",
+        "file": "runtime/k8s/deployment.yaml",
+        "path": [
+          "spec",
+          "template",
+          "spec",
+          "containers",
+          "*",
+          "readinessProbe",
+          "httpGet",
+          "port"
+        ],
+        "expected": [
+          9091
+        ],
+        "actual": [
+          9091
+        ],
+        "status": "PASS"
+      },
+      {
+        "id": "liveness-port",
+        "kind": "yaml",
+        "file": "runtime/k8s/deployment.yaml",
+        "path": [
+          "spec",
+          "template",
+          "spec",
+          "containers",
+          "*",
+          "livenessProbe",
+          "httpGet",
+          "port"
+        ],
+        "expected": [
+          9091
+        ],
+        "actual": [
+          9091
+        ],
+        "status": "PASS"
+      },
+      {
+        "id": "service-port",
+        "kind": "yaml",
+        "file": "runtime/k8s/service.yaml",
+        "path": [
+          "spec",
+          "ports",
+          "*",
+          "port"
+        ],
+        "expected": [
+          9091
+        ],
+        "actual": [
+          9091
+        ],
+        "status": "PASS"
+      },
+      {
+        "id": "target-port",
+        "kind": "yaml",
+        "file": "runtime/k8s/service.yaml",
+        "path": [
+          "spec",
+          "ports",
+          "*",
+          "targetPort"
+        ],
+        "expected": [
+          9091
+        ],
+        "actual": [
+          9091
+        ],
+        "status": "PASS"
+      },
+      {
+        "id": "ingress-port",
+        "kind": "yaml",
+        "file": "runtime/k8s/ingress.yaml",
+        "path": [
+          "spec",
+          "rules",
+          "*",
+          "http",
+          "paths",
+          "*",
+          "backend",
+          "service",
+          "port",
+          "number"
+        ],
+        "expected": [
+          9091
+        ],
+        "actual": [
+          9091
+        ],
+        "status": "PASS"
+      },
+      {
+        "id": "readiness-path",
+        "kind": "yaml",
+        "file": "runtime/k8s/deployment.yaml",
+        "path": [
+          "spec",
+          "template",
+          "spec",
+          "containers",
+          "*",
+          "readinessProbe",
+          "httpGet",
+          "path"
+        ],
+        "expected": [
+          "/readyz"
+        ],
+        "actual": [
+          "/readyz"
+        ],
+        "status": "PASS"
+      },
+      {
+        "id": "liveness-path",
+        "kind": "yaml",
+        "file": "runtime/k8s/deployment.yaml",
+        "path": [
+          "spec",
+          "template",
+          "spec",
+          "containers",
+          "*",
+          "livenessProbe",
+          "httpGet",
+          "path"
+        ],
+        "expected": [
+          "/healthz"
+        ],
+        "actual": [
+          "/healthz"
+        ],
+        "status": "PASS"
+      },
+      {
+        "id": "ingress-class",
+        "kind": "yaml",
+        "file": "runtime/k8s/ingress.yaml",
+        "path": [
+          "spec",
+          "ingressClassName"
+        ],
+        "expected": [
+          "nginx"
+        ],
+        "actual": [
+          "nginx"
+        ],
+        "status": "PASS"
+      },
+      {
+        "id": "host",
+        "kind": "yaml",
+        "file": "runtime/k8s/ingress.yaml",
+        "path": [
+          "spec",
+          "rules",
+          "*",
+          "host"
+        ],
+        "expected": [
+          "fraud.example.org"
+        ],
+        "actual": [
+          "fraud.example.org"
+        ],
+        "status": "PASS"
+      },
+      {
+        "id": "tls-host",
+        "kind": "yaml",
+        "file": "runtime/k8s/ingress.yaml",
+        "path": [
+          "spec",
+          "tls",
+          "*",
+          "hosts",
+          "*"
+        ],
+        "expected": [
+          "fraud.example.org"
+        ],
+        "actual": [
+          "fraud.example.org"
+        ],
+        "status": "PASS"
+      },
+      {
+        "id": "tls-secret",
+        "kind": "yaml",
+        "file": "runtime/k8s/ingress.yaml",
+        "path": [
+          "spec",
+          "tls",
+          "*",
+          "secretName"
+        ],
+        "expected": [
+          "fraud-gcp-serving-tls"
+        ],
+        "actual": [
+          "fraud-gcp-serving-tls"
+        ],
+        "status": "PASS"
+      },
+      {
+        "id": "lifecycle:project",
+        "kind": "yaml",
+        "file": "mlops/lifecycle.yaml",
+        "path": [
+          "project"
+        ],
+        "expected": [
+          "fraud_gcp"
+        ],
+        "actual": [
+          "fraud_gcp"
+        ],
+        "status": "PASS"
+      },
+      {
+        "id": "lifecycle:tools.tracking",
+        "kind": "yaml",
+        "file": "mlops/lifecycle.yaml",
+        "path": [
+          "tools",
+          "tracking"
+        ],
+        "expected": [
+          "MLFLOW"
+        ],
+        "actual": [
+          "MLFLOW"
+        ],
+        "status": "PASS"
+      },
+      {
+        "id": "lifecycle:tools.versioning",
+        "kind": "yaml",
+        "file": "mlops/lifecycle.yaml",
+        "path": [
+          "tools",
+          "versioning"
+        ],
+        "expected": [
+          "DVC"
+        ],
+        "actual": [
+          "DVC"
+        ],
+        "status": "PASS"
+      },
+      {
+        "id": "lifecycle:tools.registry",
+        "kind": "yaml",
+        "file": "mlops/lifecycle.yaml",
+        "path": [
+          "tools",
+          "registry"
+        ],
+        "expected": [
+          "MLFLOW_REGISTRY"
+        ],
+        "actual": [
+          "MLFLOW_REGISTRY"
+        ],
+        "status": "PASS"
+      },
+      {
+        "id": "lifecycle:tools.cicdct",
+        "kind": "yaml",
+        "file": "mlops/lifecycle.yaml",
+        "path": [
+          "tools",
+          "cicdct"
+        ],
+        "expected": [
+          "GITHUB"
+        ],
+        "actual": [
+          "GITHUB"
+        ],
+        "status": "PASS"
+      },
+      {
+        "id": "tracking:tracking.backend",
+        "kind": "yaml",
+        "file": "mlops/tracking.yaml",
+        "path": [
+          "tracking",
+          "backend"
+        ],
+        "expected": [
+          "MLFLOW"
+        ],
+        "actual": [
+          "MLFLOW"
+        ],
+        "status": "PASS"
+      },
+      {
+        "id": "tracking:tracking.experimentName",
+        "kind": "yaml",
+        "file": "mlops/tracking.yaml",
+        "path": [
+          "tracking",
+          "experimentName"
+        ],
+        "expected": [
+          "tabular_fraud_gcp"
+        ],
+        "actual": [
+          "tabular_fraud_gcp"
+        ],
+        "status": "PASS"
+      },
+      {
+        "id": "tracking:tracking.trackingUri",
+        "kind": "yaml",
+        "file": "mlops/tracking.yaml",
+        "path": [
+          "tracking",
+          "trackingUri"
+        ],
+        "expected": [
+          "https://mlflow.example.org"
+        ],
+        "actual": [
+          "https://mlflow.example.org"
+        ],
+        "status": "PASS"
+      },
+      {
+        "id": "tracking:tracking.logParams",
+        "kind": "yaml",
+        "file": "mlops/tracking.yaml",
+        "path": [
+          "tracking",
+          "logParams"
+        ],
+        "expected": [
+          true
+        ],
+        "actual": [
+          true
+        ],
+        "status": "PASS"
+      },
+      {
+        "id": "tracking:tracking.logMetrics",
+        "kind": "yaml",
+        "file": "mlops/tracking.yaml",
+        "path": [
+          "tracking",
+          "logMetrics"
+        ],
+        "expected": [
+          true
+        ],
+        "actual": [
+          true
+        ],
+        "status": "PASS"
+      },
+      {
+        "id": "tracking:tracking.logArtifacts",
+        "kind": "yaml",
+        "file": "mlops/tracking.yaml",
+        "path": [
+          "tracking",
+          "logArtifacts"
+        ],
+        "expected": [
+          false
+        ],
+        "actual": [
+          false
+        ],
+        "status": "PASS"
+      },
+      {
+        "id": "tracking:tracking.logModel",
+        "kind": "yaml",
+        "file": "mlops/tracking.yaml",
+        "path": [
+          "tracking",
+          "logModel"
+        ],
+        "expected": [
+          true
+        ],
+        "actual": [
+          true
+        ],
+        "status": "PASS"
+      },
+      {
+        "id": "versioning:versioning.backend",
+        "kind": "yaml",
+        "file": "mlops/versioning.yaml",
+        "path": [
+          "versioning",
+          "backend"
+        ],
+        "expected": [
+          "DVC"
+        ],
+        "actual": [
+          "DVC"
+        ],
+        "status": "PASS"
+      },
+      {
+        "id": "versioning:versioning.versionData",
+        "kind": "yaml",
+        "file": "mlops/versioning.yaml",
+        "path": [
+          "versioning",
+          "versionData"
+        ],
+        "expected": [
+          true
+        ],
+        "actual": [
+          true
+        ],
+        "status": "PASS"
+      },
+      {
+        "id": "versioning:versioning.versionCode",
+        "kind": "yaml",
+        "file": "mlops/versioning.yaml",
+        "path": [
+          "versioning",
+          "versionCode"
+        ],
+        "expected": [
+          true
+        ],
+        "actual": [
+          true
+        ],
+        "status": "PASS"
+      },
+      {
+        "id": "versioning:versioning.versionModels",
+        "kind": "yaml",
+        "file": "mlops/versioning.yaml",
+        "path": [
+          "versioning",
+          "versionModels"
+        ],
+        "expected": [
+          true
+        ],
+        "actual": [
+          true
+        ],
+        "status": "PASS"
+      },
+      {
+        "id": "versioning:versioning.versionParams",
+        "kind": "yaml",
+        "file": "mlops/versioning.yaml",
+        "path": [
+          "versioning",
+          "versionParams"
+        ],
+        "expected": [
+          true
+        ],
+        "actual": [
+          true
+        ],
+        "status": "PASS"
+      },
+      {
+        "id": "versioning:versioning.remoteUri",
+        "kind": "yaml",
+        "file": "mlops/versioning.yaml",
+        "path": [
+          "versioning",
+          "remoteUri"
+        ],
+        "expected": [
+          "gs://mlops-gcp-study-versioning/dvc"
+        ],
+        "actual": [
+          "gs://mlops-gcp-study-versioning/dvc"
+        ],
+        "status": "PASS"
+      },
+      {
+        "id": "model-registry:modelRegistry.backend",
+        "kind": "yaml",
+        "file": "mlops/model-registry.yaml",
+        "path": [
+          "modelRegistry",
+          "backend"
+        ],
+        "expected": [
+          "MLFLOW_REGISTRY"
+        ],
+        "actual": [
+          "MLFLOW_REGISTRY"
+        ],
+        "status": "PASS"
+      },
+      {
+        "id": "model-registry:modelRegistry.modelName",
+        "kind": "yaml",
+        "file": "mlops/model-registry.yaml",
+        "path": [
+          "modelRegistry",
+          "modelName"
+        ],
+        "expected": [
+          "fraud_classifier_v2"
+        ],
+        "actual": [
+          "fraud_classifier_v2"
+        ],
+        "status": "PASS"
+      },
+      {
+        "id": "model-registry:modelRegistry.enableStaging",
+        "kind": "yaml",
+        "file": "mlops/model-registry.yaml",
+        "path": [
+          "modelRegistry",
+          "enableStaging"
+        ],
+        "expected": [
+          true
+        ],
+        "actual": [
+          true
+        ],
+        "status": "PASS"
+      },
+      {
+        "id": "model-registry:modelRegistry.enableProduction",
+        "kind": "yaml",
+        "file": "mlops/model-registry.yaml",
+        "path": [
+          "modelRegistry",
+          "enableProduction"
+        ],
+        "expected": [
+          true
+        ],
+        "actual": [
+          true
+        ],
+        "status": "PASS"
+      },
+      {
+        "id": "model-registry:modelRegistry.rollbackEnabled",
+        "kind": "yaml",
+        "file": "mlops/model-registry.yaml",
+        "path": [
+          "modelRegistry",
+          "rollbackEnabled"
+        ],
+        "expected": [
+          true
+        ],
+        "actual": [
+          true
+        ],
+        "status": "PASS"
+      },
+      {
+        "id": "model-registry:modelRegistry.approvalMode",
+        "kind": "yaml",
+        "file": "mlops/model-registry.yaml",
+        "path": [
+          "modelRegistry",
+          "approvalMode"
+        ],
+        "expected": [
+          "manual"
+        ],
+        "actual": [
+          "manual"
+        ],
+        "status": "PASS"
+      },
+      {
+        "id": "decision-gate:decisionGate.autoPromote",
+        "kind": "yaml",
+        "file": "mlops/decision-gate.yaml",
+        "path": [
+          "decisionGate",
+          "autoPromote"
+        ],
+        "expected": [
+          false
+        ],
+        "actual": [
+          false
+        ],
+        "status": "PASS"
+      },
+      {
+        "id": "decision-gate:decisionGate.minAccuracy",
+        "kind": "yaml",
+        "file": "mlops/decision-gate.yaml",
+        "path": [
+          "decisionGate",
+          "minAccuracy"
+        ],
+        "expected": [
+          0.9
+        ],
+        "actual": [
+          0.9
+        ],
+        "status": "PASS"
+      },
+      {
+        "id": "decision-gate:decisionGate.minF1",
+        "kind": "yaml",
+        "file": "mlops/decision-gate.yaml",
+        "path": [
+          "decisionGate",
+          "minF1"
+        ],
+        "expected": [
+          0.85
+        ],
+        "actual": [
+          0.85
+        ],
+        "status": "PASS"
+      },
+      {
+        "id": "decision-gate:decisionGate.maxLatencyMs",
+        "kind": "yaml",
+        "file": "mlops/decision-gate.yaml",
+        "path": [
+          "decisionGate",
+          "maxLatencyMs"
+        ],
+        "expected": [
+          100.0
+        ],
+        "actual": [
+          100.0
+        ],
+        "status": "PASS"
+      },
+      {
+        "id": "decision-gate:decisionGate.maxCost",
+        "kind": "yaml",
+        "file": "mlops/decision-gate.yaml",
+        "path": [
+          "decisionGate",
+          "maxCost"
+        ],
+        "expected": [
+          20.0
+        ],
+        "actual": [
+          20.0
+        ],
+        "status": "PASS"
+      },
+      {
+        "id": "decision-gate:decisionGate.maxDrift",
+        "kind": "yaml",
+        "file": "mlops/decision-gate.yaml",
+        "path": [
+          "decisionGate",
+          "maxDrift"
+        ],
+        "expected": [
+          0.1
+        ],
+        "actual": [
+          0.1
+        ],
+        "status": "PASS"
+      },
+      {
+        "id": "decision-gate:decisionGate.minTraceabilityScore",
+        "kind": "yaml",
+        "file": "mlops/decision-gate.yaml",
+        "path": [
+          "decisionGate",
+          "minTraceabilityScore"
+        ],
+        "expected": [
+          0.95
+        ],
+        "actual": [
+          0.95
+        ],
+        "status": "PASS"
+      },
+      {
+        "id": "decision-gate:decisionGate.criteria",
+        "kind": "yaml",
+        "file": "mlops/decision-gate.yaml",
+        "path": [
+          "decisionGate",
+          "criteria"
+        ],
+        "expected": [
+          [
+            {
+              "name": "performance",
+              "weight": 0.6,
+              "minValue": 0.85,
+              "maxValue": 1.0,
+              "required": true
+            },
+            {
+              "name": "latency",
+              "weight": 0.4,
+              "maxValue": 100.0,
+              "required": true
+            }
+          ]
+        ],
+        "actual": [
+          [
+            {
+              "name": "performance",
+              "weight": 0.6,
+              "minValue": 0.85,
+              "maxValue": 1.0,
+              "required": true
+            },
+            {
+              "name": "latency",
+              "weight": 0.4,
+              "maxValue": 100.0,
+              "required": true
+            }
+          ]
+        ],
+        "status": "PASS"
+      },
+      {
+        "id": "retraining-policy:retraining.strategy",
+        "kind": "yaml",
+        "file": "mlops/retraining-policy.yaml",
+        "path": [
+          "retraining",
+          "strategy"
+        ],
+        "expected": [
+          "SCHEDULED"
+        ],
+        "actual": [
+          "SCHEDULED"
+        ],
+        "status": "PASS"
+      },
+      {
+        "id": "retraining-policy:retraining.schedule",
+        "kind": "yaml",
+        "file": "mlops/retraining-policy.yaml",
+        "path": [
+          "retraining",
+          "schedule"
+        ],
+        "expected": [
+          "daily"
+        ],
+        "actual": [
+          "daily"
+        ],
+        "status": "PASS"
+      },
+      {
+        "id": "retraining-policy:retraining.autoTrigger",
+        "kind": "yaml",
+        "file": "mlops/retraining-policy.yaml",
+        "path": [
+          "retraining",
+          "autoTrigger"
+        ],
+        "expected": [
+          false
+        ],
+        "actual": [
+          false
+        ],
+        "status": "PASS"
+      },
+      {
+        "id": "retraining-policy:retraining.retrainingQueue",
+        "kind": "yaml",
+        "file": "mlops/retraining-policy.yaml",
+        "path": [
+          "retraining",
+          "retrainingQueue"
+        ],
+        "expected": [
+          "cpu-training"
+        ],
+        "actual": [
+          "cpu-training"
+        ],
+        "status": "PASS"
+      },
+      {
+        "id": "retraining-policy:retraining.driftThreshold",
+        "kind": "yaml",
+        "file": "mlops/retraining-policy.yaml",
+        "path": [
+          "retraining",
+          "driftThreshold"
+        ],
+        "expected": [
+          0.1
+        ],
+        "actual": [
+          0.1
+        ],
+        "status": "PASS"
+      },
+      {
+        "id": "retraining-policy:retraining.performanceDropThreshold",
+        "kind": "yaml",
+        "file": "mlops/retraining-policy.yaml",
+        "path": [
+          "retraining",
+          "performanceDropThreshold"
+        ],
+        "expected": [
+          0.07
+        ],
+        "actual": [
+          0.07
+        ],
+        "status": "PASS"
+      },
+      {
+        "id": "monitoring-policy:monitoring.alertChannel",
+        "kind": "yaml",
+        "file": "mlops/monitoring-policy.yaml",
+        "path": [
+          "monitoring",
+          "alertChannel"
+        ],
+        "expected": [
+          "https://alerts.example.org/fraud"
+        ],
+        "actual": [
+          "https://alerts.example.org/fraud"
+        ],
+        "status": "PASS"
+      },
+      {
+        "id": "monitoring-policy:monitoring.perfMetrics",
+        "kind": "yaml",
+        "file": "mlops/monitoring-policy.yaml",
+        "path": [
+          "monitoring",
+          "perfMetrics"
+        ],
+        "expected": [
+          [
+            "p95_latency_ms",
+            "error_rate"
+          ]
+        ],
+        "actual": [
+          [
+            "p95_latency_ms",
+            "error_rate"
+          ]
+        ],
+        "status": "PASS"
+      },
+      {
+        "id": "monitoring-policy:monitoring.dataDrift",
+        "kind": "yaml",
+        "file": "mlops/monitoring-policy.yaml",
+        "path": [
+          "monitoring",
+          "dataDrift"
+        ],
+        "expected": [
+          [
+            {
+              "name": "amount_distribution",
+              "warn": 0.1,
+              "fail": 0.2
+            }
+          ]
+        ],
+        "actual": [
+          [
+            {
+              "name": "amount_distribution",
+              "warn": 0.1,
+              "fail": 0.2
+            }
+          ]
+        ],
+        "status": "PASS"
+      },
+      {
+        "id": "monitoring-policy:monitoring.modelDrift",
+        "kind": "yaml",
+        "file": "mlops/monitoring-policy.yaml",
+        "path": [
+          "monitoring",
+          "modelDrift"
+        ],
+        "expected": [
+          [
+            {
+              "name": "f1_drop",
+              "warn": 0.03,
+              "fail": 0.07
+            }
+          ]
+        ],
+        "actual": [
+          [
+            {
+              "name": "f1_drop",
+              "warn": 0.03,
+              "fail": 0.07
+            }
+          ]
+        ],
+        "status": "PASS"
+      },
+      {
+        "id": "governance:governance.traceabilityRequired",
+        "kind": "yaml",
+        "file": "mlops/governance.yaml",
+        "path": [
+          "governance",
+          "traceabilityRequired"
+        ],
+        "expected": [
+          true
+        ],
+        "actual": [
+          true
+        ],
+        "status": "PASS"
+      },
+      {
+        "id": "governance:governance.explainDecision",
+        "kind": "yaml",
+        "file": "mlops/governance.yaml",
+        "path": [
+          "governance",
+          "explainDecision"
+        ],
+        "expected": [
+          true
+        ],
+        "actual": [
+          true
+        ],
+        "status": "PASS"
+      },
+      {
+        "id": "governance:governance.auditTrail",
+        "kind": "yaml",
+        "file": "mlops/governance.yaml",
+        "path": [
+          "governance",
+          "auditTrail"
+        ],
+        "expected": [
+          true
+        ],
+        "actual": [
+          true
+        ],
+        "status": "PASS"
+      },
+      {
+        "id": "governance:governance.riskReport",
+        "kind": "yaml",
+        "file": "mlops/governance.yaml",
+        "path": [
+          "governance",
+          "riskReport"
+        ],
+        "expected": [
+          false
+        ],
+        "actual": [
+          false
+        ],
+        "status": "PASS"
+      },
+      {
+        "id": "governance:governance.complianceFramework",
+        "kind": "yaml",
+        "file": "mlops/governance.yaml",
+        "path": [
+          "governance",
+          "complianceFramework"
+        ],
+        "expected": [
+          "study-policy"
+        ],
+        "actual": [
+          "study-policy"
+        ],
+        "status": "PASS"
+      },
+      {
+        "id": "cicdct:cicdct.target",
+        "kind": "yaml",
+        "file": "mlops/cicdct.yaml",
+        "path": [
+          "cicdct",
+          "target"
+        ],
+        "expected": [
+          "GITHUB"
+        ],
+        "actual": [
+          "GITHUB"
+        ],
+        "status": "PASS"
+      },
+      {
+        "id": "cicdct:cicdct.pipelineFile",
+        "kind": "yaml",
+        "file": "mlops/cicdct.yaml",
+        "path": [
+          "cicdct",
+          "pipelineFile"
+        ],
+        "expected": [
+          "mlops.yml"
+        ],
+        "actual": [
+          "mlops.yml"
+        ],
+        "status": "PASS"
+      },
+      {
+        "id": "cicdct:cicdct.enableCI",
+        "kind": "yaml",
+        "file": "mlops/cicdct.yaml",
+        "path": [
+          "cicdct",
+          "enableCI"
+        ],
+        "expected": [
+          true
+        ],
+        "actual": [
+          true
+        ],
+        "status": "PASS"
+      },
+      {
+        "id": "cicdct:cicdct.enableCD",
+        "kind": "yaml",
+        "file": "mlops/cicdct.yaml",
+        "path": [
+          "cicdct",
+          "enableCD"
+        ],
+        "expected": [
+          false
+        ],
+        "actual": [
+          false
+        ],
+        "status": "PASS"
+      },
+      {
+        "id": "cicdct:cicdct.enableCT",
+        "kind": "yaml",
+        "file": "mlops/cicdct.yaml",
+        "path": [
+          "cicdct",
+          "enableCT"
+        ],
+        "expected": [
+          false
+        ],
+        "actual": [
+          false
+        ],
+        "status": "PASS"
+      },
+      {
+        "id": "cicdct:cicdct.stages",
+        "kind": "yaml",
+        "file": "mlops/cicdct.yaml",
+        "path": [
+          "cicdct",
+          "stages"
+        ],
+        "expected": [
+          [
+            {
+              "kind": "VALIDATE_DATA",
+              "name": "validate",
+              "required": true,
+              "tool": "python",
+              "outputArtifact": "reports/data.json"
+            },
+            {
+              "kind": "REGISTER_MODEL",
+              "name": "register",
+              "required": true,
+              "tool": "mlflow",
+              "outputArtifact": "registry/fraud_classifier_v2"
+            },
+            {
+              "kind": "DEPLOY",
+              "name": "deploy",
+              "required": false,
+              "tool": "kubectl",
+              "outputArtifact": "runtime/k8s"
+            }
+          ]
+        ],
+        "actual": [
+          [
+            {
+              "kind": "VALIDATE_DATA",
+              "name": "validate",
+              "required": true,
+              "tool": "python",
+              "outputArtifact": "reports/data.json"
+            },
+            {
+              "kind": "REGISTER_MODEL",
+              "name": "register",
+              "required": true,
+              "tool": "mlflow",
+              "outputArtifact": "registry/fraud_classifier_v2"
+            },
+            {
+              "kind": "DEPLOY",
+              "name": "deploy",
+              "required": false,
+              "tool": "kubectl",
+              "outputArtifact": "runtime/k8s"
+            }
+          ]
+        ],
+        "status": "PASS"
+      },
+      {
+        "id": "default:region",
+        "kind": "default",
+        "name": "region",
+        "expected": "europe-west4",
+        "actual": "europe-west4",
+        "status": "PASS"
+      },
+      {
+        "id": "default:account_id",
+        "kind": "default",
+        "name": "account_id",
+        "expected": "mlops-gcp-study",
+        "actual": "mlops-gcp-study",
+        "status": "PASS"
+      },
+      {
+        "id": "default:cluster_name",
+        "kind": "default",
+        "name": "cluster_name",
+        "expected": "fraud-gcp-study",
+        "actual": "fraud-gcp-study",
+        "status": "PASS"
+      },
+      {
+        "id": "default:public_exposure",
+        "kind": "default",
+        "name": "public_exposure",
+        "expected": true,
+        "actual": true,
+        "status": "PASS"
+      },
+      {
+        "id": "default:tls_enabled",
+        "kind": "default",
+        "name": "tls_enabled",
+        "expected": true,
+        "actual": true,
+        "status": "PASS"
+      },
+      {
+        "id": "resource:google_compute_network",
+        "kind": "resource",
+        "resource": "google_compute_network",
+        "expected": 1,
+        "actual": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "resource:google_compute_subnetwork",
+        "kind": "resource",
+        "resource": "google_compute_subnetwork",
+        "expected": 1,
+        "actual": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "resource:google_container_cluster",
+        "kind": "resource",
+        "resource": "google_container_cluster",
+        "expected": 1,
+        "actual": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "resource:google_container_node_pool",
+        "kind": "resource",
+        "resource": "google_container_node_pool",
+        "expected": 1,
+        "actual": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "resource:google_storage_bucket",
+        "kind": "resource",
+        "resource": "google_storage_bucket",
+        "expected": 2,
+        "actual": 2,
+        "status": "PASS"
+      },
+      {
+        "id": "resource:google_secret_manager_secret",
+        "kind": "resource",
+        "resource": "google_secret_manager_secret",
+        "expected": 1,
+        "actual": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "resource:google_logging_project_sink",
+        "kind": "resource",
+        "resource": "google_logging_project_sink",
+        "expected": 1,
+        "actual": 1,
+        "status": "PASS"
+      },
+      {
+        "id": "google_compute_subnetwork:count",
+        "kind": "hcl",
+        "resource": "google_compute_subnetwork",
+        "path": [
+          "count"
+        ],
+        "expected": [
+          2
+        ],
+        "actual": [
+          2
+        ],
+        "status": "PASS"
+      },
+      {
+        "id": "google_container_cluster:name",
+        "kind": "hcl",
+        "resource": "google_container_cluster",
+        "path": [
+          "name"
+        ],
+        "expected": [
+          "${var.cluster_name}"
+        ],
+        "actual": [
+          "${var.cluster_name}"
+        ],
+        "status": "PASS"
+      },
+      {
+        "id": "google_container_cluster:location",
+        "kind": "hcl",
+        "resource": "google_container_cluster",
+        "path": [
+          "location"
+        ],
+        "expected": [
+          "${var.region}"
+        ],
+        "actual": [
+          "${var.region}"
+        ],
+        "status": "PASS"
+      },
+      {
+        "id": "google_container_cluster:remove_default_node_pool",
+        "kind": "hcl",
+        "resource": "google_container_cluster",
+        "path": [
+          "remove_default_node_pool"
+        ],
+        "expected": [
+          true
+        ],
+        "actual": [
+          true
+        ],
+        "status": "PASS"
+      },
+      {
+        "id": "google_container_node_pool:initial_node_count",
+        "kind": "hcl",
+        "resource": "google_container_node_pool",
+        "path": [
+          "initial_node_count"
+        ],
+        "expected": [
+          3
+        ],
+        "actual": [
+          3
+        ],
+        "status": "PASS"
+      },
+      {
+        "id": "google_container_node_pool:autoscaling.*.min_node_count",
+        "kind": "hcl",
+        "resource": "google_container_node_pool",
+        "path": [
+          "autoscaling",
+          "*",
+          "min_node_count"
+        ],
+        "expected": [
+          2
+        ],
+        "actual": [
+          2
+        ],
+        "status": "PASS"
+      },
+      {
+        "id": "google_container_node_pool:autoscaling.*.max_node_count",
+        "kind": "hcl",
+        "resource": "google_container_node_pool",
+        "path": [
+          "autoscaling",
+          "*",
+          "max_node_count"
+        ],
+        "expected": [
+          5
+        ],
+        "actual": [
+          5
+        ],
+        "status": "PASS"
+      },
+      {
+        "id": "google_container_node_pool:node_config.*.machine_type",
+        "kind": "hcl",
+        "resource": "google_container_node_pool",
+        "path": [
+          "node_config",
+          "*",
+          "machine_type"
+        ],
+        "expected": [
+          "e2-standard-2"
+        ],
+        "actual": [
+          "e2-standard-2"
+        ],
+        "status": "PASS"
+      },
+      {
+        "id": "google_container_node_pool:node_config.*.spot",
+        "kind": "hcl",
+        "resource": "google_container_node_pool",
+        "path": [
+          "node_config",
+          "*",
+          "spot"
+        ],
+        "expected": [
+          false
+        ],
+        "actual": [
+          false
+        ],
+        "status": "PASS"
+      },
+      {
+        "id": "subnet-prefixes",
+        "kind": "subnets",
+        "expected": [
+          "10.72.1.0/24",
+          "10.72.2.0/24"
+        ],
+        "actual": [
+          "10.72.1.0/24",
+          "10.72.2.0/24"
+        ],
+        "status": "PASS"
+      }
+    ],
+    "domain_oracle": [],
+    "inventory": [
+      {
+        "path": ".github/workflows/mlops.yml",
+        "sha256": "ad9f8ae4ff27452b404ebba35f0a2aaa1a7f0c32b9fdc13c52d39775d7e3aab5",
+        "bytes": 597
+      },
+      {
+        "path": "ai-decision-engine/decision_engine/__init__.py",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "bytes": 0
+      },
+      {
+        "path": "ai-decision-engine/decision_engine/decision_gate.py",
+        "sha256": "bea0415feca4a0771f6c5437bdb688489da84a4af7e7b128ef04bc781c64324d",
+        "bytes": 1632
+      },
+      {
+        "path": "ai-decision-engine/decision_engine/drift_detector.py",
+        "sha256": "b1bd4cf8f0b3d074481f9ed04cfa7f8305f5cab871cf1582b9ce29b3826397ef",
+        "bytes": 396
+      },
+      {
+        "path": "ai-decision-engine/decision_engine/metrics_loader.py",
+        "sha256": "f16dab585e4791234d856f7eedc9339b52eb8963312f76e875a91c4f35626bbd",
+        "bytes": 849
+      },
+      {
+        "path": "ai-decision-engine/decision_engine/policy_loader.py",
+        "sha256": "5ad756b460dde2685777ea04564bce924e6da1b8cb4df058e9accac19b910dbe",
+        "bytes": 1010
+      },
+      {
+        "path": "ai-decision-engine/decision_engine/retraining_advisor.py",
+        "sha256": "a9459a2e24381674a7375de2dee2884426a9facb66bc416643a052ad11f5ea3c",
+        "bytes": 1203
+      },
+      {
+        "path": "ai-decision-engine/decision_engine/scorer.py",
+        "sha256": "8fd0370199411689ec9b0dea0b55296f207683df7c2fbb262f791ee49a017d86",
+        "bytes": 1977
+      },
+      {
+        "path": "ai-decision-engine/experiments/evaluate_candidates.py",
+        "sha256": "e495a715b718fda6c97ec5b1cd9cb1c5c62ccf5953f7b6e5c8c1d81c5b561058",
+        "bytes": 543
+      },
+      {
+        "path": "ai-decision-engine/experiments/simulate_drift.py",
+        "sha256": "388c7d87491e47082d54af873fddf4f5835dcb9a88a5d252162bf01e2d35d4c3",
+        "bytes": 1614
+      },
+      {
+        "path": "ai-decision-engine/experiments/train_candidates.py",
+        "sha256": "64dcb377f10c636ebb3d8e59191490e5e51da94b99f845ec4504e864e08fea47",
+        "bytes": 3029
+      },
+      {
+        "path": "ai-decision-engine/outputs/.gitkeep",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "bytes": 0
+      },
+      {
+        "path": "ai-decision-engine/README.md",
+        "sha256": "b60cb72f00a47b7ed4e16b7967223bcae7c150baaf9726f440011f03876b5d5f",
+        "bytes": 671
+      },
+      {
+        "path": "ai-decision-engine/requirements.txt",
+        "sha256": "019208b39ba7d7f9bf74bfde75239cdda4ac17398059fc5545eeaa1ec8e868ac",
+        "bytes": 52
+      },
+      {
+        "path": "ai-decision-engine/run_decision_gate.py",
+        "sha256": "326021e241b19baa3c35dfd63800efe2eb0643b108510ec056e71ae9af6736eb",
+        "bytes": 2377
+      },
+      {
+        "path": "infra/terraform/main.tf",
+        "sha256": "0db36744e94acbcd22c3228d833e0d2e3e9c6a9cfd6df93051e82e137002c151",
+        "bytes": 3060
+      },
+      {
+        "path": "infra/terraform/modules/compute/main.tf",
+        "sha256": "fa10549d761121fb4f5f2b142f235f8b165010aac3660673ca927929cdb20e4d",
+        "bytes": 2331
+      },
+      {
+        "path": "infra/terraform/modules/network/main.tf",
+        "sha256": "22066fabb7225e880772ada6d1444c11c20139e4f39cd04ce8b7e6769135dabe",
+        "bytes": 1945
+      },
+      {
+        "path": "infra/terraform/modules/observability/main.tf",
+        "sha256": "7598b24e6a460da3835b032262934e6b7327e3b3e548cdb18e6dff2e63792dca",
+        "bytes": 1649
+      },
+      {
+        "path": "infra/terraform/modules/secrets/main.tf",
+        "sha256": "4bf810ee089b42f158131b80230946e43ebe90e8904094a02dcc8b8b0ed218a4",
+        "bytes": 1563
+      },
+      {
+        "path": "infra/terraform/modules/storage/main.tf",
+        "sha256": "a455096f5c292f79a0a79587095f56bad9b25bd61bdfa2883e8b1c6be14e2c05",
+        "bytes": 1975
+      },
+      {
+        "path": "infra/terraform/outputs.tf",
+        "sha256": "904e34bc51eb11f178011d5b6a7e1a9a41c4231931f9b43e083e0ae1eb8007f9",
+        "bytes": 513
+      },
+      {
+        "path": "infra/terraform/terraform.tfvars.example",
+        "sha256": "21bce132feb2d619adda02c0d2cbe795feab42993819ccbe5b111cd920bed5b0",
+        "bytes": 432
+      },
+      {
+        "path": "infra/terraform/variables.tf",
+        "sha256": "846b36995b94eb6f47738c4ef022ff585544036a1e1bb474b55bc9fedc1b8fa9",
+        "bytes": 1734
+      },
+      {
+        "path": "infra/terraform/versions.tf",
+        "sha256": "0b67a821e642bfeb5a9498bd7418890af7db4d4173c2470ac5b7e98f7159820a",
+        "bytes": 224
+      },
+      {
+        "path": "mlops/cicdct.yaml",
+        "sha256": "7b6835740d82121acd9db3d4e89f62bc1ae8708aa3686262d761ff0917ea26a2",
+        "bytes": 536
+      },
+      {
+        "path": "mlops/decision-gate.yaml",
+        "sha256": "1d2fa71e0a1887e478c4db0faea46e0562b0b36e240bdccee6beaecfc387927d",
+        "bytes": 466
+      },
+      {
+        "path": "mlops/governance.yaml",
+        "sha256": "413c66152b7118b23fd82ef94b786a59ed4d03d243e3971a72b491c56e68b215",
+        "bytes": 148
+      },
+      {
+        "path": "mlops/lifecycle.yaml",
+        "sha256": "ebf62b0120cb589a68d4b9b3fe3da3208e9fda7f33cd92681574e5a71a9655ce",
+        "bytes": 444
+      },
+      {
+        "path": "mlops/model-registry.yaml",
+        "sha256": "63d2ef9a51a37c8abba54c560809533bd7dae62d974164502a5dd949638f993e",
+        "bytes": 180
+      },
+      {
+        "path": "mlops/monitoring-policy.yaml",
+        "sha256": "5751626bd2c12bf903b2a894f84116f8787c5225766d199dd757b05ce80fad3e",
+        "bytes": 271
+      },
+      {
+        "path": "mlops/retraining-policy.yaml",
+        "sha256": "92e5968e39905e020c1f3b2656cd6b539098745d1442abcf282ed169d8b6d43a",
+        "bytes": 171
+      },
+      {
+        "path": "mlops/tracking.yaml",
+        "sha256": "966345729e4e01cc4917bf38d88ddcec57150a4d1925558d109fa5e610a05917",
+        "bytes": 194
+      },
+      {
+        "path": "mlops/versioning.yaml",
+        "sha256": "54e4c53efb4eb7cd7e3c05e311a1be67c3ce6e732a99213173ffa50f05475460",
+        "bytes": 169
+      },
+      {
+        "path": "model-manifest.yaml",
+        "sha256": "2b39f7cba0e8655158393860261c70af6c1c7989460bc49d92711b2081b5062f",
+        "bytes": 698
+      },
+      {
+        "path": "pipelines/pipeline-model.yaml",
+        "sha256": "09a69152d0f5d2cf9e7f246f781678c51233a038297f345c82a650e05d94feaf",
+        "bytes": 119
+      },
+      {
+        "path": "README.md",
+        "sha256": "561e52e94226cd1c0485ea155ab331a6e17a90c7c01cbfe19b15f97b8e3ba20f",
+        "bytes": 1959
+      },
+      {
+        "path": "runtime/k8s/deployment.yaml",
+        "sha256": "c929e5b543d3753e59610316a78045853b080591db4c8647c323e1839827f3d4",
+        "bytes": 611
+      },
+      {
+        "path": "runtime/k8s/ingress.yaml",
+        "sha256": "b2f7a0356d79db8ea560e8932ffb56cc9843765e7f46e12e984c84977785eee5",
+        "bytes": 493
+      },
+      {
+        "path": "runtime/k8s/namespace.yaml",
+        "sha256": "bf3a4008a5024e92e121374f15a2662fbdbbe7a85b06b543fc13f64dc3c81ed4",
+        "bytes": 154
+      },
+      {
+        "path": "runtime/k8s/service.yaml",
+        "sha256": "a29c970f00b8978ac8cf54c170193b6f46bc85e9c39d295b731da02ee99d5df2",
+        "bytes": 196
+      }
+    ]
+  },
+  "generated_terraform": {
+    "status": "PASS",
+    "commands": [
+      {
+        "argv": [
+          "terraform",
+          "version",
+          "-json"
+        ],
+        "exit_code": 0,
+        "status": "PASS",
+        "stdout": "C:\\Users\\bader\\projects\\mlops-dsl\\evaluation\\journal\\gcp\\runs\\author-20261108-164641-995\\GE01\\logs\\generated-terraform\\version.stdout.txt",
+        "stderr": "C:\\Users\\bader\\projects\\mlops-dsl\\evaluation\\journal\\gcp\\runs\\author-20261108-164641-995\\GE01\\logs\\generated-terraform\\version.stderr.txt"
+      },
+      {
+        "argv": [
+          "terraform",
+          "init",
+          "-backend=false",
+          "-input=false",
+          "-no-color"
+        ],
+        "exit_code": 0,
+        "status": "PASS",
+        "stdout": "C:\\Users\\bader\\projects\\mlops-dsl\\evaluation\\journal\\gcp\\runs\\author-20261108-164641-995\\GE01\\logs\\generated-terraform\\init.stdout.txt",
+        "stderr": "C:\\Users\\bader\\projects\\mlops-dsl\\evaluation\\journal\\gcp\\runs\\author-20261108-164641-995\\GE01\\logs\\generated-terraform\\init.stderr.txt"
+      },
+      {
+        "argv": [
+          "terraform",
+          "validate",
+          "-json"
+        ],
+        "exit_code": 0,
+        "status": "PASS",
+        "stdout": "C:\\Users\\bader\\projects\\mlops-dsl\\evaluation\\journal\\gcp\\runs\\author-20261108-164641-995\\GE01\\logs\\generated-terraform\\validate.stdout.txt",
+        "stderr": "C:\\Users\\bader\\projects\\mlops-dsl\\evaluation\\journal\\gcp\\runs\\author-20261108-164641-995\\GE01\\logs\\generated-terraform\\validate.stderr.txt"
+      }
+    ]
+  },
+  "selected_requirements": "PASS"
+}

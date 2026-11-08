@@ -1,0 +1,1 @@
+error: fieldPath `spec.ports.0.port` is missing for replacement source Service.[noVer].[noGrp]/fraud-gcp-serving.[noNs]

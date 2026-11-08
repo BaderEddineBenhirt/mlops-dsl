@@ -1,0 +1,11 @@
+--- before/c10.mlops
++++ after/c10.mlops
+@@ -35,7 +35,7 @@
+   port = 9091
+   healthPath = "/healthz"
+   readinessPath = "/readyz"
+-  replicas = 3
++  replicas = 5
+   autoscaling = false
+   timeoutSeconds = 10
+   routes = ["/score", "/healthz", "/readyz"]

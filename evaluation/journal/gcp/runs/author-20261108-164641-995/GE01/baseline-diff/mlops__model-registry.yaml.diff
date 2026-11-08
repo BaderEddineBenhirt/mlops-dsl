@@ -1,0 +1,10 @@
+--- before/mlops/model-registry.yaml
++++ after/mlops/model-registry.yaml
+@@ -1,6 +1,6 @@
+ modelRegistry:
+   backend: MLFLOW_REGISTRY
+-  modelName: fraud_classifier_v1
++  modelName: fraud_classifier_v2
+   enableStaging: true
+   enableProduction: true
+   rollbackEnabled: true

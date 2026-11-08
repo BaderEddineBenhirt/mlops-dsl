@@ -1,0 +1,29 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  namespace: vision-serving
+  name: validation-c00-serving
+spec:
+  selector:
+    matchLabels:
+      app: validation-c00-serving
+  replicas: 2
+  template:
+    metadata:
+      labels:
+        app: validation-c00-serving
+    spec:
+      containers:
+        - name: serving
+          image: mcr.microsoft.com/azureml/openmpi4.1.0-ubuntu20.04
+          ports:
+            - name: http
+              containerPort: 80 # Replaced by Kustomize.
+          livenessProbe:
+            httpGet:
+              port: 80 # Replaced by Kustomize.
+              path: /health
+          readinessProbe:
+            httpGet:
+              port: 80 # Replaced by Kustomize.
+              path: /ready

@@ -1,0 +1,22 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  namespace: vision-serving
+  name: validation-c00-serving
+spec:
+  ingressClassName: nginx
+  tls:
+    - secretName: validation-c00-serving-tls
+      hosts:
+        - placeholder.invalid # Replaced from the routing host by Kustomize.
+  rules:
+    - host: vision.azure.company.com
+      http:
+        paths:
+          - pathType: Prefix
+            path: /
+            backend:
+              service:
+                port:
+                  number: 80 # Replaced by Kustomize.
+                name: validation-c00-serving

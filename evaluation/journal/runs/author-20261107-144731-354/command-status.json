@@ -1,0 +1,7 @@
+﻿{
+    "faults_exit_code":  0,
+    "size_exit_code":  0,
+    "replication":  "NOT_RUN; use build_replication_package.py with actual meta-model and JUnit XML",
+    "broader_exit_code":  0,
+    "evolution":  "NOT_RUN by this script; use the independent prepare/evaluate tasks"
+}

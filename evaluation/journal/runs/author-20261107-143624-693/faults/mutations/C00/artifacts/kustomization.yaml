@@ -1,0 +1,42 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+resources:
+  - runtime/k8s/namespace.yaml
+  - runtime/k8s/deployment.yaml
+  - runtime/k8s/service.yaml
+  - runtime/k8s/ingress.yaml
+replacements:
+  # Service.port is the single maintained API port for this baseline.
+  - source:
+      kind: Service
+      name: validation-c00-serving
+      fieldPath: spec.ports.0.port
+    targets:
+      - select:
+          kind: Service
+          name: validation-c00-serving
+        fieldPaths:
+          - spec.ports.0.targetPort
+      - select:
+          kind: Deployment
+          name: validation-c00-serving
+        fieldPaths:
+          - spec.template.spec.containers.0.ports.0.containerPort
+          - spec.template.spec.containers.0.readinessProbe.httpGet.port
+          - spec.template.spec.containers.0.livenessProbe.httpGet.port
+      - select:
+          kind: Ingress
+          name: validation-c00-serving
+        fieldPaths:
+          - spec.rules.0.http.paths.0.backend.service.port.number
+  # The public routing host is also the TLS host.
+  - source:
+      kind: Ingress
+      name: validation-c00-serving
+      fieldPath: spec.rules.0.host
+    targets:
+      - select:
+          kind: Ingress
+          name: validation-c00-serving
+        fieldPaths:
+          - spec.tls.0.hosts.0

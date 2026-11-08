@@ -1,0 +1,21 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: validation-c00-serving
+  namespace: vision-serving
+spec:
+  ingressClassName: "nginx"
+  tls:
+    - hosts:
+        - "vision.azure.company.com"
+      secretName: validation-c00-serving-tls
+  rules:
+    - host: vision.azure.company.com
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: validation-c00-serving
+                port: { number: 8080 }

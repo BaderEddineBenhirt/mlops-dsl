@@ -1,0 +1,17 @@
+cicdct:
+  target: AZURE
+  pipelineFile: azure-pipelines.yml
+  enableCI: true
+  enableCD: true
+  enableCT: true
+  stages:
+    - {kind: VALIDATE_DATA, name: data_validation, required: true, tool: python, outputArtifact: reports/data-quality.json}
+    - {kind: VERSION_DATA, name: data_versioning, required: true, tool: dvc, outputArtifact: dvc.lock}
+    - {kind: TRAIN, name: training, required: true, tool: pytorch, outputArtifact: models/resnet.pt}
+    - {kind: TRACK_EXPERIMENT, name: experiment_tracking, required: true, tool: mlflow, outputArtifact: mlruns}
+    - {kind: EVALUATE, name: evaluation, required: true, tool: python, outputArtifact: metrics/eval.json}
+    - {kind: REGISTER_MODEL, name: model_registry, required: true, tool: azureml, outputArtifact: registry/vision_defects_model_v1}
+    - {kind: DECISION_GATE, name: decision_gate, required: true, tool: mlopsdsl, outputArtifact: reports/decision.json}
+    - {kind: DEPLOY, name: deployment, required: true, tool: terraform, outputArtifact: infra/terraform/tfplan}
+    - {kind: MONITOR, name: monitoring, required: true, tool: datadog, outputArtifact: metrics/runtime.json}
+    - {kind: RETRAIN, name: retraining_check, required: true, tool: mlopsdsl, outputArtifact: reports/retraining-decision.json}

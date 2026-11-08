@@ -1,0 +1,22 @@
+cicdct:
+  target: GITHUB
+  pipelineFile: "mlops.yml"
+  enableCI: true
+  enableCD: false
+  enableCT: false
+  stages:
+    - kind: VALIDATE_DATA
+      name: "validate"
+      required: true
+      tool: "python"
+      outputArtifact: "reports/data.json"
+    - kind: REGISTER_MODEL
+      name: "register"
+      required: true
+      tool: "mlflow"
+      outputArtifact: "registry/fraud_classifier_v2"
+    - kind: DEPLOY
+      name: "deploy"
+      required: false
+      tool: "kubectl"
+      outputArtifact: "runtime/k8s"

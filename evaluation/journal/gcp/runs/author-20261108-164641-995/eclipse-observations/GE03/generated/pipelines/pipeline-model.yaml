@@ -1,0 +1,9 @@
+project: "fraud_gcp"
+target: GITHUB
+ci: true
+cd: false
+ct: false
+stages:
+  - validate
+  - register
+  - deploy

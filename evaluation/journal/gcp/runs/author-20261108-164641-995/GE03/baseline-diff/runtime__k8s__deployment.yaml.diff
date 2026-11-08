@@ -1,0 +1,11 @@
+--- before/runtime/k8s/deployment.yaml
++++ after/runtime/k8s/deployment.yaml
+@@ -4,7 +4,7 @@
+   name: fraud-gcp-serving
+   namespace: fraud-serving
+ spec:
+-  replicas: 3
++  replicas: 5
+   selector:
+     matchLabels:
+       app: fraud-gcp-serving

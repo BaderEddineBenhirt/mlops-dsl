@@ -1,0 +1,22 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: fraud-gcp-serving
+  namespace: fraud-serving
+spec:
+  replicas: 3
+  selector:
+    matchLabels: { app: fraud-gcp-serving }
+  template:
+    metadata:
+      labels: { app: fraud-gcp-serving }
+    spec:
+      containers:
+        - name: serving
+          image: europe-west4-docker.pkg.dev/mlops-gcp-study/serving/fraud-api:1.0.0
+          ports:
+            - containerPort: 1
+          readinessProbe:
+            httpGet: { path: "/readyz", port: 1 }
+          livenessProbe:
+            httpGet: { path: "/healthz", port: 1 }

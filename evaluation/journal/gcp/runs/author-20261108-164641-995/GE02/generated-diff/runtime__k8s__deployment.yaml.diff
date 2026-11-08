@@ -1,0 +1,14 @@
+--- before/runtime/k8s/deployment.yaml
++++ after/runtime/k8s/deployment.yaml
+@@ -15,8 +15,8 @@
+         - name: serving
+           image: europe-west4-docker.pkg.dev/mlops-gcp-study/serving/fraud-api:1.0.0
+           ports:
+-            - containerPort: 9091
++            - containerPort: 9092
+           readinessProbe:
+-            httpGet: { path: "/readyz", port: 9091 }
++            httpGet: { path: "/readyz", port: 9092 }
+           livenessProbe:
+-            httpGet: { path: "/healthz", port: 9091 }
++            httpGet: { path: "/healthz", port: 9092 }

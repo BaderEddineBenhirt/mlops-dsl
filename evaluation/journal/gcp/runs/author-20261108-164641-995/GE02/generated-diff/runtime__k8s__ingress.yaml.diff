@@ -1,0 +1,8 @@
+--- before/runtime/k8s/ingress.yaml
++++ after/runtime/k8s/ingress.yaml
+@@ -18,4 +18,4 @@
+             backend:
+               service:
+                 name: fraud-gcp-serving
+-                port: { number: 9091 }
++                port: { number: 9092 }

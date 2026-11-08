@@ -1,0 +1,10 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: fraud-gcp-serving
+  namespace: fraud-serving
+spec:
+  selector:
+    app: fraud-gcp-serving
+  ports:
+  - targetPort: 9091

@@ -1,0 +1,31 @@
+version: "0.3.0"
+schemaVersion: "2026.05"
+createdBy: "configuration-study"
+createdAt: "2026-11-08"
+project:
+  name: "fraud_gcp"
+  data:
+    source: PARQUET
+    modality: TABULAR
+    location: "transactions/v1"
+    version: "1"
+    privacy: "synthetic"
+mlopsLifecycle:
+  tracking: MLFLOW
+  versioning: DVC
+  registry: MLFLOW_REGISTRY
+  decisionGate: enabled
+  retraining: SCHEDULED
+operationalPlan:
+  ciTarget: GITHUB
+  compute: CPU_SMALL
+  packaging: CONTAINER
+  trainMode: SCRIPT
+  servingMode: API
+infra:
+  provider: GCP
+  region: "europe-west4"
+  orchestrator: KUBERNETES
+  clusterName: "fraud-gcp-study"
+  namespace: "fraud-serving"
+  complianceLevel: "STANDARD"
