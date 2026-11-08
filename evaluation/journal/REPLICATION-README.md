@@ -1,8 +1,7 @@
 # MLOps DSL replication material
 
 Research scope: selected configuration validation/generation and controlled
-configuration evolution for the C00 Azure case. This is a draft research
-archive. The recorded experiments do not establish deployment, inference, ML
+configuration evolution for the C00 Azure case. This research archive contains the implementation and recorded evidence. The recorded experiments do not establish deployment, inference, ML
 lifecycle execution, human productivity or general maintainability superiority.
 
 ## Start here
