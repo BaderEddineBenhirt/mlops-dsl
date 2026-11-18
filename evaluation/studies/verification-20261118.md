@@ -25,3 +25,13 @@ running Study A or starting participant collection. No Terraform validation,
 cloud apply or statistical claim about human productivity was executed here.
 
 The LaTeX manuscript and published observations were not modified by this change.
+
+## Windows fixture correction
+
+A subsequent author-side Windows run passed 49 checks and failed one GCP
+integrity-test setup because a text-mode fixture write translated LF to CRLF.
+The synthetic test source now uses explicit UTF-8 byte writes. Two regression
+checks simulate Windows text newline translation and verify that a genuinely
+changed source is still rejected by the unchanged importer. The complete suite
+then passed 52 tests locally with real Kustomize integration. This local check
+simulates the relevant Windows I/O behaviour and is not a Windows-host rerun.

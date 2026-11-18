@@ -6,6 +6,7 @@ import shutil
 import sys
 import tempfile
 import unittest
+from unittest.mock import patch
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -61,7 +62,9 @@ class GcpEvaluationTest(unittest.TestCase):
             case_root = root / c["case_id"]
             case_root.mkdir()
             text = gcp.changed_source(source, c)
-            (case_root / "source.mlops").write_text(text, encoding="utf-8")
+            # Match the Java export's exact UTF-8 bytes on every OS. Text-mode
+            # writes on Windows would insert CRLF after changed_source uses LF.
+            (case_root / "source.mlops").write_bytes(text.encode("utf-8"))
             fault = c["category"] == "fault"
             manifest = []
             if not fault:
@@ -98,6 +101,30 @@ class GcpEvaluationTest(unittest.TestCase):
             data["matrix_sha256"] = "0" * 64
             (root / "dsl-observations.json").write_text(json.dumps(data))
             with self.assertRaisesRegex(ValueError, "different fixture or case matrix"):
+                gcp.import_observations(root)
+
+    def test_fixture_import_with_windows_text_newline_translation(self):
+        original_write = Path.write_text
+        def windows_write(path, data, *args, **kwargs):
+            kwargs.setdefault("newline", "\r\n")
+            return original_write(path, data, *args, **kwargs)
+        with tempfile.TemporaryDirectory() as d:
+            root = Path(d)
+            with patch.object(Path, "write_text", windows_write):
+                self.synthetic_exports(root)
+            _, indexed = gcp.import_observations(root)
+            self.assertEqual(len(indexed), 14)
+            self.assertNotIn(b"\r\n", (root / "GC00/source.mlops").read_bytes())
+
+    def test_import_still_rejects_changed_source_line_endings(self):
+        with tempfile.TemporaryDirectory() as d:
+            root = Path(d)
+            data = self.synthetic_exports(root)
+            source = root / "GC00/source.mlops"
+            source.write_bytes(source.read_bytes().replace(b"\n", b"\r\n"))
+            data["cases"][0]["source_sha256"] = digest(source)
+            (root / "dsl-observations.json").write_text(json.dumps(data))
+            with self.assertRaisesRegex(ValueError, "Source mismatch for GC00"):
                 gcp.import_observations(root)
 
     def test_actual_kustomize_controls_and_fault_targets(self):
