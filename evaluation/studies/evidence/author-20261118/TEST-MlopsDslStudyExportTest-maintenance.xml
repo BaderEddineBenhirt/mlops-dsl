@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="UTF-8"?><testrun name="MlopsDslStudyExportTest" project="org.xtext.ucd.mlopsdsl.tests" tests="1" started="1" failures="0" errors="0" ignored="0">
+  <testsuite name="org.xtext.ucd.mlopsdsl.tests.MlopsDslStudyExportTest" time="13.954" displayname="MlopsDslStudyExportTest" uniqueid="[engine:junit-jupiter]/[class:org.xtext.ucd.mlopsdsl.tests.MlopsDslStudyExportTest]">
+    <testcase name="exportActualStudyObservations" classname="org.xtext.ucd.mlopsdsl.tests.MlopsDslStudyExportTest" time="13.954" displayname="exportActualStudyObservations()" uniqueid="[engine:junit-jupiter]/[class:org.xtext.ucd.mlopsdsl.tests.MlopsDslStudyExportTest]/[method:exportActualStudyObservations()]"/>
+  </testsuite>
+</testrun>
