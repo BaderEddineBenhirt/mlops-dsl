@@ -26,3 +26,6 @@ crash.log
 # Operating system files
 Thumbs.db
 .DS_Store
+
+# Private allocations, participant work and prospective study runs
+evaluation/studies/local/
