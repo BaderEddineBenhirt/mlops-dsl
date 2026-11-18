@@ -1,0 +1,13 @@
+{
+  "mode": "pilot",
+  "participants": 8,
+  "task_limit_seconds": 900,
+  "seed": 1847,
+  "generator_class_sha256": "COPY_FROM_ACTUAL_XTEXT_RECEIPT",
+  "minimum_effect": null,
+  "minimum_effect_rationale": null,
+  "independent_equivalence_reviewer": null,
+  "review_record": null,
+  "recruitment_justification": null,
+  "power_report": null
+}

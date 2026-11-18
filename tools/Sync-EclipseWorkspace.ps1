@@ -21,7 +21,8 @@ $relativeFiles = @(
     "org.xtext.ucd.mlopsdsl.tests\META-INF\MANIFEST.MF",
     "org.xtext.ucd.mlopsdsl.tests\src\org\xtext\ucd\mlopsdsl\tests\MlopsDslParsingTest.xtend",
     "org.xtext.ucd.mlopsdsl.tests\src\org\xtext\ucd\mlopsdsl\tests\MlopsDslValidationTest.java",
-    "org.xtext.ucd.mlopsdsl.tests\src\org\xtext\ucd\mlopsdsl\tests\MlopsDslGcpEvaluationTest.java"
+    "org.xtext.ucd.mlopsdsl.tests\src\org\xtext\ucd\mlopsdsl\tests\MlopsDslGcpEvaluationTest.java",
+    "org.xtext.ucd.mlopsdsl.tests\src\org\xtext\ucd\mlopsdsl\tests\MlopsDslStudyExportTest.java"
 )
 
 foreach ($folder in @("mlops-tests\src\validation", "org.xtext.ucd.mlopsdsl.tests\src\validation")) {
@@ -54,3 +55,4 @@ Write-Host "Regeneration and test execution have NOT been performed by this scri
 Write-Host "The suite now includes journal exports and renderer regressions (23 @Test methods)."
 Write-Host "Copy the JOURNAL OBSERVATIONS path printed by JUnit; export JUnit XML separately from the JUnit view."
 Write-Host "For the separate GCP study: run MlopsDslGcpEvaluationTest with JUnit 5 and copy its GCP OBSERVATIONS path."
+Write-Host "For the prospective studies: see evaluation/studies/README.md and run MlopsDslStudyExportTest with explicit VM arguments."
