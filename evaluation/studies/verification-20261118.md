@@ -35,3 +35,15 @@ checks simulate Windows text newline translation and verify that a genuinely
 changed source is still rejected by the unchanged importer. The complete suite
 then passed 52 tests locally with real Kustomize integration. This local check
 simulates the relevant Windows I/O behaviour and is not a Windows-host rerun.
+
+## Automated maintenance alternative
+
+After the author reported that participants were unavailable, an automated
+edit-subset experiment was added. Its instrument checks cover token-level
+value substitutions, exact subset enumeration, preservation of starting source,
+locked-input rejection, endpoint controls and a real Kustomize example where
+an apparently duplicated domain edit is unnecessary. All 62 Python tests passed
+locally with the native Kustomize checks enabled. No partial-model Xtext exports
+or human observations were fabricated for this verification. The prepared
+workload has 168 DSL inputs and 44 baseline inputs across the same 16 change
+instances. Actual execution of those DSL inputs remains a separate step.

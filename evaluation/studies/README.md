@@ -1,5 +1,10 @@
 # Run the complementary studies
 
+**Without participants:** use Study A below, followed by the
+[automated maintenance alternative](maintenance-protocol.md). This measures
+source-edit locality and incomplete-change outcomes. The participant experiment
+in sections 4–6 is optional future work and must not be reported as executed.
+
 Start with [protocol.md](protocol.md). The software prepares and records studies.
 It does not supply participants, certify independent review, or manufacture
 experimental results. Existing published observations are retained unchanged.
